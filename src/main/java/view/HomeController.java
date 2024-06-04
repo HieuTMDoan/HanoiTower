@@ -3,14 +3,12 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
 public class HomeController {
     @FXML
-    private final Label myGameTitle = new Label(Controller.TITLE);
+    private Label myGameTitle;
 
     @FXML
     private Button myLoadButton;
