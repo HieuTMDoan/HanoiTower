@@ -57,7 +57,7 @@ public class ViewManager {
             String viewFile = getViewFile(viewKeyWord);
             myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(viewFile));
             final Parent load = myFXMLLoader.load();
-            myCurrentView = new Scene(load);
+            myCurrentView = new Scene(load, WINDOW_WIDTH, WINDOW_HEIGHT);
         }
 
         myWindow = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();

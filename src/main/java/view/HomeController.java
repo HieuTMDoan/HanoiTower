@@ -11,9 +11,6 @@ import static view.ViewManager.*;
 
 public class HomeController {
     @FXML
-    private AnchorPane myRoot;
-
-    @FXML
     private Label myGameTitle;
 
     @FXML
