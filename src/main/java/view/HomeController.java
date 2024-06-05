@@ -3,10 +3,16 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+import static view.ViewManager.*;
+
 public class HomeController {
+    @FXML
+    private AnchorPane myRoot;
+
     @FXML
     private Label myGameTitle;
 
@@ -20,7 +26,7 @@ public class HomeController {
     private void attachEvent() {
         myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                Controller.setView(theMouseEvent);
+                setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -28,7 +34,7 @@ public class HomeController {
 
         myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                Controller.setView(theMouseEvent);
+                setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

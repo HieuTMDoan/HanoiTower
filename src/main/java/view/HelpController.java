@@ -13,7 +13,7 @@ public class HelpController {
     private void attachEvent() {
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                Controller.setView(theMouseEvent);
+                ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

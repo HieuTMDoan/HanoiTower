@@ -2,19 +2,22 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Controller {
+public class ViewManager {
     public static final String FXML_DIRECTORY_PATH = "src/main/resources/view/fxml/";
 
     public static final String HOME_VIEW_PATH = "fxml/home-view.fxml";
@@ -24,7 +27,7 @@ public class Controller {
     @FXML
     public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("images/app-icon.png")));
 
-    private static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Rectangle2D SCREEN_SIZE = Screen.getPrimary().getVisualBounds();
 
     private static final double TWO_FIFTHS = (double) 2/5;
 
@@ -52,8 +55,9 @@ public class Controller {
             myCurrentView = myPreviousView;
         } else {
             String viewFile = getViewFile(viewKeyWord);
-            myFXMLLoader = new FXMLLoader(Controller.class.getResource(viewFile));
-            myCurrentView = new Scene(myFXMLLoader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+            myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(viewFile));
+            final Parent load = myFXMLLoader.load();
+            myCurrentView = new Scene(load);
         }
 
         myWindow = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();
@@ -70,8 +74,6 @@ public class Controller {
 
         myWindow.getIcons().add(ICON);
         myWindow.setTitle(TITLE);
-        myWindow.setWidth(WINDOW_WIDTH);
-        myWindow.setHeight(WINDOW_HEIGHT);
         myWindow.setResizable(false);
         myWindow.setScene(myCurrentView);
         myWindow.show();
