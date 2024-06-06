@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -31,9 +30,15 @@ public class ViewManager {
 
     private static final double TWO_FIFTHS = (double) 2/5;
 
+    private static final double ONE_TENTHS = (double) 1/10;
+
     public static final double WINDOW_WIDTH = SCREEN_SIZE.getWidth() * TWO_FIFTHS;
 
     public static final double WINDOW_HEIGHT = SCREEN_SIZE.getHeight() * TWO_FIFTHS;
+
+    public static final double BUTTON_WIDTH = WINDOW_WIDTH * ONE_TENTHS;
+
+    public static final double BUTTON_HEIGHT = WINDOW_HEIGHT * ONE_TENTHS;
 
     @FXML
     private static FXMLLoader myFXMLLoader;
@@ -56,7 +61,7 @@ public class ViewManager {
         } else {
             String viewFile = getViewFile(viewKeyWord);
             myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(viewFile));
-            final Parent load = myFXMLLoader.load();
+            Parent load = myFXMLLoader.load();
             myCurrentView = new Scene(load, WINDOW_WIDTH, WINDOW_HEIGHT);
         }
 

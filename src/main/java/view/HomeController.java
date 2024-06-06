@@ -14,6 +14,9 @@ public class HomeController {
     private Label myGameTitle;
 
     @FXML
+    public Button myNewButton;
+
+    @FXML
     private Button myLoadButton;
 
     @FXML
@@ -21,6 +24,14 @@ public class HomeController {
 
     @FXML
     private void attachEvent() {
+        myNewButton.setOnMouseClicked(theMouseEvent -> {
+            try {
+                setView(theMouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 setView(theMouseEvent);
