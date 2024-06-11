@@ -35,7 +35,5 @@ public class Test {
             System.out.println(Arrays.toString(game1.getTowers()) + " " + game1.getMoves() + " " + game1.getProgress());
         };
         hieu.run();
-
-        System.out.println(ViewManager.WINDOW_HEIGHT + " " + ViewManager.WINDOW_WIDTH);
     }
 }

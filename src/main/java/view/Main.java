@@ -15,7 +15,7 @@ public class Main extends Application {
     public void start(Stage theStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(HOME_VIEW_PATH));
         Parent load = fxmlLoader.load();
-        Scene scene = new Scene(load, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(load);
         ViewManager.loadWindow(theStage, scene);
     }
 

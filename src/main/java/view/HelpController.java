@@ -10,7 +10,7 @@ public class HelpController {
     private Button myBackButton;
 
     @FXML
-    private void attachEvent() {
+    private void attachEvents() {
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);

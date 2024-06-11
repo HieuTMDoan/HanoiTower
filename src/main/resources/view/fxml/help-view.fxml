@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HelpController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HelpController">
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="83.5" AnchorPane.rightAnchor="83.5" AnchorPane.topAnchor="56.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-      <Button fx:id="myBackButton" mnemonicParsing="false" onAction="#attachEvent" text="BACK" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <TabPane prefHeight="520.0" prefWidth="1000.0" tabMinHeight="30.0" tabMinWidth="100.0">
+         <tabs>
+            <Tab closable="false" text="Instructions">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab closable="false" text="Settings">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab closable="false" text="About">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button fx:id="myBackButton" mnemonicParsing="false" onAction="#attachEvents" prefHeight="40.0" prefWidth="100.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>
