@@ -33,7 +33,7 @@ public class ViewManager {
     private static Scene myCurrentView;
 
     @FXML
-    private static Stage myWindow;
+    private static Stage myStage;
 
     @FXML
     private static Scene myPreviousView;
@@ -42,38 +42,76 @@ public class ViewManager {
     public static void setView(MouseEvent theMouseEvent) throws IOException {
         String viewKeyWord = ((Button) theMouseEvent.getSource()).getText();
 
-        if (viewKeyWord.equals("Back")) {
-            myCurrentView = myPreviousView;
-        } else {
-            if (viewKeyWord.equals("Restart")) {
-                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
-            } else {
-                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+        switch (viewKeyWord) {
+            case "Back" -> {
+                myCurrentView = myPreviousView;
+                myStage = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();
+                loadStage(myStage, myCurrentView);
             }
 
-            myPreviousView = myCurrentView;
-            Parent load = myFXMLLoader.load();
-            myCurrentView = new Scene(load);
-        }
+            case "Restart" -> {
+                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
+                myPreviousView = myCurrentView;
+                Parent load = myFXMLLoader.load();
+                myCurrentView = new Scene(load);
+                myStage = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();
+                loadStage(myStage, myCurrentView);
+            }
 
-        myWindow = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();
-        loadWindow(myWindow, myCurrentView);
+            case "Exit" -> {
+                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+                Parent load = myFXMLLoader.load();
+                Scene popUpScene = new Scene(load);
+                Stage popUpWindow = new Stage();
+                popUpWindow.getIcons().add(ICON);
+                popUpWindow.setTitle(TITLE);
+                popUpWindow.setResizable(false);
+                popUpWindow.setScene(popUpScene);
+                popUpWindow.show();
+            }
+
+            default -> {
+                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+                myPreviousView = myCurrentView;
+                Parent load = myFXMLLoader.load();
+                myCurrentView = new Scene(load);
+                myStage = (Stage) ((Node) theMouseEvent.getSource()).getScene().getWindow();
+                loadStage(myStage, myCurrentView);
+            }
+        }
     }
 
     @FXML
-    public static void loadWindow(Stage theStage, Scene theScene) {
-        if (myWindow == null || myCurrentView == null) {
-            myWindow = theStage;
+    public static void loadStage(Stage theStage, Scene theScene) {
+        if (myStage == null || myCurrentView == null) {
+            myStage = theStage;
             myCurrentView = theScene;
             myPreviousView = myCurrentView;
         }
 
-        myWindow.getIcons().add(ICON);
-        myWindow.setTitle(TITLE);
-        myWindow.setResizable(false);
-        myWindow.setScene(myCurrentView);
-        myWindow.show();
+        myStage.getIcons().add(ICON);
+        myStage.setTitle(TITLE);
+        myStage.setResizable(false);
+        myStage.setScene(myCurrentView);
+        myStage.show();
     }
+
+//    @FXML
+//    private static void handleExit(WindowEvent event) {
+//        // Show a confirmation dialog
+//        Alert alert = new Alert(AlertType.CONFIRMATION);
+//        alert.setTitle("Exit Confirmation");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Are you sure you want to exit?");
+//
+//        // Wait for the user's response
+//        alert.showAndWait().ifPresent(response -> {
+//            if (response != ButtonType.OK) {
+//                // If the user chooses not to exit, consume the event
+//                event.consume();
+//            }
+//        });
+//    }
 
     private static String getViewFile(String theViewKeyword) {
         String fxmlPath = "";

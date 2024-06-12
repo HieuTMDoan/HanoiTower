@@ -67,9 +67,11 @@ public final class HanoiTower {
 
         if (myLeft.equals(theTower)) {
             myPopDisk = myLeft.popDisk();
-        } else if (myMiddle.equals(theTower)) {
+        } 
+        else if (myMiddle.equals(theTower)) {
             myPopDisk = myMiddle.popDisk();
-        } else {
+        } 
+        else {
             myPopDisk = myRight.popDisk();
         }
         updateGame();
@@ -84,10 +86,12 @@ public final class HanoiTower {
         if (myLeft.equals(theTower)) {
             canPush = myLeft.canPush(myPopDisk);
             myLeft.pushDisk(myPopDisk);
-        } else if (myMiddle.equals(theTower)) {
+        } 
+        else if (myMiddle.equals(theTower)) {
             canPush = myMiddle.canPush(myPopDisk);
             myMiddle.pushDisk(myPopDisk);
-        } else {
+        } 
+        else {
             canPush = myRight.canPush(myPopDisk);
             myRight.pushDisk(myPopDisk);
         }
@@ -113,7 +117,9 @@ public final class HanoiTower {
     }
 
     public void endGame() {
-        SAVED_GAMES.remove(this);
+        if (hasWon()) {
+            SAVED_GAMES.remove(this);
+        }
     }
 
     public void saveGame() {
@@ -158,7 +164,7 @@ public final class HanoiTower {
 
     private void setMode(final Mode theMode) {
         if (theMode != DEFAULT_MODE && theMode != TIMED_MODE) {
-            throw new IllegalArgumentException("model.Mode is either default or timed!");
+            throw new IllegalArgumentException("Mode is either default or timed!");
         }
 
         myMode = theMode;
@@ -220,7 +226,15 @@ public final class HanoiTower {
      *                                                 HELPER METHODS                                                  *
      *******************************************************************************************************************/
     private boolean hasWon() {
-        return (myRight.getDiskCount() == myCount) && (myProgress == 1.00);
+        boolean hasWon;
+        
+        if (myMode == DEFAULT_MODE) {
+            hasWon = (myRight.getDiskCount() == myCount) && (myProgress == 1.00);
+        } else {
+            hasWon = (myTime > 0) && (myRight.getDiskCount() == myCount) && (myProgress == 1.00);
+        }
+        
+        return hasWon;
     }
 
     private void startTimer() {
