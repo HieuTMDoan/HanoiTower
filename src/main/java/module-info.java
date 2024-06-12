@@ -5,5 +5,6 @@ module com.example.hanoitower {
 
 
     opens view to javafx.fxml;
+    opens model to javafx.base;
     exports view;
 }

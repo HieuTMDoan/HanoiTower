@@ -10,9 +10,9 @@ import java.util.TimerTask;
 import static model.HanoiTower.Mode.*;
 
 public final class HanoiTower {
-    public static final int MAXIMUM_COUNT = 8;
+    public static final int MAXIMUM_LEVEL = 8;
 
-    public static final int DEFAULT_COUNT = 3;
+    public static final int DEFAULT_LEVEL = 3;
 
     public static final String DEFAULT_NAME = "N/A";
 
@@ -24,7 +24,7 @@ public final class HanoiTower {
 
     private String myName;
 
-    private int myCount;
+    private int myLevel;
 
     private double myProgress;
 
@@ -45,7 +45,7 @@ public final class HanoiTower {
     private Disk myPopDisk;
 
     public HanoiTower() {
-        startGame(DEFAULT_NAME, DEFAULT_COUNT, 0.0, DEFAULT_MODE);
+        startGame(DEFAULT_NAME, DEFAULT_LEVEL, 0.0, DEFAULT_MODE);
     }
 
     public HanoiTower(final String theName, final int theCount, double theProgress, final Mode theMode) {
@@ -54,7 +54,7 @@ public final class HanoiTower {
 
     private void startGame(final String theName, final int theCount, double theProgress, final Mode theMode) {
         setName(theName);
-        setCount(theCount);
+        setLevel(theCount);
         setProgress(theProgress);
         setMode(theMode);
         setTowers();
@@ -101,7 +101,7 @@ public final class HanoiTower {
 
     private void updateGame() {
         myMoves++;
-        setProgress((double) myRight.getDiskCount() / myCount);
+        setProgress((double) myRight.getDiskCount() / myLevel);
     }
 
     public void pauseGame() {
@@ -113,17 +113,19 @@ public final class HanoiTower {
     }
 
     public void restartGame() {
-        startGame(myName, myCount, myProgress, myMode);
+        startGame(myName, myLevel, myProgress, myMode);
     }
 
     public void endGame() {
         if (hasWon()) {
             SAVED_GAMES.remove(this);
         }
+
+        System.out.println(hasWon() ? "You won." : "You lost.");
     }
 
-    public void saveGame() {
-        SAVED_GAMES.add(this);
+    public static void saveGame(final HanoiTower theGame) {
+        SAVED_GAMES.add(theGame);
     }
 
     public static HanoiTower loadGame(final String theName) {
@@ -146,11 +148,11 @@ public final class HanoiTower {
     /*******************************************************************************************************************
      *                                                 SETTER METHODS                                                  *
      *******************************************************************************************************************/
-    public void setCount(final int theCount) {
-        if (theCount > MAXIMUM_COUNT) {
-            myCount = MAXIMUM_COUNT;
+    public void setLevel(final int theLevel) {
+        if (theLevel > MAXIMUM_LEVEL) {
+            myLevel = MAXIMUM_LEVEL;
         } else {
-            myCount = Math.max(theCount, DEFAULT_COUNT);
+            myLevel = Math.max(theLevel, DEFAULT_LEVEL);
         }
     }
 
@@ -186,7 +188,7 @@ public final class HanoiTower {
     }
 
     private void setTowers() {
-        myLeft = new Tower(myCount);
+        myLeft = new Tower(myLevel);
         myMiddle = new Tower(0);
         myRight = new Tower(0);
     }
@@ -206,8 +208,8 @@ public final class HanoiTower {
         return myMode;
     }
 
-    public int getCount() {
-        return myCount;
+    public int getLevel() {
+        return myLevel;
     }
 
     public int getMoves() {
@@ -229,9 +231,9 @@ public final class HanoiTower {
         boolean hasWon;
         
         if (myMode == DEFAULT_MODE) {
-            hasWon = (myRight.getDiskCount() == myCount) && (myProgress == 1.00);
+            hasWon = (myRight.getDiskCount() == myLevel) && (myProgress == 1.00);
         } else {
-            hasWon = (myTime > 0) && (myRight.getDiskCount() == myCount) && (myProgress == 1.00);
+            hasWon = (myTime > 0) && (myRight.getDiskCount() == myLevel) && (myProgress == 1.00);
         }
         
         return hasWon;
@@ -267,7 +269,7 @@ public final class HanoiTower {
 
     @Override
     public String toString() {
-        return "(" + myName + ", " + myCount + ", " + myMode + ")";
+        return "(" + myName + ", " + myLevel + ", " + myProgress + ", " + myMode + ")";
     }
 
     /*******************************************************************************************************************
