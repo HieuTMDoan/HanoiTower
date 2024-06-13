@@ -22,6 +22,8 @@ public final class HanoiTower {
 
     private static final int DEFAULT_COUNTDOWN = 30;
 
+    private static HanoiTower SINGLE_INSTANCE;
+
     private String myName;
 
     private int myLevel;
@@ -43,6 +45,13 @@ public final class HanoiTower {
     private Tower myRight;
 
     private Disk myPopDisk;
+
+    public static HanoiTower getInstance() {
+        if (SINGLE_INSTANCE == null) {
+            SINGLE_INSTANCE = new HanoiTower();
+        }
+        return SINGLE_INSTANCE;
+    }
 
     public HanoiTower() {
         startGame(DEFAULT_NAME, DEFAULT_LEVEL, 0.0, DEFAULT_MODE);
@@ -164,7 +173,7 @@ public final class HanoiTower {
         }
     }
 
-    private void setMode(final Mode theMode) {
+    public void setMode(final Mode theMode) {
         if (theMode != DEFAULT_MODE && theMode != TIMED_MODE) {
             throw new IllegalArgumentException("Mode is either default or timed!");
         }
@@ -177,14 +186,15 @@ public final class HanoiTower {
         }
     }
 
-    private void setName(final String theName) {
-        for (final HanoiTower game : SAVED_GAMES) {
-            if (game.myName.equals(theName) && !theName.equals(DEFAULT_NAME)) {
-                throw new IllegalArgumentException("Name must be new!");
-            }
-        }
+    public void setName(final String theName) {
+        List<String> savedNames = SAVED_GAMES.stream().map(HanoiTower::getName).toList();
+        String tempName = (theName.isEmpty() || theName.isBlank()) ? DEFAULT_NAME : theName;
 
-        myName = theName;
+        if (!savedNames.contains(tempName)) {
+            myName = tempName;
+        } else {
+            throw new IllegalArgumentException("Name must be new!");
+        }
     }
 
     private void setTowers() {

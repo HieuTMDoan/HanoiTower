@@ -3,16 +3,31 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
+
 public class ExitController {
     @FXML
-    private Button myYesButton;
+    private Button mySaveButton;
 
     @FXML
-    private Button myNoButton;
+    private Button myDoNotSaveButton;
 
     @FXML
     private void attachEvents() {
-//        myYesButton.setOnMouseClicked();
-//        myNoButton.setOnMouseClicked();
+        mySaveButton.setOnMouseClicked(theMouseEvent -> {
+            try {
+                ViewManager.setView(theMouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
+            try {
+                ViewManager.setView(theMouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static model.HanoiTower.*;
-import static model.HanoiTower.Mode.*;
+import static model.HanoiTower.Mode;
 
 public class LoadController implements Initializable {
     @FXML
@@ -49,6 +48,7 @@ public class LoadController implements Initializable {
         });
     }
 
+    @FXML
     private void showSavedGames() {
         myNameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
         myLevelColumn.setCellValueFactory(new PropertyValueFactory<>("Level"));

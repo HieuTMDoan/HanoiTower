@@ -2,7 +2,6 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.io.IOException;
 
@@ -22,7 +21,7 @@ public class HomeController {
     private void attachEvents() {
         myNewButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                setView(theMouseEvent);
+                ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -30,7 +29,7 @@ public class HomeController {
 
         myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                setView(theMouseEvent);
+                ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -38,7 +37,7 @@ public class HomeController {
 
         myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                setView(theMouseEvent);
+                ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
