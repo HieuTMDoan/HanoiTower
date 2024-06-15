@@ -15,14 +15,15 @@ public class SaveController {
     private void attachEvents() {
         myNameTextField.setOnKeyPressed(theKeyEvent -> {
             if (theKeyEvent.getCode() == KeyCode.ENTER) {
-                String typedName = myNameTextField.getText();
-                HanoiTower.getInstance().setName(typedName);
-                HanoiTower.saveGame(HanoiTower.getInstance());
-                System.out.println(HanoiTower.getSavedGames());
                 try {
+                    String typedName = myNameTextField.getText();
+                    HanoiTower.getInstance().setName(typedName);
+                    HanoiTower.saveGame(HanoiTower.getInstance());
+                    System.out.println(HanoiTower.getSavedGames());
+
                     ViewManager.setView(theKeyEvent);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Unable to switch view!");
                 }
             }
         });

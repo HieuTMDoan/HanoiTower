@@ -1,4 +1,4 @@
-package memento;
+package model;
 
 public class HanoiTowerMemento {
 }

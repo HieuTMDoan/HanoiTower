@@ -30,7 +30,7 @@ public class ViewManager {
     public static final String TITLE = "HANOI TOWER";
 
     @FXML
-    public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("images/app-icon.png")));
+    public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("images/game-logo.png")));
 
     @FXML
     private static FXMLLoader myFXMLLoader;
@@ -50,6 +50,10 @@ public class ViewManager {
     @FXML
     private static Stage myPopUpStage;
 
+    private ViewManager(){
+
+    }
+
     @FXML
     public static void setView(final InputEvent theInputEvent) throws IOException {
         if (theInputEvent instanceof MouseEvent) {
@@ -59,69 +63,51 @@ public class ViewManager {
                 case "Back" -> {
                     myCurrentView = myPreviousView;
                     myMainStage = (Stage) ((Node) theInputEvent.getSource()).getScene().getWindow();
-                    loadStage(myMainStage, myCurrentView);
+                    loadMainStage(myMainStage, myCurrentView);
                 }
                 case "Restart" -> {
-                    myPreviousView = myCurrentView;
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
+                    myPreviousView = myCurrentView;
                     initializeViewAndStage(theInputEvent);
-                    loadStage(myMainStage, myCurrentView);
+                    loadMainStage(myMainStage, myCurrentView);
                 }
                 case "Exit" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
-                    Parent load = myFXMLLoader.load();
-                    myPopUpView = new Scene(load);
+                    initializePopUpViewAndStage();
                     loadPopUpStage();
                 }
                 case "Save" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(SAVE_VIEW_PATH));
-                    Parent load = myFXMLLoader.load();
-                    myPopUpView = new Scene(load);
+                    myPopUpStage.close();
+                    initializePopUpViewAndStage();
                     loadPopUpStage();
                 }
                 case "Don't Save" -> {
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                     myPopUpStage.close();
                     myMainStage.close();
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                     initializeViewAndStage(theInputEvent);
-                    loadStage(myMainStage, myCurrentView);
+                    loadMainStage(myMainStage, myCurrentView);
                 }
                 default -> {
-                    myPreviousView = myCurrentView;
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+                    myPreviousView = myCurrentView;
                     initializeViewAndStage(theInputEvent);
-                    loadStage(myMainStage, myCurrentView);
+                    loadMainStage(myMainStage, myCurrentView);
                 }
             }
         }
         else if (theInputEvent instanceof KeyEvent) {
             KeyCode viewKeyCode = ((KeyEvent) theInputEvent).getCode();
 
-            switch (viewKeyCode) {
-                case ENTER -> {
-                    myPopUpStage.close();
-                    myMainStage.close();
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
-                    initializeViewAndStage(theInputEvent);
-                    loadStage(myMainStage, myCurrentView);
-                }
+            if (Objects.requireNonNull(viewKeyCode) == KeyCode.ENTER) {
+                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
+                myPopUpStage.close();
+                myMainStage.close();
+                initializeViewAndStage(theInputEvent);
+                loadMainStage(myMainStage, myCurrentView);
             }
         }
-    }
-
-    @FXML
-    public static void loadStage(final Stage theStage, final Scene theScene) {
-        if (myMainStage == null || myCurrentView == null) {
-            myMainStage = theStage;
-            myCurrentView = theScene;
-            myPreviousView = myCurrentView;
-        }
-
-        myMainStage.getIcons().add(ICON);
-        myMainStage.setTitle(TITLE);
-        myMainStage.setResizable(false);
-        myMainStage.setScene(myCurrentView);
-        myMainStage.show();
     }
 
     @FXML
@@ -132,14 +118,38 @@ public class ViewManager {
     }
 
     @FXML
-    private static void loadPopUpStage() {
+    public static void loadMainStage(final Stage theStage, final Scene theScene) {
+        if (myMainStage == null || myCurrentView == null) {
+            myMainStage = theStage;
+            myCurrentView = theScene;
+            myPreviousView = myCurrentView;
+        }
+
+        myMainStage.getIcons().add(ICON);
+        myMainStage.setTitle(TITLE);
+        myMainStage.setResizable(false);
+        myMainStage.setScene(myCurrentView);
+
+        myMainStage.show();
+    }
+
+
+    @FXML
+    private static void initializePopUpViewAndStage() throws IOException {
+        Parent load = myFXMLLoader.load();
+        myPopUpView = new Scene(load);
         myPopUpStage = new Stage();
+    }
+
+    @FXML
+    private static void loadPopUpStage() {
         myPopUpStage.getIcons().add(ICON);
         myPopUpStage.setTitle(TITLE);
         myPopUpStage.setResizable(false);
         myPopUpStage.initModality(Modality.WINDOW_MODAL);
         myPopUpStage.initOwner(myMainStage);
         myPopUpStage.setScene(myPopUpView);
+
         myPopUpStage.show();
     }
 

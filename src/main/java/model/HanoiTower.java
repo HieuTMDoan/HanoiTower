@@ -10,13 +10,13 @@ import java.util.TimerTask;
 import static model.HanoiTower.Mode.*;
 
 public final class HanoiTower {
-    public static final int MAXIMUM_LEVEL = 8;
+    private static final int MAXIMUM_LEVEL = 8;
 
-    public static final int DEFAULT_LEVEL = 3;
+    private static final int DEFAULT_LEVEL = 3;
 
-    public static final String DEFAULT_NAME = "N/A";
+    private static final String DEFAULT_NAME = "N/A";
 
-    public static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
+    private static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
 
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
@@ -54,19 +54,15 @@ public final class HanoiTower {
     }
 
     public HanoiTower() {
-        startGame(DEFAULT_NAME, DEFAULT_LEVEL, 0.0, DEFAULT_MODE);
+
     }
 
-    public HanoiTower(final String theName, final int theCount, double theProgress, final Mode theMode) {
-        startGame(theName, theCount, theProgress, theMode);
-    }
-
-    private void startGame(final String theName, final int theCount, double theProgress, final Mode theMode) {
-        setName(theName);
+    public void startGame(final int theCount, double theProgress, final Mode theMode) {
         setLevel(theCount);
         setProgress(theProgress);
         setMode(theMode);
         setTowers();
+
     }
 
     public void popDisk(final Tower theTower) {
@@ -122,7 +118,7 @@ public final class HanoiTower {
     }
 
     public void restartGame() {
-        startGame(myName, myLevel, myProgress, myMode);
+        startGame(myLevel, myProgress, myMode);
     }
 
     public void endGame() {

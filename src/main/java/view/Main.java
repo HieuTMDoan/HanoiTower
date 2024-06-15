@@ -16,7 +16,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(HOME_VIEW_PATH));
         Parent load = fxmlLoader.load();
         Scene scene = new Scene(load);
-        ViewManager.loadStage(theStage, scene);
+        ViewManager.loadMainStage(theStage, scene);
     }
 
     public static void main(String[] args) {
