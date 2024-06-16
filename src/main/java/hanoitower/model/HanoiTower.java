@@ -1,13 +1,13 @@
-package model;
+package hanoitower.model;
 
-import model.Tower.Disk;
+import hanoitower.model.Tower.Disk;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static model.HanoiTower.Mode.*;
+import static hanoitower.model.HanoiTower.Mode.*;
 
 public final class HanoiTower {
     private static final int MAXIMUM_LEVEL = 8;

@@ -1,5 +1,6 @@
-package view;
+package hanoitower;
 
+import hanoitower.control.ViewManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static view.ViewManager.*;
+import static hanoitower.control.ViewManager.*;
 
 public class Main extends Application {
     @Override

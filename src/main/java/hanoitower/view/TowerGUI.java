@@ -1,4 +1,4 @@
-package view.GUI;
+package hanoitower.view;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;

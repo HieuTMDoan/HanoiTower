@@ -1,5 +1,6 @@
-package view;
+package hanoitower.control;
 
+import hanoitower.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,18 +20,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ViewManager {
-    public static final String FXML_DIRECTORY_PATH = "src/main/resources/view/fxml/";
+    public static final String FXML_DIRECTORY_PATH = "src/main/resources/hanoitower/fxml/";
 
-    public static final String HOME_VIEW_PATH = "fxml/home-view.fxml";
+    public static final String HOME_VIEW_PATH = "/hanoitower/fxml/home-view.fxml";
 
-    public static final String GAME_VIEW_PATH = "fxml/new-view.fxml";
+    public static final String GAME_VIEW_PATH = "/hanoitower/fxml/new-view.fxml";
 
-    public static final String SAVE_VIEW_PATH = "fxml/save-view.fxml";
+    public static final String SAVE_VIEW_PATH = "/hanoitower/fxml/save-view.fxml";
 
     public static final String TITLE = "HANOI TOWER";
 
     @FXML
-    public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("images/game-logo.png")));
+    public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
 
     @FXML
     private static FXMLLoader myFXMLLoader;
@@ -162,7 +163,8 @@ public class ViewManager {
             if (listOfFiles != null) {
                 for (File file : listOfFiles) {
                     if (file.getName().contains(theViewKeyword.toLowerCase())) {
-                        fxmlPath = "fxml/" + file.getName();
+                        fxmlPath = "/hanoitower/fxml/" + file.getName();
+                        break;
                     }
                 }
             } else {

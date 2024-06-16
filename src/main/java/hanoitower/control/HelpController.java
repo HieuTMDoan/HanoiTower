@@ -1,4 +1,4 @@
-package view;
+package hanoitower.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

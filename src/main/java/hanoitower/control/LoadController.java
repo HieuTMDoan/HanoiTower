@@ -1,4 +1,4 @@
-package view;
+package hanoitower.control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,13 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.HanoiTower;
+import hanoitower.model.HanoiTower;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static model.HanoiTower.Mode;
+import static hanoitower.model.HanoiTower.Mode;
 
 public class LoadController implements Initializable {
     @FXML

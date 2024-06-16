@@ -1,9 +1,9 @@
-package view;
+package hanoitower.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import model.HanoiTower;
+import hanoitower.model.HanoiTower;
 
 import java.io.IOException;
 
