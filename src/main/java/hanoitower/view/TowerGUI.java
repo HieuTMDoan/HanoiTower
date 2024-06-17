@@ -1,37 +1,45 @@
 package hanoitower.view;
 
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static hanoitower.view.DiskGUI.*;
+
 public class TowerGUI extends StackPane {
-    private final int myBaseWidth;
+    private static final int BASE_WIDTH = 300;
 
-    private final int myBaseHeight;
+    private static final int BASE_HEIGHT = 30;
 
-    private final int myPoleWidth;
+    private static final int POLE_WIDTH = BASE_HEIGHT - 10;
 
-    private final int myPoleHeight;
+    private static final int POLE_HEIGHT = BASE_WIDTH - 20;
 
-    private final int myPoleYTranslate;
+    public TowerGUI() {
+        Rectangle myBase = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
+        myBase.setFill(Color.BLACK);
 
-    public TowerGUI(final int theWidth, final int theHeight, final int thePoleHeight) {
-        myBaseWidth = theWidth;
-        myBaseHeight = theHeight;
-        myPoleWidth = theHeight;
-        myPoleHeight = thePoleHeight;
-        myPoleYTranslate = -((myPoleHeight/2) + (myBaseHeight/2));
-        createTower();
+        Rectangle myPole = new Rectangle(POLE_WIDTH, POLE_HEIGHT);
+        myPole.setFill(Color.BLACK);
+        myPole.setTranslateY(-BASE_HEIGHT);
+
+        super.getChildren().addAll(myBase, myPole);
+        super.setAlignment(Pos.BOTTOM_CENTER);
     }
 
-    private void createTower() {
-        Rectangle base = new Rectangle(myBaseWidth, myBaseHeight);
-        base.setFill(Color.BLACK);
+    public void addDisk(final DiskGUI theDisk) {
+        if (this.getChildren().size() > 2) {
+            theDisk.setTranslateY(-DISK_HEIGHT * (this.getChildren().size() - 1));
+        }
+        this.getChildren().add(theDisk);
+    }
 
-        Rectangle pole = new Rectangle(myPoleWidth, myPoleHeight);
-        pole.setFill(Color.BLACK);
-        pole.setTranslateY(myPoleYTranslate);
-
-        super.getChildren().addAll(base, pole);
+    public void addAllDisks(final DiskGUI... theDisks) {
+        for (final DiskGUI disk : theDisks) {
+            this.addDisk(disk);
+        }
     }
 }

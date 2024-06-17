@@ -40,10 +40,10 @@
       </HBox>
    </top>
    <center>
-      <HBox fx:id="myTowersHBox" spacing="100.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
-         </padding></HBox>
+      <HBox fx:id="myTowersHBox" alignment="BOTTOM_CENTER" fillHeight="false" spacing="30.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></HBox>
    </center>
    <bottom>
       <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">

@@ -43,7 +43,7 @@ public class LoadController implements Initializable {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Unable to switch view!");
             }
         });
     }

@@ -9,10 +9,12 @@ import java.util.TimerTask;
 
 import static hanoitower.model.HanoiTower.Mode.*;
 
-public final class HanoiTower {
+public class HanoiTower {
     private static final int MAXIMUM_LEVEL = 8;
 
-    private static final int DEFAULT_LEVEL = 3;
+    public static final int DEFAULT_LEVEL = 3;
+
+    public static final double DEFAULT_PROGRESS = 0.0;
 
     private static final String DEFAULT_NAME = "N/A";
 
@@ -53,7 +55,7 @@ public final class HanoiTower {
         return SINGLE_INSTANCE;
     }
 
-    public HanoiTower() {
+    private HanoiTower() {
 
     }
 
@@ -62,7 +64,6 @@ public final class HanoiTower {
         setProgress(theProgress);
         setMode(theMode);
         setTowers();
-
     }
 
     public void popDisk(final Tower theTower) {

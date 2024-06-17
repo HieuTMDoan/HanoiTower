@@ -20,18 +20,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ViewManager {
-    public static final String FXML_DIRECTORY_PATH = "src/main/resources/hanoitower/fxml/";
+    private static final String FXML_DIRECTORY_PATH = "src/main/resources/hanoitower/fxml/";
 
     public static final String HOME_VIEW_PATH = "/hanoitower/fxml/home-view.fxml";
 
-    public static final String GAME_VIEW_PATH = "/hanoitower/fxml/new-view.fxml";
+    private static final String GAME_VIEW_PATH = "/hanoitower/fxml/new-view.fxml";
 
-    public static final String SAVE_VIEW_PATH = "/hanoitower/fxml/save-view.fxml";
+    private static final String SAVE_VIEW_PATH = "/hanoitower/fxml/save-view.fxml";
 
-    public static final String TITLE = "HANOI TOWER";
+    private static final String TITLE = "HANOI TOWER";
 
     @FXML
-    public static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
+    private static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
 
     @FXML
     private static FXMLLoader myFXMLLoader;
@@ -51,7 +51,7 @@ public class ViewManager {
     @FXML
     private static Stage myPopUpStage;
 
-    private ViewManager(){
+    private ViewManager() {
 
     }
 
@@ -101,7 +101,7 @@ public class ViewManager {
         else if (theInputEvent instanceof KeyEvent) {
             KeyCode viewKeyCode = ((KeyEvent) theInputEvent).getCode();
 
-            if (Objects.requireNonNull(viewKeyCode) == KeyCode.ENTER) {
+            if (viewKeyCode == KeyCode.ENTER) {
                 myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                 myPopUpStage.close();
                 myMainStage.close();
@@ -133,7 +133,6 @@ public class ViewManager {
 
         myMainStage.show();
     }
-
 
     @FXML
     private static void initializePopUpViewAndStage() throws IOException {

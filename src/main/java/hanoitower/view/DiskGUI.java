@@ -1,25 +1,31 @@
 package hanoitower.view;
 
+import hanoitower.model.HanoiTower;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class DiskGUI extends Rectangle {
-    private final static int DISK_ARC = 10;
+    private final static int DISK_ARC = 20;
 
-    private final int myWidth;
+    public final static int DISK_HEIGHT = 30;
 
-    private final int myHeight;
+    private final static int WIDTH_DIFFERENCE = 30;
 
-    private final Color myColor;
+    private final static int MINIMUM_DISK_WIDTH = 90;
 
-    public DiskGUI(final int theWidth, final int theHeight, final Color theColor) {
-        super(theWidth, theHeight);
+    private final int myDiskID;
+
+    public DiskGUI(final int theDiskID, final Color theColor) {
+        super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theDiskID - HanoiTower.DEFAULT_LEVEL)), DISK_HEIGHT);
         super.setFill(theColor);
         super.setArcWidth(DISK_ARC);
         super.setArcHeight(DISK_ARC);
+        super.setTranslateY(-DISK_HEIGHT);
 
-        myWidth = theWidth;
-        myHeight = theHeight;
-        myColor = theColor;
+        myDiskID = theDiskID;
+    }
+
+    public int getDiskID() {
+        return myDiskID;
     }
 }
