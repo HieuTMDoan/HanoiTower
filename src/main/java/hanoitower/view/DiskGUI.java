@@ -16,7 +16,7 @@ public class DiskGUI extends Rectangle {
     private final int myDiskID;
 
     public DiskGUI(final int theDiskID, final Color theColor) {
-        super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theDiskID - HanoiTower.DEFAULT_LEVEL)), DISK_HEIGHT);
+        super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theDiskID)), DISK_HEIGHT);
         super.setFill(theColor);
         super.setArcWidth(DISK_ARC);
         super.setArcHeight(DISK_ARC);

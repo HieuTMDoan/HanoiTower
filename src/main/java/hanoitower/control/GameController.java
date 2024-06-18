@@ -1,21 +1,29 @@
 package hanoitower.control;
 
+import hanoitower.model.HanoiTower;
 import hanoitower.view.DiskGUI;
 import hanoitower.view.TowerGUI;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
+
+import static hanoitower.model.HanoiTower.*;
 
 public class GameController implements Initializable {
+    private final static String MINIMUM_MOVES_LABEL_PREFIX = "Minimum Moves: ";
+
+    private final static String MOVES_LABEL_PREFIX = "Moves: ";
+
     @FXML
     private HBox myTowersHBox;
 
@@ -52,6 +60,10 @@ public class GameController implements Initializable {
     @FXML
     private Label myTimerLabel;
 
+    private final DoubleProperty myProgressProperty = new SimpleDoubleProperty();
+
+    private final SpinnerValueFactory<Integer> myLevelFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(DEFAULT_LEVEL, MAXIMUM_LEVEL);
+
     @FXML
     private void attachEvents() {
         myExitButton.setOnMouseClicked(theMouseEvent -> {
@@ -80,30 +92,65 @@ public class GameController implements Initializable {
     }
 
     @FXML
+    private void showProgress() {
+        double progress = HanoiTower.getInstance().getProgress();
+        myProgressProperty.set(progress);
+        myProgressBar.progressProperty().bind(myProgressProperty);
+    }
+
+    @FXML
     private void showTowers() {
         myLeftTower = new TowerGUI();
         myMiddleTower = new TowerGUI();
         myRightTower = new TowerGUI();
-
-        DiskGUI disk = new DiskGUI(3, Color.rgb(255, 99, 71));
-        DiskGUI disk1 = new DiskGUI(4, Color.rgb(99, 99, 71));
-        DiskGUI disk2 = new DiskGUI(5, Color.rgb(99, 255, 71));
-        DiskGUI disk3 = new DiskGUI(6, Color.rgb(99, 99, 255));
-        DiskGUI disk4 = new DiskGUI(8, Color.rgb(0, 0, 255));
-
-//        myLeftTower.addDisk(disk);
-//        myLeftTower.addDisk(disk1);
-//        myLeftTower.addDisk(disk2);
-//        myLeftTower.addDisk(disk3);
-//        myLeftTower.addDisk(disk4);
-
-        myMiddleTower.addAllDisks(disk4, disk3, disk2, disk1);
-
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
+    }
+
+    @FXML
+    private void showDisks() {
+        int level = HanoiTower.getInstance().getLevel();
+        DiskGUI[] disks = IntStream.range(0, level).mapToObj(GameController::createDisk).toArray(DiskGUI[]::new);
+
+        myLeftTower.addAllDisks(disks);
+    }
+
+    private static DiskGUI createDisk(int i) {
+        int randomR = new Random().nextInt(255);
+        int randomG = new Random().nextInt(255);
+        int randomB = new Random().nextInt(255);
+        Color randomColor = Color.rgb(randomR, randomG, randomB);
+
+        return new DiskGUI(i, randomColor);
+    }
+
+    @FXML
+    private void showMinimumMoves() {
+        int level = HanoiTower.getInstance().getLevel();
+        int minimumMoves = HanoiTower.MINIMUM_MOVES[level-3];
+        myMinimumMovesLabel.setText(MINIMUM_MOVES_LABEL_PREFIX + minimumMoves);
+    }
+
+    @FXML
+    private void showMoves() {
+        int moves = HanoiTower.getInstance().getMoves();
+        myMovesLabel.setText(MOVES_LABEL_PREFIX + moves);
+    }
+
+    @FXML
+    private void showLevel() {
+        int level = HanoiTower.getInstance().getLevel();
+        myLevelFactory.setValue(level);
+        myLevelSpinner.setValueFactory(myLevelFactory);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        HanoiTower.getInstance();
         showTowers();
+        showDisks();
+        showLevel();
+        showProgress();
+        showMoves();
+        showMinimumMoves();
     }
 }

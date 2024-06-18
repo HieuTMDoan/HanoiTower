@@ -7,6 +7,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Arrays;
+
 import static hanoitower.view.DiskGUI.*;
 
 public class TowerGUI extends StackPane {
@@ -14,9 +16,9 @@ public class TowerGUI extends StackPane {
 
     private static final int BASE_HEIGHT = 30;
 
-    private static final int POLE_WIDTH = BASE_HEIGHT - 10;
+    private static final int POLE_WIDTH = BASE_HEIGHT - 5;
 
-    private static final int POLE_HEIGHT = BASE_WIDTH - 20;
+    private static final int POLE_HEIGHT = BASE_WIDTH - 40;
 
     public TowerGUI() {
         Rectangle myBase = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
@@ -38,8 +40,6 @@ public class TowerGUI extends StackPane {
     }
 
     public void addAllDisks(final DiskGUI... theDisks) {
-        for (final DiskGUI disk : theDisks) {
-            this.addDisk(disk);
-        }
+        Arrays.stream(theDisks).forEach(this::addDisk);
     }
 }

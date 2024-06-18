@@ -10,7 +10,7 @@ import java.util.TimerTask;
 import static hanoitower.model.HanoiTower.Mode.*;
 
 public class HanoiTower {
-    private static final int MAXIMUM_LEVEL = 8;
+    public static final int MAXIMUM_LEVEL = 8;
 
     public static final int DEFAULT_LEVEL = 3;
 
@@ -18,7 +18,7 @@ public class HanoiTower {
 
     private static final String DEFAULT_NAME = "N/A";
 
-    private static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
+    public static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
 
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
@@ -56,11 +56,11 @@ public class HanoiTower {
     }
 
     private HanoiTower() {
-
+        startGame(DEFAULT_LEVEL, DEFAULT_PROGRESS, DEFAULT_MODE);
     }
 
-    public void startGame(final int theCount, double theProgress, final Mode theMode) {
-        setLevel(theCount);
+    public void startGame(final int theLevel, double theProgress, final Mode theMode) {
+        setLevel(theLevel);
         setProgress(theProgress);
         setMode(theMode);
         setTowers();

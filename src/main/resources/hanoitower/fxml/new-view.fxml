@@ -15,19 +15,19 @@
    <top>
       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="myMinimumMovesLabel" text="Minimum Moves: ">
+            <Label fx:id="myMinimumMovesLabel">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Label fx:id="myMovesLabel" text="Moves: ">
+            <Label fx:id="myMovesLabel">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <ProgressBar fx:id="myProgressBar" prefWidth="300.0" progress="0.0" />
+            <ProgressBar fx:id="myProgressBar" prefWidth="300.0" progress="0.0" style="-fx-accent: black;" />
             <Separator layoutX="242.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
             <Spinner fx:id="myLevelSpinner" editable="true" prefWidth="80.0" />
             <Separator layoutX="76.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
@@ -43,7 +43,10 @@
       <HBox fx:id="myTowersHBox" alignment="BOTTOM_CENTER" fillHeight="false" spacing="30.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
-         </BorderPane.margin></HBox>
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="50.0" />
+         </padding></HBox>
    </center>
    <bottom>
       <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">
