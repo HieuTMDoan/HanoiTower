@@ -16,6 +16,8 @@ public class HanoiTower {
 
     public static final double DEFAULT_PROGRESS = 0.0;
 
+    public static final int DEFAULT_MOVES = 0;
+
     private static final String DEFAULT_NAME = "N/A";
 
     public static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
@@ -61,6 +63,7 @@ public class HanoiTower {
 
     public void startGame(final int theLevel, double theProgress, final Mode theMode) {
         setLevel(theLevel);
+        setMoves(DEFAULT_MOVES);
         setProgress(theProgress);
         setMode(theMode);
         setTowers();
@@ -120,6 +123,17 @@ public class HanoiTower {
 
     public void restartGame(final int theLevel) {
         setLevel(theLevel);
+        setMoves(DEFAULT_MOVES);
+        setProgress(DEFAULT_PROGRESS);
+        setTowers();
+        if (myMode == TIMED_MODE) {
+            startTimer();
+        }
+    }
+
+    public void restartGame() {
+        setLevel(myLevel);
+        setMoves(DEFAULT_MOVES);
         setProgress(DEFAULT_PROGRESS);
         setTowers();
         if (myMode == TIMED_MODE) {
@@ -164,6 +178,14 @@ public class HanoiTower {
             myLevel = MAXIMUM_LEVEL;
         } else {
             myLevel = Math.max(theLevel, DEFAULT_LEVEL);
+        }
+    }
+
+    public void setMoves(final int theMoves) {
+        if (theMoves < DEFAULT_MOVES) {
+            throw new IllegalArgumentException("Initial moves can't be smaller than 0!");
+        } else {
+            myMoves = theMoves;
         }
     }
 

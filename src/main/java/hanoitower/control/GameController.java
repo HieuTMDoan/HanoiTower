@@ -7,9 +7,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -94,11 +94,8 @@ public class GameController implements Initializable {
         });
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
-            try {
-                ViewManager.setView(theMouseEvent);
-            } catch (IOException e) {
-                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
-            }
+            HanoiTower.getInstance().restartGame();
+            resetGame();
         });
     }
 
@@ -146,6 +143,13 @@ public class GameController implements Initializable {
     }
 
     @FXML
+    private void removeAllDisks() {
+        myLeftTower.removeAllDisks();
+        myMiddleTower.removeAllDisks();
+        myRightTower.removeAllDisks();
+    }
+
+    @FXML
     private DiskGUI createDisk(final int theLevel) {
         int randomR = new Random().nextInt(255);
         int randomG = new Random().nextInt(255);
@@ -171,8 +175,22 @@ public class GameController implements Initializable {
     @FXML
     private void showLevel() {
         int level = HanoiTower.getInstance().getLevel();
+
         myLevelFactory.setValue(level);
         myLevelSpinner.setValueFactory(myLevelFactory);
+        myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {
+            HanoiTower.getInstance().restartGame(theNewValue);
+            resetGame();
+        });
+    }
+
+    @FXML
+    private void resetGame() {
+        removeAllDisks();
+        showDisks();
+        showProgress();
+        showMoves();
+        showMinimumMoves();
     }
 
     @Override

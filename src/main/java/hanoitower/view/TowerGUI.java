@@ -43,4 +43,9 @@ public class TowerGUI extends StackPane {
     public void addAllDisks(final DiskGUI... theDisks) {
         Arrays.stream(theDisks).forEach(this::addDisk);
     }
+
+    public void removeAllDisks() {
+        ObservableList<Node> childrenNodes = this.getChildren();
+        childrenNodes.removeIf(DiskGUI.class::isInstance);
+    }
 }
