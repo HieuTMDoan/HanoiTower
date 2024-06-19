@@ -32,7 +32,15 @@ public enum PCS {
 
     DECREMENT_TIME,
 
-    RESTART_TIME;
+    RESTART_TIME,
+
+    UPDATE_LEVEL,
+
+    UPDATE_MODE,
+
+    UPDATE_NAME,
+
+    UPDATE_TOWERS;
 
     private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PCS.class);
 

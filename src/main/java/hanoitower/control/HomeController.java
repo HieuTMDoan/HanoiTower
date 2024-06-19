@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
+import static hanoitower.control.ViewManager.*;
+
 public class HomeController {
     @FXML
     public Button myNewButton;
@@ -21,7 +23,7 @@ public class HomeController {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
 
@@ -29,7 +31,7 @@ public class HomeController {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
 
@@ -37,7 +39,7 @@ public class HomeController {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
     }

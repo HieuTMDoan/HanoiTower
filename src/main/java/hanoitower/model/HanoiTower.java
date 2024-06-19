@@ -118,8 +118,13 @@ public class HanoiTower {
         resumeTimer();
     }
 
-    public void restartGame() {
-        startGame(myLevel, myProgress, myMode);
+    public void restartGame(final int theLevel) {
+        setLevel(theLevel);
+        setProgress(DEFAULT_PROGRESS);
+        setTowers();
+        if (myMode == TIMED_MODE) {
+            startTimer();
+        }
     }
 
     public void endGame() {

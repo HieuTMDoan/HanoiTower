@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static hanoitower.view.DiskGUI.*;
 

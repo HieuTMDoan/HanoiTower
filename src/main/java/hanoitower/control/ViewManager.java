@@ -1,6 +1,7 @@
 package hanoitower.control;
 
 import hanoitower.Main;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class ViewManager {
 
     @FXML
     private static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
+
+    public static final String VIEW_SWITCH_ERROR_MESSAGE = "Unable to switch view!";
 
     @FXML
     private static FXMLLoader myFXMLLoader;
@@ -101,12 +105,34 @@ public class ViewManager {
         else if (theInputEvent instanceof KeyEvent) {
             KeyCode viewKeyCode = ((KeyEvent) theInputEvent).getCode();
 
-            if (viewKeyCode == KeyCode.ENTER) {
-                myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
-                myPopUpStage.close();
-                myMainStage.close();
-                initializeViewAndStage(theInputEvent);
-                loadMainStage(myMainStage, myCurrentView);
+            switch (viewKeyCode) {
+                case ENTER -> {
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
+                    myPopUpStage.close();
+                    myMainStage.close();
+                    initializeViewAndStage(theInputEvent);
+                    loadMainStage(myMainStage, myCurrentView);
+                }
+                case LEFT, RIGHT -> {
+
+                }
+                case ESCAPE -> {
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Exit")));
+                    initializePopUpViewAndStage();
+                    loadPopUpStage();
+                }
+                case R -> {
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
+                    myPreviousView = myCurrentView;
+                    initializeViewAndStage(theInputEvent);
+                    loadMainStage(myMainStage, myCurrentView);
+                }
+                case H -> {
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Help")));
+                    myPreviousView = myCurrentView;
+                    initializeViewAndStage(theInputEvent);
+                    loadMainStage(myMainStage, myCurrentView);
+                }
             }
         }
     }
@@ -129,6 +155,7 @@ public class ViewManager {
         myMainStage.getIcons().add(ICON);
         myMainStage.setTitle(TITLE);
         myMainStage.setResizable(false);
+        myMainStage.setOnCloseRequest((final WindowEvent theWindowEvent) -> System.exit(0));
         myMainStage.setScene(myCurrentView);
 
         myMainStage.show();

@@ -7,7 +7,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -17,7 +19,9 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
-import static hanoitower.model.HanoiTower.*;
+import static hanoitower.control.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
+import static hanoitower.model.HanoiTower.DEFAULT_LEVEL;
+import static hanoitower.model.HanoiTower.MAXIMUM_LEVEL;
 
 public class GameController implements Initializable {
     private final static String MINIMUM_MOVES_LABEL_PREFIX = "Minimum Moves: ";
@@ -60,17 +64,24 @@ public class GameController implements Initializable {
     @FXML
     private Label myTimerLabel;
 
+//    @FXML
+//    private final Scene myGameScene = myTowersHBox.getScene();
+
+    @FXML
     private final DoubleProperty myProgressProperty = new SimpleDoubleProperty();
 
+    @FXML
     private final SpinnerValueFactory<Integer> myLevelFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(DEFAULT_LEVEL, MAXIMUM_LEVEL);
 
     @FXML
     private void attachEvents() {
+//        myGameScene.setOnKeyPressed(this::handleKeyPress);
+
         myExitButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                System.out.println("Unable to switch view!");
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
 
@@ -78,7 +89,7 @@ public class GameController implements Initializable {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                System.out.println("Unable to switch view!");
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
 
@@ -86,9 +97,30 @@ public class GameController implements Initializable {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                System.out.println("Unable to switch view!");
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
+    }
+
+    private void handleKeyPress(final KeyEvent theKeyEvent) {
+        switch (theKeyEvent.getCode()) {
+            case LEFT, RIGHT -> {
+
+            }
+            case ESCAPE, R, H -> {
+                try {
+                    ViewManager.setView(theKeyEvent);
+                } catch (IOException e) {
+                    System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+                }
+            }
+            case PAUSE -> {
+                HanoiTower.getInstance().pauseGame();
+            }
+            case PLAY -> {
+                HanoiTower.getInstance().resumeGame();
+            }
+        }
     }
 
     @FXML
@@ -109,24 +141,24 @@ public class GameController implements Initializable {
     @FXML
     private void showDisks() {
         int level = HanoiTower.getInstance().getLevel();
-        DiskGUI[] disks = IntStream.range(0, level).mapToObj(GameController::createDisk).toArray(DiskGUI[]::new);
-
+        DiskGUI[] disks = IntStream.iterate(level - 1, i -> i >= 0, i -> i - 1).mapToObj(this::createDisk).toArray(DiskGUI[]::new);
         myLeftTower.addAllDisks(disks);
     }
 
-    private static DiskGUI createDisk(int i) {
+    @FXML
+    private DiskGUI createDisk(final int theLevel) {
         int randomR = new Random().nextInt(255);
         int randomG = new Random().nextInt(255);
         int randomB = new Random().nextInt(255);
         Color randomColor = Color.rgb(randomR, randomG, randomB);
 
-        return new DiskGUI(i, randomColor);
+        return new DiskGUI(theLevel, randomColor);
     }
 
     @FXML
     private void showMinimumMoves() {
         int level = HanoiTower.getInstance().getLevel();
-        int minimumMoves = HanoiTower.MINIMUM_MOVES[level-3];
+        int minimumMoves = HanoiTower.MINIMUM_MOVES[level-DEFAULT_LEVEL];
         myMinimumMovesLabel.setText(MINIMUM_MOVES_LABEL_PREFIX + minimumMoves);
     }
 
@@ -145,7 +177,6 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        HanoiTower.getInstance();
         showTowers();
         showDisks();
         showLevel();

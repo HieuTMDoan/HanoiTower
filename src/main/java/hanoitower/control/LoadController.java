@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static hanoitower.control.ViewManager.*;
 import static hanoitower.model.HanoiTower.Mode;
 
 public class LoadController implements Initializable {
@@ -43,7 +44,7 @@ public class LoadController implements Initializable {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                System.out.println("Unable to switch view!");
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
     }

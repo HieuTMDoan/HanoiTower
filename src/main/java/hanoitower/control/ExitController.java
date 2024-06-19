@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
+import static hanoitower.control.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
+
 public class ExitController {
     @FXML
     private Button mySaveButton;
@@ -18,7 +20,7 @@ public class ExitController {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
 
@@ -26,7 +28,7 @@ public class ExitController {
             try {
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
     }

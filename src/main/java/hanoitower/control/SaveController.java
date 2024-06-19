@@ -7,6 +7,8 @@ import hanoitower.model.HanoiTower;
 
 import java.io.IOException;
 
+import static hanoitower.control.ViewManager.*;
+
 public class SaveController {
     @FXML
     private TextField myNameTextField;
@@ -23,7 +25,7 @@ public class SaveController {
 
                     ViewManager.setView(theKeyEvent);
                 } catch (IOException e) {
-                    System.out.println("Unable to switch view!");
+                    System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
                 }
             }
         });
