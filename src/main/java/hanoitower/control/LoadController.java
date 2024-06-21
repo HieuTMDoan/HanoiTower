@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import hanoitower.model.HanoiTower;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,8 +17,13 @@ import java.util.ResourceBundle;
 
 import static hanoitower.control.ViewManager.*;
 import static hanoitower.model.HanoiTower.Mode;
+import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.input.KeyCode.BACK_SPACE;
 
 public class LoadController implements Initializable {
+    @FXML
+    public AnchorPane myLoadAnchorPane;
+
     @FXML
     private TableColumn<HanoiTower, String> myNameColumn;
 
@@ -40,6 +46,16 @@ public class LoadController implements Initializable {
 
     @FXML
     private void attachEvents() {
+         myLoadAnchorPane.setOnKeyPressed(theKeyEvent -> {
+            try {
+                if (theKeyEvent.getCode() == BACK_SPACE) {
+                    ViewManager.setView(theKeyEvent);
+                }
+            } catch (IOException e) {
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+            }
+        });
+
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);

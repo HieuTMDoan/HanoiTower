@@ -58,14 +58,14 @@ public class HanoiTower {
     }
 
     private HanoiTower() {
-        startGame(DEFAULT_LEVEL, DEFAULT_PROGRESS, DEFAULT_MODE);
+        startGame();
     }
 
-    public void startGame(final int theLevel, double theProgress, final Mode theMode) {
-        setLevel(theLevel);
+    public void startGame() {
+        setLevel(DEFAULT_LEVEL);
         setMoves(DEFAULT_MOVES);
-        setProgress(theProgress);
-        setMode(theMode);
+        setProgress(DEFAULT_PROGRESS);
+        setMode(DEFAULT_MODE);
         setTowers();
     }
 
@@ -123,16 +123,6 @@ public class HanoiTower {
 
     public void restartGame(final int theLevel) {
         setLevel(theLevel);
-        setMoves(DEFAULT_MOVES);
-        setProgress(DEFAULT_PROGRESS);
-        setTowers();
-        if (myMode == TIMED_MODE) {
-            startTimer();
-        }
-    }
-
-    public void restartGame() {
-        setLevel(myLevel);
         setMoves(DEFAULT_MOVES);
         setProgress(DEFAULT_PROGRESS);
         setTowers();

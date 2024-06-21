@@ -8,8 +8,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -22,11 +23,15 @@ import java.util.stream.IntStream;
 import static hanoitower.control.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 import static hanoitower.model.HanoiTower.DEFAULT_LEVEL;
 import static hanoitower.model.HanoiTower.MAXIMUM_LEVEL;
+import static javafx.scene.input.KeyCode.*;
 
 public class GameController implements Initializable {
     private final static String MINIMUM_MOVES_LABEL_PREFIX = "Minimum Moves: ";
 
     private final static String MOVES_LABEL_PREFIX = "Moves: ";
+
+    @FXML
+    public BorderPane myGameBorderPane;
 
     @FXML
     private HBox myTowersHBox;
@@ -64,9 +69,6 @@ public class GameController implements Initializable {
     @FXML
     private Label myTimerLabel;
 
-//    @FXML
-//    private final Scene myGameScene = myTowersHBox.getScene();
-
     @FXML
     private final DoubleProperty myProgressProperty = new SimpleDoubleProperty();
 
@@ -75,7 +77,18 @@ public class GameController implements Initializable {
 
     @FXML
     private void attachEvents() {
-//        myGameScene.setOnKeyPressed(this::handleKeyPress);
+        myGameBorderPane.setOnKeyPressed(theKeyEvent -> {
+            try {
+                if (theKeyEvent.getCode() == ESCAPE
+                        || theKeyEvent.getCode() == H
+                        || theKeyEvent.getCode() == R
+                        || theKeyEvent.getCode() == BACK_SPACE) {
+                    ViewManager.setView(theKeyEvent);
+                }
+            } catch (IOException e) {
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+            }
+        });
 
         myExitButton.setOnMouseClicked(theMouseEvent -> {
             try {
@@ -94,30 +107,9 @@ public class GameController implements Initializable {
         });
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
-            HanoiTower.getInstance().restartGame();
-            resetGame();
+            HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
+            this.restartGame();
         });
-    }
-
-    private void handleKeyPress(final KeyEvent theKeyEvent) {
-        switch (theKeyEvent.getCode()) {
-            case LEFT, RIGHT -> {
-
-            }
-            case ESCAPE, R, H -> {
-                try {
-                    ViewManager.setView(theKeyEvent);
-                } catch (IOException e) {
-                    System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
-                }
-            }
-            case PAUSE -> {
-                HanoiTower.getInstance().pauseGame();
-            }
-            case PLAY -> {
-                HanoiTower.getInstance().resumeGame();
-            }
-        }
     }
 
     @FXML
@@ -143,7 +135,7 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void removeAllDisks() {
+    private void removeDisks() {
         myLeftTower.removeAllDisks();
         myMiddleTower.removeAllDisks();
         myRightTower.removeAllDisks();
@@ -180,13 +172,13 @@ public class GameController implements Initializable {
         myLevelSpinner.setValueFactory(myLevelFactory);
         myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {
             HanoiTower.getInstance().restartGame(theNewValue);
-            resetGame();
+            this.restartGame();
         });
     }
 
     @FXML
-    private void resetGame() {
-        removeAllDisks();
+    private void restartGame() {
+        removeDisks();
         showDisks();
         showProgress();
         showMoves();
@@ -195,6 +187,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        HanoiTower.getInstance().startGame();
         showTowers();
         showDisks();
         showLevel();

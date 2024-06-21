@@ -1,10 +1,8 @@
 package hanoitower.control;
 
 import hanoitower.Main;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -67,7 +65,6 @@ public class ViewManager {
             switch (viewKeyWord) {
                 case "Back" -> {
                     myCurrentView = myPreviousView;
-                    myMainStage = (Stage) ((Node) theInputEvent.getSource()).getScene().getWindow();
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 case "Restart" -> {
@@ -113,9 +110,6 @@ public class ViewManager {
                     initializeViewAndStage(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
-                case LEFT, RIGHT -> {
-
-                }
                 case ESCAPE -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Exit")));
                     initializePopUpViewAndStage();
@@ -133,6 +127,10 @@ public class ViewManager {
                     initializeViewAndStage(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
+                case BACK_SPACE -> {
+                    myCurrentView = myPreviousView;
+                    loadMainStage(myMainStage, myCurrentView);
+                }
             }
         }
     }
@@ -141,7 +139,6 @@ public class ViewManager {
     private static void initializeViewAndStage(final InputEvent theInputEvent) throws IOException {
         Parent load = myFXMLLoader.load();
         myCurrentView = new Scene(load);
-        myMainStage = (Stage) ((Node) theInputEvent.getSource()).getScene().getWindow();
     }
 
     @FXML
@@ -159,6 +156,7 @@ public class ViewManager {
         myMainStage.setScene(myCurrentView);
 
         myMainStage.show();
+        myCurrentView.getRoot().requestFocus();
     }
 
     @FXML
@@ -178,6 +176,7 @@ public class ViewManager {
         myPopUpStage.setScene(myPopUpView);
 
         myPopUpStage.show();
+        myPopUpView.getRoot().requestFocus();
     }
 
     private static String getViewFile(final String theViewKeyword) {

@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<?import hanoitower.view.TowerGUI?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.GameController">
+<BorderPane fx:id="myGameBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" onKeyPressed="#attachEvents" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.GameController">
    <top>
       <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,7 +29,7 @@
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <ProgressBar fx:id="myProgressBar" prefWidth="300.0" progress="0.0" style="-fx-accent: black;" />
             <Separator layoutX="242.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
-            <Spinner fx:id="myLevelSpinner" editable="true" prefWidth="80.0" />
+            <Spinner fx:id="myLevelSpinner" prefWidth="80.0" />
             <Separator layoutX="76.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
             <Label fx:id="myTimerLabel">
                <font>
