@@ -67,12 +67,6 @@ public class ViewManager {
                     myCurrentView = myPreviousView;
                     loadMainStage(myMainStage, myCurrentView);
                 }
-                case "Restart" -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
-                    myPreviousView = myCurrentView;
-                    initializeViewAndStage(theInputEvent);
-                    loadMainStage(myMainStage, myCurrentView);
-                }
                 case "Exit" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
                     initializePopUpViewAndStage();
@@ -114,12 +108,6 @@ public class ViewManager {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Exit")));
                     initializePopUpViewAndStage();
                     loadPopUpStage();
-                }
-                case R -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(GAME_VIEW_PATH));
-                    myPreviousView = myCurrentView;
-                    initializeViewAndStage(theInputEvent);
-                    loadMainStage(myMainStage, myCurrentView);
                 }
                 case H -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Help")));

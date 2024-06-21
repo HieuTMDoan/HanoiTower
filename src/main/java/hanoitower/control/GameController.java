@@ -7,9 +7,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -31,7 +30,10 @@ public class GameController implements Initializable {
     private final static String MOVES_LABEL_PREFIX = "Moves: ";
 
     @FXML
-    public BorderPane myGameBorderPane;
+    private Scene myGameScene;
+
+    @FXML
+    private BorderPane myGameBorderPane;
 
     @FXML
     private HBox myTowersHBox;
@@ -77,13 +79,14 @@ public class GameController implements Initializable {
 
     @FXML
     private void attachEvents() {
-        myGameBorderPane.setOnKeyPressed(theKeyEvent -> {
+        myGameScene.setOnKeyPressed(theKeyEvent -> {
             try {
-                if (theKeyEvent.getCode() == ESCAPE
-                        || theKeyEvent.getCode() == H
-                        || theKeyEvent.getCode() == R
-                        || theKeyEvent.getCode() == BACK_SPACE) {
+                if (theKeyEvent.getCode() == ESCAPE || theKeyEvent.getCode() == H) {
                     ViewManager.setView(theKeyEvent);
+                }
+                else if (theKeyEvent.getCode() == R) {
+                    HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
+                    this.restartGame();
                 }
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);

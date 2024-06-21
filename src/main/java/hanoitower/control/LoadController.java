@@ -17,12 +17,11 @@ import java.util.ResourceBundle;
 
 import static hanoitower.control.ViewManager.*;
 import static hanoitower.model.HanoiTower.Mode;
-import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyCode.BACK_SPACE;
 
 public class LoadController implements Initializable {
     @FXML
-    public AnchorPane myLoadAnchorPane;
+    private AnchorPane myLoadAnchorPane;
 
     @FXML
     private TableColumn<HanoiTower, String> myNameColumn;
@@ -46,7 +45,7 @@ public class LoadController implements Initializable {
 
     @FXML
     private void attachEvents() {
-         myLoadAnchorPane.setOnKeyPressed(theKeyEvent -> {
+         myLoadAnchorPane.getScene().setOnKeyPressed(theKeyEvent -> {
             try {
                 if (theKeyEvent.getCode() == BACK_SPACE) {
                     ViewManager.setView(theKeyEvent);
