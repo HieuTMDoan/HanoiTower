@@ -48,7 +48,7 @@ public class HanoiTower {
 
     private Tower myRight;
 
-    private Disk myPopDisk;
+    private Disk myPoppedDisk;
 
     public static HanoiTower getInstance() {
         if (SINGLE_INSTANCE == null) {
@@ -70,41 +70,41 @@ public class HanoiTower {
     }
 
     public void popDisk(final Tower theTower) {
-        if (myPopDisk != null) {
+        if (myPoppedDisk != null) {
             return;
         }
 
         if (myLeft.equals(theTower)) {
-            myPopDisk = myLeft.popDisk();
+            myPoppedDisk = myLeft.popDisk();
         } 
         else if (myMiddle.equals(theTower)) {
-            myPopDisk = myMiddle.popDisk();
+            myPoppedDisk = myMiddle.popDisk();
         } 
         else {
-            myPopDisk = myRight.popDisk();
+            myPoppedDisk = myRight.popDisk();
         }
         updateGame();
     }
 
     public void pushDisk(final Tower theTower) {
-        if (myPopDisk == null) {
+        if (myPoppedDisk == null) {
             return;
         }
 
         boolean canPush;
         if (myLeft.equals(theTower)) {
-            canPush = myLeft.canPush(myPopDisk);
-            myLeft.pushDisk(myPopDisk);
+            canPush = myLeft.canPush(myPoppedDisk);
+            myLeft.pushDisk(myPoppedDisk);
         } 
         else if (myMiddle.equals(theTower)) {
-            canPush = myMiddle.canPush(myPopDisk);
-            myMiddle.pushDisk(myPopDisk);
+            canPush = myMiddle.canPush(myPoppedDisk);
+            myMiddle.pushDisk(myPoppedDisk);
         } 
         else {
-            canPush = myRight.canPush(myPopDisk);
-            myRight.pushDisk(myPopDisk);
+            canPush = myRight.canPush(myPoppedDisk);
+            myRight.pushDisk(myPoppedDisk);
         }
-        myPopDisk = canPush ? null : myPopDisk;
+        myPoppedDisk = canPush ? null : myPoppedDisk;
         updateGame();
     }
 

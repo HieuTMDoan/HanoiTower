@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.ExitController">
    <children>
-      <Label layoutX="55.0" layoutY="62.0" text="Do you want to save the game?" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="60.0">
+      <Label focusTraversable="false" layoutX="55.0" layoutY="62.0" text="Do you want to save the game?" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="30.0" />
          </font>

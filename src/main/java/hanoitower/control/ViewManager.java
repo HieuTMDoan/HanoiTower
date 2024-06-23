@@ -144,7 +144,6 @@ public class ViewManager {
         myMainStage.setScene(myCurrentView);
 
         myMainStage.show();
-        myCurrentView.getRoot().requestFocus();
     }
 
     @FXML
@@ -164,7 +163,6 @@ public class ViewManager {
         myPopUpStage.setScene(myPopUpView);
 
         myPopUpStage.show();
-        myPopUpView.getRoot().requestFocus();
     }
 
     private static String getViewFile(final String theViewKeyword) {
