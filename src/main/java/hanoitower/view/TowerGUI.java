@@ -24,7 +24,7 @@ public class TowerGUI extends StackPane {
 
     private static final int DEFAULT_CHILDREN_SIZE = 2;
 
-    public final ObservableList<Node> myChildrenNodes = this.getChildren();
+    private final ObservableList<Node> myChildrenNodes = this.getChildren();
 
     private DiskGUI myPoppedDisk;
 
@@ -38,36 +38,30 @@ public class TowerGUI extends StackPane {
 
         super.getChildren().addAll(myBase, myPole);
         super.setAlignment(Pos.BOTTOM_CENTER);
-        super.setFocusTraversable(true);
     }
 
     public void addDisk(final DiskGUI theDisk) {
-        double translateY = -BASE_HEIGHT * (this.getChildren().size() - 1);
-        theDisk.setTranslateY(translateY);
         myChildrenNodes.add(theDisk);
         myPoppedDisk = theDisk;
     }
 
     public DiskGUI popDisk() {
-        if (myChildrenNodes.size() > DEFAULT_CHILDREN_SIZE && !myPoppedDisk.isPopped()) {
-            double distanceToPeak = -POP_DISK_TRANSLATE_Y;
-            myPoppedDisk.setTranslateY(distanceToPeak);
-            myPoppedDisk.setPopped(true);
-            return myPoppedDisk;
-        }
-        return null;
+        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
+        myPoppedDisk.setPopped(true);
+        return myPoppedDisk;
     }
 
     public void pushDisk() {
-        if (myPoppedDisk.isPopped()) {
-            double translateY = -BASE_HEIGHT * (this.getDiskCount());
-            myPoppedDisk.setTranslateY(translateY);
-            myPoppedDisk.setPopped(false);
-        }
+        double translateY = -BASE_HEIGHT * (this.getDiskCount());
+        myPoppedDisk.setTranslateY(translateY);
+        myPoppedDisk.setPopped(false);
     }
 
     public void addAllDisks(final DiskGUI... theDisks) {
-        Arrays.stream(theDisks).forEach(this::addDisk);
+        Arrays.stream(theDisks).forEach(theDisk -> {
+            this.addDisk(theDisk);
+            this.pushDisk();
+        });
     }
 
     public void removeAllDisks() {
@@ -77,6 +71,7 @@ public class TowerGUI extends StackPane {
     public void removeDisk() {
         if (myChildrenNodes.size() > DEFAULT_CHILDREN_SIZE) {
             myChildrenNodes.remove(myPoppedDisk);
+            myPoppedDisk = (myChildrenNodes.size() > DEFAULT_CHILDREN_SIZE) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
         }
     }
 

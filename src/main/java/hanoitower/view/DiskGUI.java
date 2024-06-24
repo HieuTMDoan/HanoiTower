@@ -31,7 +31,7 @@ public class DiskGUI extends Rectangle {
         return myDiskID;
     }
 
-    public void setPopped(final boolean thePopped) {
+    void setPopped(final boolean thePopped) {
         myPopped = thePopped;
     }
 

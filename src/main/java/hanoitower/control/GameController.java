@@ -44,6 +44,9 @@ public class GameController implements Initializable {
     private TowerGUI myRightTower;
 
     @FXML
+    private TowerGUI myPreviousClickedTower;
+
+    @FXML
     private DiskGUI myPoppedDisk;
 
     @FXML
@@ -124,68 +127,60 @@ public class GameController implements Initializable {
     @FXML
     private void showTowers() {
         myLeftTower = new TowerGUI();
-        myLeftTower.setOnMouseClicked(theMouseEvent -> {
-            myLeftTower.requestFocus();
-            DiskGUI poppedDisk = (DiskGUI) myLeftTower.getChildren().get(myLeftTower.getChildren().size()-1);
-            if (!poppedDisk.isPopped()) {
-                myPoppedDisk = myLeftTower.popDisk();
-            } else {
-                myLeftTower.pushDisk();
-            }
-        });
-        myLeftTower.setOnKeyPressed(theKeyEvent -> {
-            if (theKeyEvent.getCode() == RIGHT && myPoppedDisk != null) {
-                myLeftTower.removeDisk();
-                myPoppedDisk.setPopped(false);
-                myMiddleTower.addDisk(myPoppedDisk);
-                myMiddleTower.popDisk();
-            }
-        });
+        myLeftTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myLeftTower));
 
         myMiddleTower = new TowerGUI();
-        myMiddleTower.setOnMouseClicked(theMouseEvent -> {
-            myMiddleTower.requestFocus();
-            DiskGUI poppedDisk = (DiskGUI) myMiddleTower.getChildren().get(myMiddleTower.getChildren().size()-1);
-            if (!poppedDisk.isPopped()) {
-                myPoppedDisk = myMiddleTower.popDisk();
-            } else {
-                myMiddleTower.pushDisk();
-            }
-        });
-        myMiddleTower.setOnKeyPressed(theKeyEvent -> {
-            if (theKeyEvent.getCode() == RIGHT && myPoppedDisk != null) {
-                myMiddleTower.removeDisk();
-                myPoppedDisk.setPopped(false);
-                myRightTower.addDisk(myPoppedDisk);
-                myRightTower.popDisk();
-            } else if (theKeyEvent.getCode() == LEFT && myPoppedDisk != null) {
-                myMiddleTower.removeDisk();
-                myPoppedDisk.setPopped(false);
-                myLeftTower.addDisk(myPoppedDisk);
-                myLeftTower.popDisk();
-            }
-        });
+        myMiddleTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myMiddleTower));
 
         myRightTower = new TowerGUI();
-        myRightTower.setOnMouseClicked(theMouseEvent -> {
-            myRightTower.requestFocus();
-            DiskGUI poppedDisk = (DiskGUI) myRightTower.getChildren().get(myRightTower.getChildren().size()-1);
-            if (!poppedDisk.isPopped()) {
-                myPoppedDisk = myRightTower.popDisk();
-            } else {
-                myRightTower.pushDisk();
-            }
-        });
-        myRightTower.setOnKeyPressed(theKeyEvent -> {
-            if (theKeyEvent.getCode() == LEFT && myPoppedDisk.isPopped()) {
-                myRightTower.removeDisk();
-                myPoppedDisk.setPopped(false);
-                myMiddleTower.addDisk(myPoppedDisk);
-                myMiddleTower.popDisk();
-            }
-        });
+        myRightTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myRightTower));
 
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
+    }
+
+    @FXML
+    private void handlePoppedDisk(final TowerGUI theCurrentClickedTower) {
+        if (myPreviousClickedTower != null) {   //if a tower is already clicked before
+            if (myPreviousClickedTower.equals(theCurrentClickedTower)) {    //if clicks the same tower as before
+                if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+                    DiskGUI topDisk = (DiskGUI) theCurrentClickedTower.getChildren().get(theCurrentClickedTower.getChildren().size() - 1);
+
+                    if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
+                        myPoppedDisk = theCurrentClickedTower.popDisk();
+                    } else {    //if the top disk of the clicked tower is not popped
+                        theCurrentClickedTower.pushDisk();
+                        myPoppedDisk = null;
+                    }
+                }
+            } else {    //else if clicks a different tower than before
+                if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+                    if (myPoppedDisk != null && myPoppedDisk.isPopped()) {  //if the popped disk of the clicked tower is popped and not null
+                        myPreviousClickedTower.removeDisk();
+                        theCurrentClickedTower.addDisk(myPoppedDisk);
+                    } else {    //else if the popped disk of the clicked tower is null or not popped
+                        myPoppedDisk = theCurrentClickedTower.popDisk();
+                    }
+                } else {    //else if the clicked tower is empty
+                    if (myPoppedDisk != null && myPoppedDisk.isPopped()) {  //if the popped disk of the clicked tower is popped and not null
+                        myPreviousClickedTower.removeDisk();
+                        theCurrentClickedTower.addDisk(myPoppedDisk);
+                    }
+                }
+            }
+        } else {    //if no towers are clicked before
+            if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+                DiskGUI topDisk = (DiskGUI) theCurrentClickedTower.getChildren().get(theCurrentClickedTower.getChildren().size() - 1);
+
+                if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
+                    myPoppedDisk = theCurrentClickedTower.popDisk();
+                } else {    //if the top disk of the clicked tower is already popped
+                    theCurrentClickedTower.pushDisk();
+                    myPoppedDisk = null;
+                }
+            }
+        }
+
+        myPreviousClickedTower = theCurrentClickedTower;
     }
 
     @FXML
@@ -196,10 +191,11 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void removeAllDisks() {
+    private void resetTowers() {
         myLeftTower.removeAllDisks();
         myMiddleTower.removeAllDisks();
         myRightTower.removeAllDisks();
+        myPreviousClickedTower = null;
     }
 
     @FXML
@@ -239,7 +235,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void restartGame() {
-        removeAllDisks();
+        resetTowers();
         showDisks();
         showProgress();
         showMoves();
