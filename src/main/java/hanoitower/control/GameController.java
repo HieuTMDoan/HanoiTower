@@ -127,13 +127,22 @@ public class GameController implements Initializable {
     @FXML
     private void showTowers() {
         myLeftTower = new TowerGUI();
-        myLeftTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myLeftTower));
+        myLeftTower.setOnMouseClicked(theMouseEvent -> {
+            handlePoppedDisk(myLeftTower);
+            myLeftTower.requestFocus();
+        });
 
         myMiddleTower = new TowerGUI();
-        myMiddleTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myMiddleTower));
+        myMiddleTower.setOnMouseClicked(theMouseEvent -> {
+            handlePoppedDisk(myMiddleTower);
+            myMiddleTower.requestFocus();
+        });
 
         myRightTower = new TowerGUI();
-        myRightTower.setOnMouseClicked(theMouseEvent -> handlePoppedDisk(myRightTower));
+        myRightTower.setOnMouseClicked(theMouseEvent -> {
+            handlePoppedDisk(myRightTower);
+            myRightTower.requestFocus();
+        });
 
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
     }
@@ -143,8 +152,7 @@ public class GameController implements Initializable {
         if (myPreviousClickedTower != null) {   //if a tower is already clicked before
             if (myPreviousClickedTower.equals(theCurrentClickedTower)) {    //if clicks the same tower as before
                 if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
-                    DiskGUI topDisk = (DiskGUI) theCurrentClickedTower.getChildren().get(theCurrentClickedTower.getChildren().size() - 1);
-
+                    DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                     if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                         myPoppedDisk = theCurrentClickedTower.popDisk();
                     } else {    //if the top disk of the clicked tower is not popped
@@ -169,8 +177,7 @@ public class GameController implements Initializable {
             }
         } else {    //if no towers are clicked before
             if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
-                DiskGUI topDisk = (DiskGUI) theCurrentClickedTower.getChildren().get(theCurrentClickedTower.getChildren().size() - 1);
-
+                DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                 if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                     myPoppedDisk = theCurrentClickedTower.popDisk();
                 } else {    //if the top disk of the clicked tower is already popped

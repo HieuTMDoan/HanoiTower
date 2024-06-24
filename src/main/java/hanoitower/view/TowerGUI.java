@@ -45,18 +45,6 @@ public class TowerGUI extends StackPane {
         myPoppedDisk = theDisk;
     }
 
-    public DiskGUI popDisk() {
-        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
-        myPoppedDisk.setPopped(true);
-        return myPoppedDisk;
-    }
-
-    public void pushDisk() {
-        double translateY = -BASE_HEIGHT * (this.getDiskCount());
-        myPoppedDisk.setTranslateY(translateY);
-        myPoppedDisk.setPopped(false);
-    }
-
     public void addAllDisks(final DiskGUI... theDisks) {
         Arrays.stream(theDisks).forEach(theDisk -> {
             this.addDisk(theDisk);
@@ -69,10 +57,26 @@ public class TowerGUI extends StackPane {
     }
 
     public void removeDisk() {
-        if (myChildrenNodes.size() > DEFAULT_CHILDREN_SIZE) {
+        if (this.getDiskCount() != 0) {
             myChildrenNodes.remove(myPoppedDisk);
-            myPoppedDisk = (myChildrenNodes.size() > DEFAULT_CHILDREN_SIZE) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+            myPoppedDisk = (this.getDiskCount() != 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
         }
+    }
+
+    public DiskGUI peekDisk() {
+        return (this.getDiskCount() != 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+    }
+
+    public DiskGUI popDisk() {
+        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
+        myPoppedDisk.setPopped(true);
+        return myPoppedDisk;
+    }
+
+    public void pushDisk() {
+        double translateY = -BASE_HEIGHT * (this.getDiskCount());
+        myPoppedDisk.setTranslateY(translateY);
+        myPoppedDisk.setPopped(false);
     }
 
     public int getDiskCount() {
