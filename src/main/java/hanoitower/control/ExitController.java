@@ -1,11 +1,12 @@
 package hanoitower.control;
 
+import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-import static hanoitower.control.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
+import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 
 public class ExitController {
     @FXML

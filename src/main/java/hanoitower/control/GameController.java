@@ -1,6 +1,7 @@
 package hanoitower.control;
 
 import hanoitower.model.HanoiTower;
+import hanoitower.utilties.ViewManager;
 import hanoitower.view.DiskGUI;
 import hanoitower.view.TowerGUI;
 import javafx.beans.property.DoubleProperty;
@@ -18,7 +19,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
-import static hanoitower.control.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
+import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 import static hanoitower.model.HanoiTower.DEFAULT_LEVEL;
 import static hanoitower.model.HanoiTower.MAXIMUM_LEVEL;
 import static javafx.scene.input.KeyCode.*;

@@ -1,4 +1,4 @@
-package hanoitower.control;
+package hanoitower.utilties;
 
 import hanoitower.Main;
 import javafx.fxml.FXML;

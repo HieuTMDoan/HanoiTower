@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.ViewManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static hanoitower.control.ViewManager.*;
+import static hanoitower.utilties.ViewManager.*;
 import static hanoitower.model.HanoiTower.Mode;
 import static javafx.scene.input.KeyCode.BACK_SPACE;
 

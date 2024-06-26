@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -7,7 +8,7 @@ import hanoitower.model.HanoiTower;
 
 import java.io.IOException;
 
-import static hanoitower.control.ViewManager.*;
+import static hanoitower.utilties.ViewManager.*;
 
 public class SaveController {
     @FXML
