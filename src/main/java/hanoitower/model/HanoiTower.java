@@ -58,7 +58,6 @@ public class HanoiTower {
     }
 
     private HanoiTower() {
-        startGame();
     }
 
     public void startGame() {

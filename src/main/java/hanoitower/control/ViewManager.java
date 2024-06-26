@@ -3,7 +3,6 @@ package hanoitower.control;
 import hanoitower.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,7 +34,7 @@ public class ViewManager {
     private static final Rectangle2D VISIBLE_WINDOW_DIMENSION = Screen.getPrimary().getVisualBounds();
 
     @FXML
-    private static final Image ICON_IMAGE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
+    private static final Image ICON_IMAGE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/image/game-logo.png")));
 
     public static final String VIEW_SWITCH_ERROR_MESSAGE = "Unable to switch view!";
 

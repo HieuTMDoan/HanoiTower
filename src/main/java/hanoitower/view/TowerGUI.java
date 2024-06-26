@@ -28,14 +28,13 @@ public class TowerGUI extends StackPane {
 
     private static final int DEFAULT_CHILDREN_SIZE = 2;
 
+    public static final Duration TRANSITION_DURATION = Duration.seconds(0.5);
+
     @FXML
     private final ObservableList<Node> myChildrenNodes = this.getChildren();
 
     @FXML
     private DiskGUI myPoppedDisk;
-
-    @FXML
-    private TranslateTransition myTranslateTransition;
 
     public TowerGUI() {
         Rectangle myBase = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
@@ -53,7 +52,7 @@ public class TowerGUI extends StackPane {
         myChildrenNodes.add(theDisk);
         myPoppedDisk = theDisk;
 
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), theDisk);
+        FadeTransition fadeIn = new FadeTransition(TRANSITION_DURATION, theDisk);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
@@ -76,7 +75,7 @@ public class TowerGUI extends StackPane {
 //            myPoppedDisk = (this.getDiskCount() > 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
 //        }
         if (this.getDiskCount() > 0) {
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), myPoppedDisk);
+            FadeTransition fadeOut = new FadeTransition(TRANSITION_DURATION, myPoppedDisk);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
             fadeOut.setOnFinished(event -> {
@@ -93,10 +92,10 @@ public class TowerGUI extends StackPane {
     }
 
     public DiskGUI popDisk() {
-        myTranslateTransition = new TranslateTransition(Duration.seconds(0.5), myPoppedDisk);
-        myTranslateTransition.setToY(-POP_DISK_TRANSLATE_Y);
-        myTranslateTransition.setOnFinished(event -> myPoppedDisk.setPopped(true));
-        myTranslateTransition.play();
+        TranslateTransition translateTransition = new TranslateTransition(TRANSITION_DURATION, myPoppedDisk);
+        translateTransition.setToY(-POP_DISK_TRANSLATE_Y);
+        translateTransition.setOnFinished(event -> myPoppedDisk.setPopped(true));
+        translateTransition.play();
 
         return myPoppedDisk;
 //        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
@@ -107,10 +106,10 @@ public class TowerGUI extends StackPane {
     public void pushDisk() {
         double translateY = -BASE_HEIGHT * (this.getDiskCount());
 
-        myTranslateTransition = new TranslateTransition(Duration.seconds(0.5), myPoppedDisk);
-        myTranslateTransition.setToY(translateY);
-        myTranslateTransition.setOnFinished(event -> myPoppedDisk.setPopped(false));
-        myTranslateTransition.play();
+        TranslateTransition translateTransition = new TranslateTransition(TRANSITION_DURATION, myPoppedDisk);
+        translateTransition.setToY(translateY);
+        translateTransition.setOnFinished(event -> myPoppedDisk.setPopped(false));
+        translateTransition.play();
 //        double translateY = -BASE_HEIGHT * (this.getDiskCount());
 //        myPoppedDisk.setTranslateY(translateY);
 //        myPoppedDisk.setPopped(false);
