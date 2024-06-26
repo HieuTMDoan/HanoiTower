@@ -1,11 +1,15 @@
 package hanoitower.view;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.Arrays;
 
@@ -24,9 +28,14 @@ public class TowerGUI extends StackPane {
 
     private static final int DEFAULT_CHILDREN_SIZE = 2;
 
+    @FXML
     private final ObservableList<Node> myChildrenNodes = this.getChildren();
 
+    @FXML
     private DiskGUI myPoppedDisk;
+
+    @FXML
+    private TranslateTransition myTranslateTransition;
 
     public TowerGUI() {
         Rectangle myBase = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
@@ -43,6 +52,11 @@ public class TowerGUI extends StackPane {
     public void addDisk(final DiskGUI theDisk) {
         myChildrenNodes.add(theDisk);
         myPoppedDisk = theDisk;
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), theDisk);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
     }
 
     public void addAllDisks(final DiskGUI... theDisks) {
@@ -57,26 +71,49 @@ public class TowerGUI extends StackPane {
     }
 
     public void removeDisk() {
-        if (this.getDiskCount() != 0) {
-            myChildrenNodes.remove(myPoppedDisk);
-            myPoppedDisk = (this.getDiskCount() != 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+//        if (this.getDiskCount() > 0) {
+//            myChildrenNodes.remove(myPoppedDisk);
+//            myPoppedDisk = (this.getDiskCount() > 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+//        }
+        if (this.getDiskCount() > 0) {
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), myPoppedDisk);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(event -> {
+                myChildrenNodes.remove(myPoppedDisk);
+                myPoppedDisk = (this.getDiskCount() > 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+            });
+            fadeOut.play();
         }
+
     }
 
     public DiskGUI peekDisk() {
-        return (this.getDiskCount() != 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
+        return (this.getDiskCount() > 0) ? (DiskGUI) myChildrenNodes.get(myChildrenNodes.size() - 1) : null;
     }
 
     public DiskGUI popDisk() {
-        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
-        myPoppedDisk.setPopped(true);
+        myTranslateTransition = new TranslateTransition(Duration.seconds(0.5), myPoppedDisk);
+        myTranslateTransition.setToY(-POP_DISK_TRANSLATE_Y);
+        myTranslateTransition.setOnFinished(event -> myPoppedDisk.setPopped(true));
+        myTranslateTransition.play();
+
         return myPoppedDisk;
+//        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
+//        myPoppedDisk.setPopped(true);
+//        return myPoppedDisk;
     }
 
     public void pushDisk() {
         double translateY = -BASE_HEIGHT * (this.getDiskCount());
-        myPoppedDisk.setTranslateY(translateY);
-        myPoppedDisk.setPopped(false);
+
+        myTranslateTransition = new TranslateTransition(Duration.seconds(0.5), myPoppedDisk);
+        myTranslateTransition.setToY(translateY);
+        myTranslateTransition.setOnFinished(event -> myPoppedDisk.setPopped(false));
+        myTranslateTransition.play();
+//        double translateY = -BASE_HEIGHT * (this.getDiskCount());
+//        myPoppedDisk.setTranslateY(translateY);
+//        myPoppedDisk.setPopped(false);
     }
 
     public int getDiskCount() {

@@ -3,6 +3,8 @@ package hanoitower.control;
 import hanoitower.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Dimension2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -24,14 +27,15 @@ public class ViewManager {
 
     public static final String HOME_VIEW_PATH = "/hanoitower/fxml/home-view.fxml";
 
-    private static final String GAME_VIEW_PATH = "/hanoitower/fxml/new-view.fxml";
-
     private static final String SAVE_VIEW_PATH = "/hanoitower/fxml/save-view.fxml";
 
     private static final String TITLE = "HANOI TOWER";
 
     @FXML
-    private static final Image ICON = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
+    private static final Rectangle2D VISIBLE_WINDOW_DIMENSION = Screen.getPrimary().getVisualBounds();
+
+    @FXML
+    private static final Image ICON_IMAGE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/images/game-logo.png")));
 
     public static final String VIEW_SWITCH_ERROR_MESSAGE = "Unable to switch view!";
 
@@ -137,7 +141,7 @@ public class ViewManager {
             myPreviousView = myCurrentView;
         }
 
-        myMainStage.getIcons().add(ICON);
+        myMainStage.getIcons().add(ICON_IMAGE);
         myMainStage.setTitle(TITLE);
         myMainStage.setResizable(false);
         myMainStage.setOnCloseRequest((final WindowEvent theWindowEvent) -> System.exit(0));
@@ -155,7 +159,7 @@ public class ViewManager {
 
     @FXML
     private static void loadPopUpStage() {
-        myPopUpStage.getIcons().add(ICON);
+        myPopUpStage.getIcons().add(ICON_IMAGE);
         myPopUpStage.setTitle(TITLE);
         myPopUpStage.setResizable(false);
         myPopUpStage.initModality(Modality.WINDOW_MODAL);

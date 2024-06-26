@@ -151,7 +151,7 @@ public class GameController implements Initializable {
     private void handlePoppedDisk(final TowerGUI theCurrentClickedTower) {
         if (myPreviousClickedTower != null) {   //if a tower is already clicked before
             if (myPreviousClickedTower.equals(theCurrentClickedTower)) {    //if clicks the same tower as before
-                if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+                if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                     DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                     if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                         myPoppedDisk = theCurrentClickedTower.popDisk();
@@ -161,7 +161,7 @@ public class GameController implements Initializable {
                     }
                 }
             } else {    //else if clicks a different tower than before
-                if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+                if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                     if (myPoppedDisk != null && myPoppedDisk.isPopped()) {  //if the popped disk of the clicked tower is popped and not null
                         myPreviousClickedTower.removeDisk();
                         theCurrentClickedTower.addDisk(myPoppedDisk);
@@ -176,7 +176,7 @@ public class GameController implements Initializable {
                 }
             }
         } else {    //if no towers are clicked before
-            if (theCurrentClickedTower.getDiskCount() != 0) {   //if the clicked tower is not empty
+            if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                 DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                 if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                     myPoppedDisk = theCurrentClickedTower.popDisk();
