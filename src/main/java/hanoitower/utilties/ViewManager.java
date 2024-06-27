@@ -71,7 +71,7 @@ public class ViewManager {
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 case "Exit" -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath(viewKeyWord)));
                     initializePopUpViewAndStage();
                     loadPopUpStage();
                 }
@@ -89,7 +89,7 @@ public class ViewManager {
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 default -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile(viewKeyWord)));
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath(viewKeyWord)));
                     myPreviousView = myCurrentView;
                     initializeViewAndStage(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
@@ -108,12 +108,12 @@ public class ViewManager {
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 case ESCAPE -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Exit")));
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath("Exit")));
                     initializePopUpViewAndStage();
                     loadPopUpStage();
                 }
                 case H -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFile("Help")));
+                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath("Help")));
                     myPreviousView = myCurrentView;
                     initializeViewAndStage(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
@@ -168,7 +168,7 @@ public class ViewManager {
         myPopUpStage.show();
     }
 
-    private static String getViewFile(final String theViewKeyword) {
+    private static String getViewFilePath(final String theViewKeyword) {
         String fxmlPath = "";
         File directory = new File(FXML_DIRECTORY_PATH);
 

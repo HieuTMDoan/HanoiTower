@@ -1,5 +1,6 @@
 package hanoitower;
 
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(HOME_VIEW_PATH));
         Parent load = fxmlLoader.load();
         Scene scene = new Scene(load);
+
+        SoundManager.playSoundtrack();
         ViewManager.loadMainStage(theStage, scene);
     }
 

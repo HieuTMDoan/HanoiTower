@@ -1,6 +1,7 @@
 package hanoitower.control;
 
 import hanoitower.model.HanoiTower;
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import hanoitower.view.DiskGUI;
 import hanoitower.view.TowerGUI;
@@ -131,18 +132,21 @@ public class GameController implements Initializable {
         myLeftTower.setOnMouseClicked(theMouseEvent -> {
             handlePoppedDisk(myLeftTower);
             myLeftTower.requestFocus();
+            SoundManager.playSoundEffect();
         });
 
         myMiddleTower = new TowerGUI();
         myMiddleTower.setOnMouseClicked(theMouseEvent -> {
             handlePoppedDisk(myMiddleTower);
             myMiddleTower.requestFocus();
+            SoundManager.playSoundEffect();
         });
 
         myRightTower = new TowerGUI();
         myRightTower.setOnMouseClicked(theMouseEvent -> {
             handlePoppedDisk(myRightTower);
             myRightTower.requestFocus();
+            SoundManager.playSoundEffect();
         });
 
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
