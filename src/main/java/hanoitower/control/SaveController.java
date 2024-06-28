@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,11 +21,12 @@ public class SaveController {
             if (theKeyEvent.getCode() == KeyCode.ENTER) {
                 try {
                     String typedName = myNameTextField.getText();
-                    HanoiTower.getInstance().setName(typedName);
-                    HanoiTower.saveGame(HanoiTower.getInstance());
-                    System.out.println(HanoiTower.getSavedGames());
+//                    HanoiTower.getInstance().setName(typedName);
+//                    HanoiTower.saveGame(HanoiTower.getInstance());
+                    System.out.println(typedName);
 
                     ViewManager.setView(theKeyEvent);
+                    SoundManager.playIntro();
                 } catch (IOException e) {
                     System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
                 }

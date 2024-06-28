@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ public class HomeController {
         myNewButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);
+//                SoundManager.playInGame();
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

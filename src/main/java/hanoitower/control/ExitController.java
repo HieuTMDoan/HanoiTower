@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class ExitController {
         myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);
+                SoundManager.playIntro();
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

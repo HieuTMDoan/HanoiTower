@@ -1,5 +1,6 @@
 package hanoitower.view;
 
+import hanoitower.model.Tower;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -25,8 +26,6 @@ public class TowerGUI extends StackPane {
     private static final int POP_DISK_TRANSLATE_Y = POLE_HEIGHT + BASE_HEIGHT + POLE_WIDTH;
 
     private static final int DEFAULT_CHILDREN_SIZE = 2;
-
-    public static final Duration TRANSITION_DURATION = Duration.seconds(0.5);
 
     @FXML
     private final ObservableList<Node> myChildrenNodes = this.getChildren();
@@ -115,5 +114,9 @@ public class TowerGUI extends StackPane {
 
     public int getDiskCount() {
         return myChildrenNodes.size() - DEFAULT_CHILDREN_SIZE;
+    }
+
+    public Tower getTower() {
+        return new Tower(this.getDiskCount());
     }
 }

@@ -6,8 +6,6 @@ import java.beans.PropertyChangeSupport;
 public enum PCS {
     NEW_GAME,
 
-    UPDATE_GAME,
-
     PAUSE_GAME,
 
     RESUME_GAME,
@@ -40,7 +38,11 @@ public enum PCS {
 
     UPDATE_NAME,
 
-    UPDATE_TOWERS;
+    UPDATE_TOWERS,
+
+    PUSH,
+
+    POP;
 
     private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PCS.class);
 

@@ -130,38 +130,40 @@ public class GameController implements Initializable {
     private void showTowers() {
         myLeftTower = new TowerGUI();
         myLeftTower.setOnMouseClicked(theMouseEvent -> {
-            handlePoppedDisk(myLeftTower);
+            handleDisk(myLeftTower);
             myLeftTower.requestFocus();
-            SoundManager.playSoundEffect();
         });
 
         myMiddleTower = new TowerGUI();
         myMiddleTower.setOnMouseClicked(theMouseEvent -> {
-            handlePoppedDisk(myMiddleTower);
+            handleDisk(myMiddleTower);
             myMiddleTower.requestFocus();
-            SoundManager.playSoundEffect();
         });
 
         myRightTower = new TowerGUI();
         myRightTower.setOnMouseClicked(theMouseEvent -> {
-            handlePoppedDisk(myRightTower);
+            handleDisk(myRightTower);
             myRightTower.requestFocus();
-            SoundManager.playSoundEffect();
         });
 
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
     }
 
     @FXML
-    private void handlePoppedDisk(final TowerGUI theCurrentClickedTower) {
+    private void handleDisk(final TowerGUI theCurrentClickedTower) {
         if (myPreviousClickedTower != null) {   //if a tower is already clicked before
             if (myPreviousClickedTower.equals(theCurrentClickedTower)) {    //if clicks the same tower as before
                 if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                     DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                     if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
+                        HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
                     } else {    //if the top disk of the clicked tower is not popped
-                        theCurrentClickedTower.pushDisk();
+                        if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
+                            theCurrentClickedTower.pushDisk();
+                        }
+
+                        SoundManager.playPush();
                         myPoppedDisk = null;
                     }
                 }
@@ -171,6 +173,7 @@ public class GameController implements Initializable {
                         myPreviousClickedTower.removeDisk();
                         theCurrentClickedTower.addDisk(myPoppedDisk);
                     } else {    //else if the popped disk of the clicked tower is null or not popped
+                        HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
                     }
                 } else {    //else if the clicked tower is empty
@@ -184,10 +187,15 @@ public class GameController implements Initializable {
             if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                 DiskGUI topDisk = theCurrentClickedTower.peekDisk();
                 if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
+                    HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                     myPoppedDisk = theCurrentClickedTower.popDisk();
                 } else {    //if the top disk of the clicked tower is already popped
-                    theCurrentClickedTower.pushDisk();
-                    myPoppedDisk = null;
+                    if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
+                        theCurrentClickedTower.pushDisk();
+                        myPoppedDisk = null;
+                    }
+
+                    SoundManager.playPush();
                 }
             }
         }

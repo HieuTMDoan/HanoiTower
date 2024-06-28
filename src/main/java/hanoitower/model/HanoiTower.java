@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static hanoitower.model.HanoiTower.Mode.*;
+import static hanoitower.model.PCS.*;
 
 public class HanoiTower {
     public static final int MAXIMUM_LEVEL = 8;
@@ -60,14 +61,6 @@ public class HanoiTower {
     private HanoiTower() {
     }
 
-    public void startGame() {
-        setLevel(DEFAULT_LEVEL);
-        setMoves(DEFAULT_MOVES);
-        setProgress(DEFAULT_PROGRESS);
-        setMode(DEFAULT_MODE);
-        setTowers();
-    }
-
     public void popDisk(final Tower theTower) {
         if (myPoppedDisk != null) {
             return;
@@ -85,9 +78,9 @@ public class HanoiTower {
         updateGame();
     }
 
-    public void pushDisk(final Tower theTower) {
+    public boolean pushDisk(final Tower theTower) {
         if (myPoppedDisk == null) {
-            return;
+            return false;
         }
 
         boolean canPush;
@@ -105,6 +98,16 @@ public class HanoiTower {
         }
         myPoppedDisk = canPush ? null : myPoppedDisk;
         updateGame();
+
+        return canPush;
+    }
+
+    public void startGame() {
+        setLevel(DEFAULT_LEVEL);
+        setMoves(DEFAULT_MOVES);
+        setProgress(DEFAULT_PROGRESS);
+        setMode(DEFAULT_MODE);
+        setTowers();
     }
 
     private void updateGame() {

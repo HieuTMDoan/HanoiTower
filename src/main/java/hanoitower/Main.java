@@ -19,7 +19,7 @@ public class Main extends Application {
         Parent load = fxmlLoader.load();
         Scene scene = new Scene(load);
 
-        SoundManager.playSoundtrack();
+        SoundManager.playIntro();
         ViewManager.loadMainStage(theStage, scene);
     }
 
