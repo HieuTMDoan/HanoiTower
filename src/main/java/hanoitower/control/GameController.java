@@ -161,6 +161,7 @@ public class GameController implements Initializable {
                         if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
                             theCurrentClickedTower.pushDisk();
                             myPoppedDisk = null;
+                            showMoves();
                             SoundManager.playPush();
                         }
                     }

@@ -33,6 +33,16 @@ public class HanoiTower {
 
     public static final int RIGHT_TOWER_ID = 2;
 
+    public static final String LOAD_ERROR_MESSAGE = "Can't find the game with the given name!";
+
+    public static final String SET_MOVES_ERROR_MESSAGE = "Initial moves can't be smaller than 0!";
+
+    public static final String SET_PROGRESS_ERROR_MESSAGE = "Initial progress can't be smaller than 0.00!";
+
+    public static final String SET_MODE_ERROR_MESSAGE = "Mode is either default or timed!";
+
+    public static final String SET_NAME_ERROR_MESSAGE = "Name must be new!";
+
     private static HanoiTower SINGLE_INSTANCE;
 
     private String myName;
@@ -49,11 +59,13 @@ public class HanoiTower {
 
     private final Timer myTimer = new Timer();
 
-    private Tower myLeft;
+    private Tower myLeftTower;
 
-    private Tower myMiddle;
+    private Tower myMiddleTower;
 
-    private Tower myRight;
+    private Tower myRightTower;
+
+    private Tower myPreviousTower;
 
     private Disk myPoppedDisk;
 
@@ -72,16 +84,17 @@ public class HanoiTower {
             return;
         }
 
-        if (myLeft.equals(theTower)) {
-            myPoppedDisk = myLeft.popDisk();
+        if (myLeftTower.equals(theTower)) {
+            myPoppedDisk = myLeftTower.popDisk();
         } 
-        else if (myMiddle.equals(theTower)) {
-            myPoppedDisk = myMiddle.popDisk();
+        else if (myMiddleTower.equals(theTower)) {
+            myPoppedDisk = myMiddleTower.popDisk();
         } 
         else {
-            myPoppedDisk = myRight.popDisk();
+            myPoppedDisk = myRightTower.popDisk();
         }
-        updateGame();
+
+        myPreviousTower = theTower;
     }
 
     public boolean pushDisk(final Tower theTower) {
@@ -90,21 +103,25 @@ public class HanoiTower {
         }
 
         boolean canPush;
-        if (myLeft.equals(theTower)) {
-            canPush = myLeft.canPush(myPoppedDisk);
-            myLeft.pushDisk(myPoppedDisk);
+        if (myLeftTower.equals(theTower)) {
+            canPush = myLeftTower.canPush(myPoppedDisk);
+            myLeftTower.pushDisk(myPoppedDisk);
         } 
-        else if (myMiddle.equals(theTower)) {
-            canPush = myMiddle.canPush(myPoppedDisk);
-            myMiddle.pushDisk(myPoppedDisk);
+        else if (myMiddleTower.equals(theTower)) {
+            canPush = myMiddleTower.canPush(myPoppedDisk);
+            myMiddleTower.pushDisk(myPoppedDisk);
         } 
         else {
-            canPush = myRight.canPush(myPoppedDisk);
-            myRight.pushDisk(myPoppedDisk);
+            canPush = myRightTower.canPush(myPoppedDisk);
+            myRightTower.pushDisk(myPoppedDisk);
         }
-        myPoppedDisk = canPush ? null : myPoppedDisk;
-        updateGame();
 
+        if (!myPreviousTower.equals(theTower) && canPush) {
+            updateGame();
+            myPreviousTower = theTower;
+        }
+
+        myPoppedDisk = canPush ? null : myPoppedDisk;
         return canPush;
     }
 
@@ -117,8 +134,8 @@ public class HanoiTower {
     }
 
     private void updateGame() {
-        myMoves++;
-        setProgress((double) myRight.getDiskCount() / myLevel);
+        setMoves(++myMoves);
+        setProgress((double) myRightTower.getDiskCount() / myLevel);
     }
 
     public void pauseGame() {
@@ -143,8 +160,6 @@ public class HanoiTower {
         if (hasWon()) {
             SAVED_GAMES.remove(this);
         }
-
-        System.out.println(hasWon() ? "You won." : "You lost.");
     }
 
     public static void saveGame(final HanoiTower theGame) {
@@ -162,7 +177,7 @@ public class HanoiTower {
         }
 
         if (loadGame == null) {
-            throw new IllegalArgumentException("Can't find the game with the given name!");
+            throw new IllegalArgumentException(LOAD_ERROR_MESSAGE);
         }
 
         return loadGame;
@@ -171,7 +186,7 @@ public class HanoiTower {
     /*******************************************************************************************************************
      *                                                 SETTER METHODS                                                  *
      *******************************************************************************************************************/
-    public void setLevel(final int theLevel) {
+    private void setLevel(final int theLevel) {
         if (theLevel > MAXIMUM_LEVEL) {
             myLevel = MAXIMUM_LEVEL;
         } else {
@@ -179,9 +194,9 @@ public class HanoiTower {
         }
     }
 
-    public void setMoves(final int theMoves) {
+    private void setMoves(final int theMoves) {
         if (theMoves < DEFAULT_MOVES) {
-            throw new IllegalArgumentException("Initial moves can't be smaller than 0!");
+            throw new IllegalArgumentException(SET_MOVES_ERROR_MESSAGE);
         } else {
             myMoves = theMoves;
         }
@@ -189,7 +204,7 @@ public class HanoiTower {
 
     private void setProgress(final double theProgress) {
         if (theProgress < 0.00) {
-            throw new IllegalArgumentException("Initial progress can't be smaller than 0.00!");
+            throw new IllegalArgumentException(SET_PROGRESS_ERROR_MESSAGE);
         } else {
             myProgress = theProgress;
         }
@@ -197,7 +212,7 @@ public class HanoiTower {
 
     public void setMode(final Mode theMode) {
         if (theMode != DEFAULT_MODE && theMode != TIMED_MODE) {
-            throw new IllegalArgumentException("Mode is either default or timed!");
+            throw new IllegalArgumentException(SET_MODE_ERROR_MESSAGE);
         }
 
         myMode = theMode;
@@ -215,14 +230,15 @@ public class HanoiTower {
         if (!savedNames.contains(tempName)) {
             myName = tempName;
         } else {
-            throw new IllegalArgumentException("Name must be new!");
+            throw new IllegalArgumentException(SET_NAME_ERROR_MESSAGE);
         }
     }
 
     private void setTowers() {
-        myLeft = new Tower(myLevel, LEFT_TOWER_ID);
-        myMiddle = new Tower(0, MIDDLE_TOWER_ID);
-        myRight = new Tower(0, RIGHT_TOWER_ID);
+        myPreviousTower = null;
+        myLeftTower = new Tower(myLevel, LEFT_TOWER_ID);
+        myMiddleTower = new Tower(0, MIDDLE_TOWER_ID);
+        myRightTower = new Tower(0, RIGHT_TOWER_ID);
     }
 
     /*******************************************************************************************************************
@@ -253,7 +269,7 @@ public class HanoiTower {
     }
 
     public Tower[] getTowers() {
-        return new Tower[] {myLeft, myMiddle, myRight};
+        return new Tower[] {myLeftTower, myMiddleTower, myRightTower};
     }
 
     /*******************************************************************************************************************
@@ -263,9 +279,9 @@ public class HanoiTower {
         boolean hasWon;
         
         if (myMode == DEFAULT_MODE) {
-            hasWon = (myRight.getDiskCount() == myLevel) && (myProgress == 1.00);
+            hasWon = (myRightTower.getDiskCount() == myLevel) && (myProgress == 1.00);
         } else {
-            hasWon = (myTime > 0) && (myRight.getDiskCount() == myLevel) && (myProgress == 1.00);
+            hasWon = (myTime > 0) && (myRightTower.getDiskCount() == myLevel) && (myProgress == 1.00);
         }
         
         return hasWon;

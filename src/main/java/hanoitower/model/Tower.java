@@ -3,13 +3,17 @@ package hanoitower.model;
 import java.util.Stack;
 
 public class Tower {
+    public static final String DISK_COUNT_ERROR_MESSAGE = "Negative disk count!";
+
+    public static final String DISK_SIZE_ERROR_MESSAGE = "Negative disk size!";
+
     private final Stack<Disk> myDiskStack = new Stack<>();
 
     private final int myTowerID;
 
     public Tower(final int theDiskCount, final int theTowerID) {
         if (theDiskCount < 0) {
-            throw new IllegalArgumentException("Negative disk count!");
+            throw new IllegalArgumentException(DISK_COUNT_ERROR_MESSAGE);
         } else {
             for (int i = theDiskCount; i > 0; i--) {
                 myDiskStack.push(new Disk(i));
@@ -72,7 +76,9 @@ public class Tower {
 
     @Override
     public boolean equals(Object theObject) {
-        return theObject != null && this.getClass() == theObject.getClass() && this.myTowerID == ((Tower) theObject).myTowerID;
+        return theObject != null
+                && this.getClass() == theObject.getClass()
+                && this.myTowerID == ((Tower) theObject).myTowerID;
     }
 
     /*******************************************************************************************************************
@@ -83,7 +89,7 @@ public class Tower {
 
         private Disk(final int theSize) {
             if (theSize < 0) {
-                throw new IllegalArgumentException("Negative disk size!");
+                throw new IllegalArgumentException(DISK_SIZE_ERROR_MESSAGE);
             } else {
                 size = theSize;
             }
