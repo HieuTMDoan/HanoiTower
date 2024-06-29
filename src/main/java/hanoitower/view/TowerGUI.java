@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import java.util.Arrays;
 
@@ -33,7 +32,11 @@ public class TowerGUI extends StackPane {
     @FXML
     private DiskGUI myPoppedDisk;
 
-    public TowerGUI() {
+    private final int myTowerID;
+
+    public TowerGUI(final int theTowerID) {
+        myTowerID = theTowerID;
+
         Rectangle myBase = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
         myBase.setFill(Color.BLACK);
 
@@ -117,6 +120,10 @@ public class TowerGUI extends StackPane {
     }
 
     public Tower getTower() {
-        return new Tower(this.getDiskCount());
+        return new Tower(this.getDiskCount(), myTowerID);
+    }
+
+    public int getTowerID() {
+        return myTowerID;
     }
 }

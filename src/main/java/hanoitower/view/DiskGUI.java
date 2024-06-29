@@ -12,9 +12,7 @@ public class DiskGUI extends Rectangle {
 
     private final static int MINIMUM_DISK_WIDTH = 90;
 
-    private final int myDiskID;
-
-    private boolean myPopped;
+    private boolean myPoppedState;
 
     public DiskGUI(final int theDiskID, final Color theColor) {
         super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theDiskID)), DISK_HEIGHT);
@@ -23,19 +21,14 @@ public class DiskGUI extends Rectangle {
         super.setArcHeight(DISK_ARC);
         super.setTranslateY(-DISK_HEIGHT);
 
-        myDiskID = theDiskID;
-        myPopped = false;
-    }
-
-    public int getDiskID() {
-        return myDiskID;
+        myPoppedState = false;
     }
 
     void setPopped(final boolean thePopped) {
-        myPopped = thePopped;
+        myPoppedState = thePopped;
     }
 
     public boolean isPopped() {
-        return myPopped;
+        return myPoppedState;
     }
 }

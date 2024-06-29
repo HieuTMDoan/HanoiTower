@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static hanoitower.model.HanoiTower.Mode.*;
-import static hanoitower.model.PCS.*;
+import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
+import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
 
 public class HanoiTower {
     public static final int MAXIMUM_LEVEL = 8;
@@ -26,6 +26,12 @@ public class HanoiTower {
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
     private static final int DEFAULT_COUNTDOWN = 30;
+
+    public static final int LEFT_TOWER_ID = 0;
+
+    public static final int MIDDLE_TOWER_ID = 1;
+
+    public static final int RIGHT_TOWER_ID = 2;
 
     private static HanoiTower SINGLE_INSTANCE;
 
@@ -214,9 +220,9 @@ public class HanoiTower {
     }
 
     private void setTowers() {
-        myLeft = new Tower(myLevel);
-        myMiddle = new Tower(0);
-        myRight = new Tower(0);
+        myLeft = new Tower(myLevel, LEFT_TOWER_ID);
+        myMiddle = new Tower(0, MIDDLE_TOWER_ID);
+        myRight = new Tower(0, RIGHT_TOWER_ID);
     }
 
     /*******************************************************************************************************************

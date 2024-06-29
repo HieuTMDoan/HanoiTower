@@ -20,9 +20,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
+import static hanoitower.model.HanoiTower.*;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
-import static hanoitower.model.HanoiTower.DEFAULT_LEVEL;
-import static hanoitower.model.HanoiTower.MAXIMUM_LEVEL;
 import static javafx.scene.input.KeyCode.*;
 
 public class GameController implements Initializable {
@@ -128,19 +127,19 @@ public class GameController implements Initializable {
 
     @FXML
     private void showTowers() {
-        myLeftTower = new TowerGUI();
+        myLeftTower = new TowerGUI(LEFT_TOWER_ID);
         myLeftTower.setOnMouseClicked(theMouseEvent -> {
             handleDisk(myLeftTower);
             myLeftTower.requestFocus();
         });
 
-        myMiddleTower = new TowerGUI();
+        myMiddleTower = new TowerGUI(MIDDLE_TOWER_ID);
         myMiddleTower.setOnMouseClicked(theMouseEvent -> {
             handleDisk(myMiddleTower);
             myMiddleTower.requestFocus();
         });
 
-        myRightTower = new TowerGUI();
+        myRightTower = new TowerGUI(RIGHT_TOWER_ID);
         myRightTower.setOnMouseClicked(theMouseEvent -> {
             handleDisk(myRightTower);
             myRightTower.requestFocus();
@@ -161,10 +160,9 @@ public class GameController implements Initializable {
                     } else {    //if the top disk of the clicked tower is not popped
                         if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
                             theCurrentClickedTower.pushDisk();
+                            myPoppedDisk = null;
+                            SoundManager.playPush();
                         }
-
-                        SoundManager.playPush();
-                        myPoppedDisk = null;
                     }
                 }
             } else {    //else if clicks a different tower than before
@@ -193,9 +191,8 @@ public class GameController implements Initializable {
                     if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
                         theCurrentClickedTower.pushDisk();
                         myPoppedDisk = null;
+                        SoundManager.playPush();
                     }
-
-                    SoundManager.playPush();
                 }
             }
         }

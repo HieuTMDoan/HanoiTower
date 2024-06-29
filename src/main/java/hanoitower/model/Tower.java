@@ -5,11 +5,16 @@ import java.util.Stack;
 public class Tower {
     private final Stack<Disk> myDiskStack = new Stack<>();
 
-    public Tower(final int theDiskCount) {
+    private final int myTowerID;
+
+    public Tower(final int theDiskCount, final int theTowerID) {
         if (theDiskCount < 0) {
             throw new IllegalArgumentException("Negative disk count!");
         } else {
-            initializeStack(theDiskCount);
+            for (int i = theDiskCount; i > 0; i--) {
+                myDiskStack.push(new Disk(i));
+            }
+            myTowerID = theTowerID;
         }
     }
 
@@ -20,8 +25,8 @@ public class Tower {
         return myDiskStack.size();
     }
 
-    public Stack<Disk> getDiskStack() {
-        return myDiskStack;
+    public int getTowerID() {
+        return myTowerID;
     }
 
     /*******************************************************************************************************************
@@ -50,12 +55,6 @@ public class Tower {
         return (myDiskStack.size() == 0) || (myDiskStack.peek().getSize() > theDisk.getSize());
     }
 
-    private void initializeStack(final int theDiskCount) {
-        for (int i = theDiskCount; i > 0; i--) {
-            myDiskStack.push(new Disk(i));
-        }
-    }
-
     @Override
     public String toString() {
         StringBuilder stringStack = new StringBuilder("[");
@@ -69,6 +68,11 @@ public class Tower {
 
         stringStack.append("]");
         return stringStack.toString();
+    }
+
+    @Override
+    public boolean equals(Object theObject) {
+        return theObject != null && this.getClass() == theObject.getClass() && this.myTowerID == ((Tower) theObject).myTowerID;
     }
 
     /*******************************************************************************************************************
