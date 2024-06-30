@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
 import static hanoitower.model.HanoiTower.*;
+import static hanoitower.model.HanoiTower.Mode.*;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 import static javafx.scene.input.KeyCode.*;
 
@@ -28,6 +29,8 @@ public class GameController implements Initializable {
     private final static String MINIMUM_MOVES_LABEL_PREFIX = "Minimum Moves: ";
 
     private final static String MOVES_LABEL_PREFIX = "Moves: ";
+
+    private final static String MINUTE_LABEL_PREFIX = "00:";
 
     @FXML
     private BorderPane myGameBorderPane;
@@ -89,7 +92,15 @@ public class GameController implements Initializable {
                 }
                 else if (theKeyEvent.getCode() == R) {
                     HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
-                    this.restartGame();
+                    restartGame();
+                } else if (theKeyEvent.getCode() == T) {
+                    if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+                        HanoiTower.getInstance().setMode(TIMED_MODE);
+                        showTimer();
+                    } else if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                        HanoiTower.getInstance().setMode(DEFAULT_MODE);
+                        showTimer();
+                    }
                 }
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -162,6 +173,7 @@ public class GameController implements Initializable {
                             theCurrentClickedTower.pushDisk();
                             myPoppedDisk = null;
                             showMoves();
+                            showProgress();
                             SoundManager.playPush();
                         }
                     }
@@ -184,17 +196,8 @@ public class GameController implements Initializable {
             }
         } else {    //if no towers are clicked before
             if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
-                DiskGUI topDisk = theCurrentClickedTower.peekDisk();
-                if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
-                    HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
-                    myPoppedDisk = theCurrentClickedTower.popDisk();
-                } else {    //if the top disk of the clicked tower is already popped
-                    if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
-                        theCurrentClickedTower.pushDisk();
-                        myPoppedDisk = null;
-                        SoundManager.playPush();
-                    }
-                }
+                HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
+                myPoppedDisk = theCurrentClickedTower.popDisk();
             }
         }
 
@@ -252,12 +255,22 @@ public class GameController implements Initializable {
     }
 
     @FXML
+    private void showTimer() {
+        if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+            myTimerLabel.setText("∞");
+        } else {
+            myTimerLabel.setText(String.valueOf(HanoiTower.getInstance().getTime()));
+        }
+    }
+
+    @FXML
     private void restartGame() {
         resetTowers();
         showDisks();
         showProgress();
         showMoves();
         showMinimumMoves();
+        showTimer();
     }
 
     @Override
@@ -269,5 +282,6 @@ public class GameController implements Initializable {
         showProgress();
         showMoves();
         showMinimumMoves();
+        showTimer();
     }
 }

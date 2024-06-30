@@ -72,26 +72,26 @@ public class ViewManager {
                 }
                 case "Exit" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath(viewKeyWord)));
-                    initializePopUpViewAndStage();
+                    initializePopUpView();
                     loadPopUpStage();
                 }
                 case "Save" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(SAVE_VIEW_PATH));
                     myPopUpStage.close();
-                    initializePopUpViewAndStage();
+                    initializePopUpView();
                     loadPopUpStage();
                 }
                 case "Don't Save" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                     myPopUpStage.close();
                     myMainStage.close();
-                    initializeViewAndStage(theInputEvent);
+                    initializeView(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 default -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath(viewKeyWord)));
                     myPreviousView = myCurrentView;
-                    initializeViewAndStage(theInputEvent);
+                    initializeView(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
             }
@@ -104,18 +104,18 @@ public class ViewManager {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                     myPopUpStage.close();
                     myMainStage.close();
-                    initializeViewAndStage(theInputEvent);
+                    initializeView(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 case ESCAPE -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath("Exit")));
-                    initializePopUpViewAndStage();
+                    initializePopUpView();
                     loadPopUpStage();
                 }
                 case H -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath("Help")));
                     myPreviousView = myCurrentView;
-                    initializeViewAndStage(theInputEvent);
+                    initializeView(theInputEvent);
                     loadMainStage(myMainStage, myCurrentView);
                 }
                 case BACK_SPACE -> {
@@ -127,9 +127,10 @@ public class ViewManager {
     }
 
     @FXML
-    private static void initializeViewAndStage(final InputEvent theInputEvent) throws IOException {
+    private static void initializeView(final InputEvent theInputEvent) throws IOException {
         Parent load = myFXMLLoader.load();
         myCurrentView = new Scene(load);
+        load.requestFocus();
     }
 
     @FXML
@@ -150,14 +151,15 @@ public class ViewManager {
     }
 
     @FXML
-    private static void initializePopUpViewAndStage() throws IOException {
+    private static void initializePopUpView() throws IOException {
         Parent load = myFXMLLoader.load();
         myPopUpView = new Scene(load);
-        myPopUpStage = new Stage();
+        load.requestFocus();
     }
 
     @FXML
     private static void loadPopUpStage() {
+        myPopUpStage = new Stage();
         myPopUpStage.getIcons().add(ICON_IMAGE);
         myPopUpStage.setTitle(TITLE);
         myPopUpStage.setResizable(false);

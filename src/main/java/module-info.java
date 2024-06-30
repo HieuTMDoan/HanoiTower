@@ -8,4 +8,5 @@ module hanoitower {
     exports hanoitower;
     opens hanoitower.control to javafx.fxml;
     opens hanoitower.model to javafx.base;
+    opens hanoitower.utilties to javafx.base;
 }

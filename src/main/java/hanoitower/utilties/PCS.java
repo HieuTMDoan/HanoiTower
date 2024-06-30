@@ -1,4 +1,4 @@
-package hanoitower.model;
+package hanoitower.utilties;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

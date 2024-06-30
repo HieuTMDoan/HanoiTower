@@ -1,11 +1,10 @@
 package hanoitower.model;
 
 import hanoitower.model.Tower.Disk;
+import hanoitower.utilties.TimerManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
 import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
@@ -17,6 +16,8 @@ public class HanoiTower {
 
     public static final double DEFAULT_PROGRESS = 0.0;
 
+    public static final double COMPLETE_PROGRESS = 1.00;
+
     public static final int DEFAULT_MOVES = 0;
 
     private static final String DEFAULT_NAME = "N/A";
@@ -25,13 +26,15 @@ public class HanoiTower {
 
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
-    private static final int DEFAULT_COUNTDOWN = 30;
+    private static final long DEFAULT_COUNTDOWN = 30;
 
     public static final int LEFT_TOWER_ID = 0;
 
     public static final int MIDDLE_TOWER_ID = 1;
 
     public static final int RIGHT_TOWER_ID = 2;
+
+    public static final int DEFAULT_DISK_COUNT = 0;
 
     public static final String LOAD_ERROR_MESSAGE = "Can't find the game with the given name!";
 
@@ -54,10 +57,6 @@ public class HanoiTower {
     private Mode myMode;
 
     private int myMoves;
-
-    private int myTime;
-
-    private final Timer myTimer = new Timer();
 
     private Tower myLeftTower;
 
@@ -139,11 +138,11 @@ public class HanoiTower {
     }
 
     public void pauseGame() {
-        pauseTimer();
+        TimerManager.pauseCountDownTimer();
     }
 
     public void resumeGame() {
-        resumeTimer();
+        TimerManager.resumeCountDownTimer();
     }
 
     public void restartGame(final int theLevel) {
@@ -152,7 +151,7 @@ public class HanoiTower {
         setProgress(DEFAULT_PROGRESS);
         setTowers();
         if (myMode == TIMED_MODE) {
-            startTimer();
+            TimerManager.restartCountDownTimer(DEFAULT_COUNTDOWN);
         }
     }
 
@@ -203,7 +202,7 @@ public class HanoiTower {
     }
 
     private void setProgress(final double theProgress) {
-        if (theProgress < 0.00) {
+        if (theProgress < DEFAULT_PROGRESS) {
             throw new IllegalArgumentException(SET_PROGRESS_ERROR_MESSAGE);
         } else {
             myProgress = theProgress;
@@ -215,12 +214,13 @@ public class HanoiTower {
             throw new IllegalArgumentException(SET_MODE_ERROR_MESSAGE);
         }
 
-        myMode = theMode;
-
-        if (theMode == TIMED_MODE) {
-            myTime = DEFAULT_COUNTDOWN;
-            startTimer();
+        if (theMode == TIMED_MODE && myMode == DEFAULT_MODE) {
+            TimerManager.startCountDownTimer(DEFAULT_COUNTDOWN);
+        } else if (theMode == DEFAULT_MODE && myMode == TIMED_MODE) {
+            TimerManager.cancelCountDownTimer();
         }
+
+        myMode = theMode;
     }
 
     public void setName(final String theName) {
@@ -237,8 +237,8 @@ public class HanoiTower {
     private void setTowers() {
         myPreviousTower = null;
         myLeftTower = new Tower(myLevel, LEFT_TOWER_ID);
-        myMiddleTower = new Tower(0, MIDDLE_TOWER_ID);
-        myRightTower = new Tower(0, RIGHT_TOWER_ID);
+        myMiddleTower = new Tower(DEFAULT_DISK_COUNT, MIDDLE_TOWER_ID);
+        myRightTower = new Tower(DEFAULT_DISK_COUNT, RIGHT_TOWER_ID);
     }
 
     /*******************************************************************************************************************
@@ -272,6 +272,10 @@ public class HanoiTower {
         return new Tower[] {myLeftTower, myMiddleTower, myRightTower};
     }
 
+    public long getTime() {
+        return TimerManager.getCurrentTime();
+    }
+
     /*******************************************************************************************************************
      *                                                 HELPER METHODS                                                  *
      *******************************************************************************************************************/
@@ -279,40 +283,13 @@ public class HanoiTower {
         boolean hasWon;
         
         if (myMode == DEFAULT_MODE) {
-            hasWon = (myRightTower.getDiskCount() == myLevel) && (myProgress == 1.00);
-        } else {
-            hasWon = (myTime > 0) && (myRightTower.getDiskCount() == myLevel) && (myProgress == 1.00);
+            hasWon = (myRightTower.getDiskCount() == myLevel) && (myProgress == COMPLETE_PROGRESS);
+        }
+        else {
+            hasWon = (TimerManager.getCurrentTime() > TimerManager.END_TIME) && (myRightTower.getDiskCount() == myLevel) && (myProgress == COMPLETE_PROGRESS);
         }
         
         return hasWon;
-    }
-
-    private void startTimer() {
-        TimerTask countDown = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println(myTime--);
-                if (myTime < 0) {
-                    myTimer.cancel();
-                    endGame();
-                }
-            }
-        };
-
-        myTimer.scheduleAtFixedRate(countDown, 1000, 1000);
-    }
-
-    private void pauseTimer() {
-        myTimer.cancel();
-    }
-
-    private void resumeTimer() {
-        startTimer();
-    }
-
-    private void resetTimer() {
-        myTime = DEFAULT_COUNTDOWN;
-        startTimer();
     }
 
     @Override
