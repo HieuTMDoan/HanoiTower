@@ -1,6 +1,5 @@
 package hanoitower.utilties;
 
-import hanoitower.model.HanoiTower;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
