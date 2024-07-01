@@ -52,7 +52,7 @@ public class LoadController implements Initializable {
                     ViewManager.setView(theKeyEvent);
                 }
             } catch (IOException e) {
-                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+                System.out.println(KEY_EVENT_ERROR_MESSAGE);
             }
         });
 
@@ -75,7 +75,7 @@ public class LoadController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
         showSavedGames();
     }
 }

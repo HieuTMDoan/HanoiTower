@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.EndController">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.EndController">
+   <children>
+      <Label fx:id="myEndGameLabel" alignment="CENTER" layoutX="146.0" layoutY="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutY="123.0" text="Replay?" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="123.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <HBox layoutX="85.0" layoutY="172.0" spacing="30.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Button fx:id="myYesButton" focusTraversable="false" mnemonicParsing="false" onAction="#attachEvents" prefHeight="40.0" prefWidth="150.0" text="Yes" />
+            <Button fx:id="myNoButton" focusTraversable="false" mnemonicParsing="false" onAction="#attachEvents" prefHeight="40.0" prefWidth="150.0" text="No" />
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

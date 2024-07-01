@@ -32,7 +32,7 @@ public class TowerGUI extends StackPane {
     @FXML
     private DiskGUI myPoppedDisk;
 
-    private final int myTowerID;
+    private int myTowerID;
 
     public TowerGUI(final int theTowerID) {
         myTowerID = theTowerID;
@@ -46,6 +46,12 @@ public class TowerGUI extends StackPane {
 
         super.getChildren().addAll(myBase, myPole);
         super.setAlignment(Pos.BOTTOM_CENTER);
+    }
+
+    public TowerGUI(final Tower theTower) {
+        if (theTower != null) {
+            new TowerGUI(theTower.getTowerID());
+        }
     }
 
     public void addDisk(final DiskGUI theDisk) {

@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+import static hanoitower.utilties.ViewManager.KEY_EVENT_ERROR_MESSAGE;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 import static javafx.scene.input.KeyCode.BACK_SPACE;
 
@@ -25,7 +26,7 @@ public class HelpController {
                     ViewManager.setView(theKeyEvent);
                 }
             } catch (IOException e) {
-                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+                System.out.println(KEY_EVENT_ERROR_MESSAGE);
             }
         });
 

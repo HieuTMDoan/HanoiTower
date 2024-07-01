@@ -28,7 +28,7 @@ public class SaveController {
                     ViewManager.setView(theKeyEvent);
                     SoundManager.playIntro();
                 } catch (IOException e) {
-                    System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+                    System.out.println(KEY_EVENT_ERROR_MESSAGE);
                 }
             }
         });

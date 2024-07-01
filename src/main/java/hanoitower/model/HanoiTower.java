@@ -26,7 +26,7 @@ public class HanoiTower {
 
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
-    private static final long DEFAULT_COUNTDOWN = 30;
+    public static final long DEFAULT_COUNTDOWN = 30;
 
     public static final int LEFT_TOWER_ID = 0;
 
@@ -135,6 +135,10 @@ public class HanoiTower {
     private void updateGame() {
         setMoves(++myMoves);
         setProgress((double) myRightTower.getDiskCount() / myLevel);
+
+        if (hasWon()) {
+            endGame();
+        }
     }
 
     public void pauseGame() {
@@ -236,6 +240,7 @@ public class HanoiTower {
 
     private void setTowers() {
         myPreviousTower = null;
+        myPoppedDisk = null;
         myLeftTower = new Tower(myLevel, LEFT_TOWER_ID);
         myMiddleTower = new Tower(DEFAULT_DISK_COUNT, MIDDLE_TOWER_ID);
         myRightTower = new Tower(DEFAULT_DISK_COUNT, RIGHT_TOWER_ID);
@@ -272,6 +277,10 @@ public class HanoiTower {
         return new Tower[] {myLeftTower, myMiddleTower, myRightTower};
     }
 
+    public Tower getPreviousTower() {
+        return myPreviousTower;
+    }
+
     public long getTime() {
         return TimerManager.getCurrentTime();
     }
@@ -279,7 +288,7 @@ public class HanoiTower {
     /*******************************************************************************************************************
      *                                                 HELPER METHODS                                                  *
      *******************************************************************************************************************/
-    private boolean hasWon() {
+    public boolean hasWon() {
         boolean hasWon;
         
         if (myMode == DEFAULT_MODE) {

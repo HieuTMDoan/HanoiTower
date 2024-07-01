@@ -19,8 +19,8 @@ public class Main extends Application {
         Parent load = fxmlLoader.load();
         Scene scene = new Scene(load);
 
-        SoundManager.playIntro();
         ViewManager.loadMainStage(theStage, scene);
+        SoundManager.playIntro();
     }
 
     public static void main(String[] args) {

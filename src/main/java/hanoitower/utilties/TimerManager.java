@@ -36,6 +36,7 @@ public class TimerManager {
                 } else {
                     updateTimeProperty();
                     myTimeline.stop();
+                    ViewManager.showEndView();
                 }
             }
         }));
@@ -44,11 +45,9 @@ public class TimerManager {
     }
 
     public static void cancelCountDownTimer() {
-        myTime = END_TIME;
         if (myTimeline != null) {
             myTimeline.stop();
         }
-        updateTimeProperty();
     }
 
     public static void pauseCountDownTimer() {

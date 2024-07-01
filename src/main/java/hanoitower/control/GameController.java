@@ -19,11 +19,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.stream.IntStream;
 
 import static hanoitower.model.HanoiTower.*;
 import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
 import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
+import static hanoitower.utilties.ViewManager.KEY_EVENT_ERROR_MESSAGE;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 
 public class GameController implements Initializable {
@@ -112,7 +114,7 @@ public class GameController implements Initializable {
                     }
                 }
             } catch (IOException e) {
-                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+                System.out.println(KEY_EVENT_ERROR_MESSAGE);
             }
         });
 
@@ -134,7 +136,7 @@ public class GameController implements Initializable {
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
             HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
-            this.restartGame();
+            restartGame();
         });
     }
 
@@ -182,10 +184,16 @@ public class GameController implements Initializable {
                     else {    //if the top disk of the clicked tower is not popped
                         if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
                             theCurrentClickedTower.pushDisk();
-                            myPoppedDisk = null;
-                            showMoves();
-                            showProgress();
+                            updateGameStatistics();
                             SoundManager.playPush();
+
+                            if (HanoiTower.getInstance().hasWon()) {
+                                ViewManager.showEndView();
+
+                                if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                                    TimerManager.cancelCountDownTimer();
+                                }
+                            }
                         }
                     }
                 }
@@ -217,6 +225,17 @@ public class GameController implements Initializable {
         }
 
         myPreviousClickedTower = theCurrentClickedTower;
+    }
+
+    @FXML
+    private void updateGameStatistics() {
+        myPoppedDisk = null;
+        showMoves();
+        showProgress();
+
+        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            TimerManager.restartCountDownTimer(DEFAULT_COUNTDOWN);
+        }
     }
 
     @FXML
@@ -265,7 +284,7 @@ public class GameController implements Initializable {
         myLevelSpinner.setValueFactory(myLevelFactory);
         myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {
             HanoiTower.getInstance().restartGame(theNewValue);
-            this.restartGame();
+            restartGame();
         });
     }
 
@@ -290,7 +309,7 @@ public class GameController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
         HanoiTower.getInstance().startGame();
         showTowers();
         showDisks();
