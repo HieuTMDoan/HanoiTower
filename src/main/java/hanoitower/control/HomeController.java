@@ -24,7 +24,6 @@ public class HomeController {
         myNewButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 ViewManager.setView(theMouseEvent);
-//                SoundManager.playInGame();
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.model.HanoiTower;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ public class HelpController {
         myHelpAnchorPane.getScene().setOnKeyPressed(theKeyEvent -> {
             try {
                 if (theKeyEvent.getCode() == BACK_SPACE) {
+                    HanoiTower.getInstance().resumeGame();
                     ViewManager.setView(theKeyEvent);
                 }
             } catch (IOException e) {
@@ -32,6 +34,7 @@ public class HelpController {
 
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                HanoiTower.getInstance().resumeGame();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);

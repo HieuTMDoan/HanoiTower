@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Timer;
 import java.util.stream.IntStream;
 
 import static hanoitower.model.HanoiTower.*;
@@ -89,7 +88,16 @@ public class GameController implements Initializable {
         myGameBorderPane.getScene().setOnKeyPressed(theKeyEvent -> {
             try {
                 switch (theKeyEvent.getCode()) {
-                    case ESCAPE, H -> {
+                    case H -> {
+                        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                            HanoiTower.getInstance().pauseGame();
+                        }
+                        ViewManager.setView(theKeyEvent);
+                    }
+                    case ESCAPE -> {
+                        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                            TimerManager.cancelCountDownTimer();
+                        }
                         ViewManager.setView(theKeyEvent);
                     }
                     case R -> {
@@ -120,6 +128,9 @@ public class GameController implements Initializable {
 
         myExitButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                    TimerManager.cancelCountDownTimer();
+                }
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -128,6 +139,9 @@ public class GameController implements Initializable {
 
         myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                    HanoiTower.getInstance().pauseGame();
+                }
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);

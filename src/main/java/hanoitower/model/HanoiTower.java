@@ -277,14 +277,6 @@ public class HanoiTower {
         return new Tower[] {myLeftTower, myMiddleTower, myRightTower};
     }
 
-    public Tower getPreviousTower() {
-        return myPreviousTower;
-    }
-
-    public long getTime() {
-        return TimerManager.getCurrentTime();
-    }
-
     /*******************************************************************************************************************
      *                                                 HELPER METHODS                                                  *
      *******************************************************************************************************************/
