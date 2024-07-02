@@ -26,7 +26,7 @@ public class HanoiTower {
 
     private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
 
-    public static final long DEFAULT_COUNTDOWN = 30;
+    public static final long DEFAULT_COUNTDOWN = 15;
 
     public static final int LEFT_TOWER_ID = 0;
 
