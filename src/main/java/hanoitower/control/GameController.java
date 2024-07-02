@@ -131,6 +131,7 @@ public class GameController implements Initializable {
                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                     TimerManager.cancelCountDownTimer();
                 }
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -142,6 +143,7 @@ public class GameController implements Initializable {
                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                     HanoiTower.getInstance().pauseGame();
                 }
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -149,6 +151,7 @@ public class GameController implements Initializable {
         });
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
+            SoundManager.playClick();
             HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             restartGame();
         });

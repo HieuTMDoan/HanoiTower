@@ -1,6 +1,7 @@
 package hanoitower.control;
 
 import hanoitower.model.HanoiTower;
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,8 +35,9 @@ public class HelpController {
 
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                HanoiTower.getInstance().resumeGame();
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
+                HanoiTower.getInstance().resumeGame();
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

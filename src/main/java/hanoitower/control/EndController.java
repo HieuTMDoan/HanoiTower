@@ -1,6 +1,7 @@
 package hanoitower.control;
 
 import hanoitower.model.HanoiTower;
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,8 @@ public class EndController implements Initializable {
     private void attachEvents() {
         myYesButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
+                SoundManager.stopOutro();
                 ViewManager.setView(theMouseEvent);
                 HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             } catch (IOException e) {
@@ -40,6 +43,8 @@ public class EndController implements Initializable {
 
         myNoButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
+                SoundManager.stopOutro();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -50,6 +55,7 @@ public class EndController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myEndGameLabel.setText(HanoiTower.getInstance().hasWon() ? WIN_STATEMENT : LOSS_STATEMENT);
+        SoundManager.playOutro();
     }
 }
 

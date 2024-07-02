@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,7 @@ public class LoadController implements Initializable {
 
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);

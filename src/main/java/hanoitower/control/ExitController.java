@@ -20,6 +20,7 @@ public class ExitController {
     private void attachEvents() {
         mySaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -28,6 +29,7 @@ public class ExitController {
 
         myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
                 SoundManager.playIntro();
             } catch (IOException e) {

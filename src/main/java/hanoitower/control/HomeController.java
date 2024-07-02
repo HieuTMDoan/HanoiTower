@@ -1,5 +1,6 @@
 package hanoitower.control;
 
+import hanoitower.model.HanoiTower;
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
@@ -23,6 +24,8 @@ public class HomeController {
     private void attachEvents() {
         myNewButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
+                SoundManager.stopIntro();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -31,6 +34,7 @@ public class HomeController {
 
         myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -39,6 +43,7 @@ public class HomeController {
 
         myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
+                SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
