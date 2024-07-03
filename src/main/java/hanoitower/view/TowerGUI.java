@@ -1,7 +1,6 @@
 package hanoitower.view;
 
 import hanoitower.model.Tower;
-import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.TransitionManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,7 +33,7 @@ public class TowerGUI extends StackPane {
     @FXML
     private DiskGUI myPoppedDisk;
 
-    private int myTowerID;
+    private final int myTowerID;
 
     public TowerGUI(final int theTowerID) {
         myTowerID = theTowerID;
@@ -48,12 +47,6 @@ public class TowerGUI extends StackPane {
 
         super.getChildren().addAll(myBase, myPole);
         super.setAlignment(Pos.BOTTOM_CENTER);
-    }
-
-    public TowerGUI(final Tower theTower) {
-        if (theTower != null) {
-            new TowerGUI(theTower.getTowerID());
-        }
     }
 
     public void addDisk(final DiskGUI theDisk) {

@@ -68,6 +68,8 @@ public class HanoiTower {
 
     private Disk myPoppedDisk;
 
+    private boolean myPlayedState = false;
+
     public static HanoiTower getInstance() {
         if (SINGLE_INSTANCE == null) {
             SINGLE_INSTANCE = new HanoiTower();
@@ -130,6 +132,7 @@ public class HanoiTower {
         setProgress(DEFAULT_PROGRESS);
         setMode(DEFAULT_MODE);
         setTowers();
+        setPlayed(true);
     }
 
     private void updateGame() {
@@ -189,6 +192,10 @@ public class HanoiTower {
     /*******************************************************************************************************************
      *                                                 SETTER METHODS                                                  *
      *******************************************************************************************************************/
+    private void setPlayed(final boolean thePlayedState) {
+        myPlayedState = thePlayedState;
+    }
+
     private void setLevel(final int theLevel) {
         if (theLevel > MAXIMUM_LEVEL) {
             myLevel = MAXIMUM_LEVEL;
@@ -251,6 +258,10 @@ public class HanoiTower {
      *******************************************************************************************************************/
     public static List<HanoiTower> getSavedGames() {
         return List.copyOf(SAVED_GAMES);
+    }
+
+    public boolean isPlayed() {
+        return myPlayedState;
     }
 
     public String getName() {

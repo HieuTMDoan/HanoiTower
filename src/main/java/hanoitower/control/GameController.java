@@ -93,9 +93,6 @@ public class GameController implements Initializable {
                         if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
                             HanoiTower.getInstance().setMode(TIMED_MODE);
                         }
-                        else if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                            HanoiTower.getInstance().setMode(DEFAULT_MODE);
-                        }
 
                         SoundManager.playInGame();
                         showTimer();
@@ -326,7 +323,12 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
-        HanoiTower.getInstance().startGame();
+        if (!HanoiTower.getInstance().isPlayed()) {
+            HanoiTower.getInstance().startGame();
+        } else {
+            HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
+        }
+
         showTowers();
         showDisks();
         showLevel();
