@@ -1,6 +1,7 @@
 package hanoitower.view;
 
 import hanoitower.model.Tower;
+import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.TransitionManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -85,7 +86,6 @@ public class TowerGUI extends StackPane {
     }
 
     public DiskGUI popDisk() {
-//        myPoppedDisk.setTranslateY(-POP_DISK_TRANSLATE_Y);
         TransitionManager.playSlideUp(myPoppedDisk, POP_DISK_TRANSLATE_Y);
         myPoppedDisk.setPopped(true);
         return myPoppedDisk;
@@ -93,7 +93,6 @@ public class TowerGUI extends StackPane {
 
     public void pushDisk() {
         double translateY = -BASE_HEIGHT * (this.getDiskCount());
-//        myPoppedDisk.setTranslateY(translateY);
         TransitionManager.playSlideDown(myPoppedDisk, translateY);
         myPoppedDisk.setPopped(false);
     }

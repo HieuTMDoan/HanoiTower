@@ -197,6 +197,7 @@ public class GameController implements Initializable {
                     if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                         HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
+                        SoundManager.playPop();
                     }
                     else {    //if the top disk of the clicked tower is not popped
                         if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
@@ -224,6 +225,7 @@ public class GameController implements Initializable {
                     else {    //else if the popped disk of the clicked tower is null or not popped
                         HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
+                        SoundManager.playPop();
                     }
                 }
                 else {    //else if the clicked tower is empty
@@ -238,6 +240,7 @@ public class GameController implements Initializable {
             if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                 HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                 myPoppedDisk = theCurrentClickedTower.popDisk();
+                SoundManager.playPop();
             }
         }
 
@@ -300,6 +303,7 @@ public class GameController implements Initializable {
         myLevelFactory.setValue(level);
         myLevelSpinner.setValueFactory(myLevelFactory);
         myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {
+            SoundManager.playChangeLevel();
             HanoiTower.getInstance().restartGame(theNewValue);
             restartGame();
         });

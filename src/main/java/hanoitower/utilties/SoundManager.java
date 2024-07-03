@@ -12,13 +12,17 @@ import java.util.Objects;
 public class SoundManager {
     private static final double DEFAULT_VOLUME = 0.5;
 
+    private static final double FULL_VOLUME = 1.0;
+
     private static final double IN_GAME_VOLUME = 0.1;
 
     private static final String PUSH_SOUND_FILE_PATH = "/hanoitower/sound/push-sound.m4a";
 
-    private static final String POP_SOUND_FILE_PATH = "/hanoitower/sound/pop-sound.mp3";
+    private static final String POP_SOUND_FILE_PATH = "/hanoitower/sound/pop-sound.m4a";
 
     private static final String CLICK_SOUND_FILE_PATH = "/hanoitower/sound/click-sound.m4a";
+
+    private static final String CHANGE_LEVEL_SOUND_FILE_PATH = "/hanoitower/sound/change-level-sound.m4a";
 
     private static final String WIN_SOUND_FILE_PATH = "/hanoitower/sound/win-sound.mp3";
 
@@ -30,9 +34,11 @@ public class SoundManager {
 
     private static final URL PUSH_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(PUSH_SOUND_FILE_PATH));
 
-//    private static final URL POP_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(POP_SOUND_FILE_PATH));
+    private static final URL POP_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(POP_SOUND_FILE_PATH));
 
     private static final URL CLICK_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(CLICK_SOUND_FILE_PATH));
+
+    private static final URL CHANGE_LEVEL_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(CHANGE_LEVEL_SOUND_FILE_PATH));
 
     private static final URL WIN_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(WIN_SOUND_FILE_PATH));
 
@@ -40,7 +46,9 @@ public class SoundManager {
 
     private static final AudioClip PUSH_SOUND = new AudioClip(PUSH_SOUND_URL.toString());
 
-//    private static final AudioClip POP_SOUND = new AudioClip(POP_SOUND_URL.toString());
+    private static final AudioClip POP_SOUND = new AudioClip(POP_SOUND_URL.toString());
+
+    private static final AudioClip CHANGE_LEVEL_SOUND = new AudioClip(CHANGE_LEVEL_SOUND_URL.toString());
 
     private static final AudioClip CLICK_SOUND = new AudioClip(CLICK_SOUND_URL.toString());
 
@@ -58,20 +66,26 @@ public class SoundManager {
 
     @FXML
     public static void playPush() {
-        PUSH_SOUND.setVolume(DEFAULT_VOLUME);
+        PUSH_SOUND.setVolume(FULL_VOLUME);
         PUSH_SOUND.play();
     }
 
-//    @FXML
-//    public static void playPop() {
-//        POP_SOUND.setVolume(DEFAULT_VOLUME);
-//        POP_SOUND.play();
-//    }
-//
+    @FXML
+    public static void playPop() {
+        POP_SOUND.setVolume(DEFAULT_VOLUME);
+        POP_SOUND.play();
+    }
+
     @FXML
     public static void playClick() {
-        CLICK_SOUND.setVolume(DEFAULT_VOLUME);
+        CLICK_SOUND.setVolume(FULL_VOLUME);
         CLICK_SOUND.play();
+    }
+
+    @FXML
+    public static void playChangeLevel() {
+        CHANGE_LEVEL_SOUND.setVolume(FULL_VOLUME);
+        CHANGE_LEVEL_SOUND.play();
     }
 
     @FXML
@@ -97,10 +111,10 @@ public class SoundManager {
     @FXML
     public static void playOutro() {
         if (HanoiTower.getInstance().hasWon()) {
-            WIN_SOUND.setVolume(DEFAULT_VOLUME);
+            WIN_SOUND.setVolume(FULL_VOLUME);
             WIN_SOUND.play();
         } else {
-            LOSE_SOUND.setVolume(DEFAULT_VOLUME);
+            LOSE_SOUND.setVolume(FULL_VOLUME);
             LOSE_SOUND.play();
         }
     }
