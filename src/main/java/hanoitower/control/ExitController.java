@@ -30,6 +30,7 @@ public class ExitController {
         myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 SoundManager.playClick();
+                SoundManager.stopInGame();
                 ViewManager.setView(theMouseEvent);
                 SoundManager.playIntro();
             } catch (IOException e) {

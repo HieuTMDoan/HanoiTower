@@ -12,6 +12,7 @@ import java.io.IOException;
 import static hanoitower.utilties.ViewManager.KEY_EVENT_ERROR_MESSAGE;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 import static javafx.scene.input.KeyCode.BACK_SPACE;
+import static javafx.scene.input.KeyCode.S;
 
 public class HelpController {
     @FXML

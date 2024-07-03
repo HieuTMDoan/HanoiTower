@@ -24,7 +24,6 @@ import java.util.stream.IntStream;
 import static hanoitower.model.HanoiTower.*;
 import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
 import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
-import static hanoitower.utilties.ViewManager.KEY_EVENT_ERROR_MESSAGE;
 import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
 
 public class GameController implements Initializable {
@@ -83,28 +82,14 @@ public class GameController implements Initializable {
     @FXML
     private final SpinnerValueFactory<Integer> myLevelFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(DEFAULT_LEVEL, MAXIMUM_LEVEL);
 
+    private boolean myPauseState = false;
+
     @FXML
     private void attachEvents() {
         myGameBorderPane.getScene().setOnKeyPressed(theKeyEvent -> {
-            try {
-                switch (theKeyEvent.getCode()) {
-                    case H -> {
-                        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                            HanoiTower.getInstance().pauseGame();
-                        }
-                        ViewManager.setView(theKeyEvent);
-                    }
-                    case ESCAPE -> {
-                        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                            TimerManager.cancelCountDownTimer();
-                        }
-                        ViewManager.setView(theKeyEvent);
-                    }
-                    case R -> {
-                        HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
-                        restartGame();
-                    }
-                    case T -> {
+            switch (theKeyEvent.getCode()) {
+                case T -> {
+                    if (!myPauseState) {
                         if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
                             HanoiTower.getInstance().setMode(TIMED_MODE);
                             showTimer();
@@ -113,16 +98,20 @@ public class GameController implements Initializable {
                             showTimer();
                         }
                     }
-                    case SPACE -> {
-                        if (TimerManager.getRunningState()) {
-                            HanoiTower.getInstance().pauseGame();
-                        } else {
-                            HanoiTower.getInstance().resumeGame();
-                        }
+                }
+                case SPACE -> {
+                    if (TimerManager.getRunningState()) {
+                        HanoiTower.getInstance().pauseGame();
+                        SoundManager.pauseInGame();
+                        myGameBorderPane.setDisable(true);
+                        myPauseState = true;
+                    } else {
+                        HanoiTower.getInstance().resumeGame();
+                        SoundManager.resumeInGame();
+                        myGameBorderPane.setDisable(false);
+                        myPauseState = false;
                     }
                 }
-            } catch (IOException e) {
-                System.out.println(KEY_EVENT_ERROR_MESSAGE);
             }
         });
 
@@ -143,6 +132,7 @@ public class GameController implements Initializable {
                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                     HanoiTower.getInstance().pauseGame();
                 }
+
                 SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
@@ -152,6 +142,8 @@ public class GameController implements Initializable {
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
             SoundManager.playClick();
+            SoundManager.playInGame();
+
             HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             restartGame();
         });
@@ -207,6 +199,7 @@ public class GameController implements Initializable {
 
                             if (HanoiTower.getInstance().hasWon()) {
                                 ViewManager.showEndView();
+                                SoundManager.stopInGame();
 
                                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                                     TimerManager.cancelCountDownTimer();
@@ -339,5 +332,6 @@ public class GameController implements Initializable {
         showMoves();
         showMinimumMoves();
         showTimer();
+        SoundManager.playInGame();
     }
 }

@@ -10,11 +10,9 @@ import java.net.URL;
 import java.util.Objects;
 
 public class SoundManager {
-    private static final double DEFAULT_VOLUME = 0.5;
+    private static final double SOUNDTRACK_VOLUME = 1.0;
 
-    private static final double FULL_VOLUME = 1.0;
-
-    private static final double IN_GAME_VOLUME = 0.1;
+    private static final double SOUND_FX_VOLUME = 0.5;
 
     private static final String PUSH_SOUND_FILE_PATH = "/hanoitower/sound/push-sound.m4a";
 
@@ -60,38 +58,42 @@ public class SoundManager {
 
     private static final MediaPlayer INTRO_SOUNDTRACK = new MediaPlayer(INTRO_SOUNDTRACK_MEDIA);
 
+    private static final Media GAME_SOUNDTRACK_MEDIA = new Media(Objects.requireNonNull(SoundManager.class.getResource(GAME_SOUNDTRACK_FILE_PATH)).toString());
+
+    private static final MediaPlayer GAME_SOUNDTRACK = new MediaPlayer(GAME_SOUNDTRACK_MEDIA);
+
     private SoundManager() {
 
     }
 
     @FXML
     public static void playPush() {
-        PUSH_SOUND.setVolume(FULL_VOLUME);
+        PUSH_SOUND.setVolume(SOUND_FX_VOLUME);
         PUSH_SOUND.play();
     }
 
     @FXML
     public static void playPop() {
-        POP_SOUND.setVolume(DEFAULT_VOLUME);
+        POP_SOUND.setVolume(SOUND_FX_VOLUME);
         POP_SOUND.play();
     }
 
     @FXML
     public static void playClick() {
-        CLICK_SOUND.setVolume(FULL_VOLUME);
+        CLICK_SOUND.setVolume(SOUND_FX_VOLUME);
         CLICK_SOUND.play();
     }
 
     @FXML
     public static void playChangeLevel() {
-        CHANGE_LEVEL_SOUND.setVolume(FULL_VOLUME);
+        CHANGE_LEVEL_SOUND.setVolume(SOUND_FX_VOLUME);
         CHANGE_LEVEL_SOUND.play();
     }
 
     @FXML
     public static void playIntro() {
         INTRO_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
-        INTRO_SOUNDTRACK.setVolume(DEFAULT_VOLUME);
+        INTRO_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME);
         INTRO_SOUNDTRACK.play();
     }
 
@@ -100,21 +102,36 @@ public class SoundManager {
         INTRO_SOUNDTRACK.stop();
     }
 
-//    @FXML
-//    public static void playInGame() {
-//        GAME_SOUNDTRACK.stop();
-//        GAME_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
-//        GAME_SOUNDTRACK.setVolume(IN_GAME_VOLUME);
-//        GAME_SOUNDTRACK.play();
-//    }
-//
+    @FXML
+    public static void playInGame() {
+        GAME_SOUNDTRACK.stop();
+        GAME_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
+        GAME_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
+        GAME_SOUNDTRACK.play();
+    }
+
+    @FXML
+    public static void pauseInGame() {
+        GAME_SOUNDTRACK.pause();
+    }
+
+    @FXML
+    public static void resumeInGame() {
+        GAME_SOUNDTRACK.play();
+    }
+
+    @FXML
+    public static void stopInGame() {
+        GAME_SOUNDTRACK.stop();
+    }
+
     @FXML
     public static void playOutro() {
         if (HanoiTower.getInstance().hasWon()) {
-            WIN_SOUND.setVolume(FULL_VOLUME);
+            WIN_SOUND.setVolume(SOUNDTRACK_VOLUME);
             WIN_SOUND.play();
         } else {
-            LOSE_SOUND.setVolume(FULL_VOLUME);
+            LOSE_SOUND.setVolume(SOUNDTRACK_VOLUME);
             LOSE_SOUND.play();
         }
     }
@@ -127,10 +144,4 @@ public class SoundManager {
             LOSE_SOUND.stop();
         }
     }
-
-//
-//    @FXML
-//    public static void pauseInGame() {
-//        GAME_SOUNDTRACK.pause();
-//    }
 }
