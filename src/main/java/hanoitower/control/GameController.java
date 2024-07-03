@@ -92,11 +92,13 @@ public class GameController implements Initializable {
                     if (!myPauseState) {
                         if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
                             HanoiTower.getInstance().setMode(TIMED_MODE);
-                            showTimer();
-                        } else if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                            HanoiTower.getInstance().setMode(DEFAULT_MODE);
-                            showTimer();
                         }
+                        else if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+                            HanoiTower.getInstance().setMode(DEFAULT_MODE);
+                        }
+
+                        SoundManager.playInGame();
+                        showTimer();
                     }
                 }
                 case SPACE -> {
@@ -198,7 +200,7 @@ public class GameController implements Initializable {
                             SoundManager.playPush();
 
                             if (HanoiTower.getInstance().hasWon()) {
-                                ViewManager.showEndView();
+                                ViewManager.setEndView();
                                 SoundManager.stopInGame();
 
                                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {

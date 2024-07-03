@@ -13,6 +13,9 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -46,6 +49,19 @@ public class ViewManager {
     private static final Image ICON_IMAGE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/image/game-logo.png")));
 
     @FXML
+    private static final Image BACKGROUND_IMAGE_SOURCE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/image/background-image.jpeg")));
+
+    private static final BackgroundImage BACKGROUND_IMAGE = new BackgroundImage(
+            BACKGROUND_IMAGE_SOURCE,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.DEFAULT,
+            new BackgroundSize(100, 100, true, true, false, true));
+
+    @FXML
+    public static final Background BACKGROUND = new Background(BACKGROUND_IMAGE);
+
+    @FXML
     private static FXMLLoader myFXMLLoader;
 
     @FXML
@@ -65,17 +81,6 @@ public class ViewManager {
 
     private ViewManager() {
 
-    }
-
-    @FXML
-    public static void showEndView() {
-        try {
-            myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(END_VIEW_PATH));
-            initializePopUpView();
-            loadPopUpStage();
-        } catch (IOException e) {
-            throw new RuntimeException(VIEW_SWITCH_ERROR_MESSAGE);
-        }
     }
 
     @FXML
@@ -157,8 +162,20 @@ public class ViewManager {
     }
 
     @FXML
+    public static void setEndView() {
+        try {
+            myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(END_VIEW_PATH));
+            initializePopUpView();
+            loadPopUpStage();
+        } catch (IOException e) {
+            throw new RuntimeException(VIEW_SWITCH_ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
     public static void initializeView() throws IOException {
-        Parent load = myFXMLLoader.load();
+        Pane load = myFXMLLoader.load();
+        load.setBackground(BACKGROUND);
         myCurrentView = new Scene(load);
         load.requestFocus();
     }
@@ -182,7 +199,7 @@ public class ViewManager {
 
     @FXML
     private static void initializePopUpView() throws IOException {
-        Parent load = myFXMLLoader.load();
+        Pane load = myFXMLLoader.load();
         myPopUpView = new Scene(load);
         load.requestFocus();
     }

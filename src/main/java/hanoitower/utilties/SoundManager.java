@@ -9,6 +9,9 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URL;
 import java.util.Objects;
 
+import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
+import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
+
 public class SoundManager {
     private static final double SOUNDTRACK_VOLUME = 1.0;
 
@@ -28,7 +31,9 @@ public class SoundManager {
 
     private static final String INTRO_SOUNDTRACK_FILE_PATH = "/hanoitower/sound/intro-soundtrack.mp3";
 
-    private static final String GAME_SOUNDTRACK_FILE_PATH = "/hanoitower/sound/game-soundtrack.mp3";
+    private static final String DEFAULT_MODE_SOUNDTRACK_FILE_PATH = "/hanoitower/sound/default-mode-soundtrack.mp3";
+
+    private static final String TIMED_MODE_SOUNDTRACK_FILE_PATH = "/hanoitower/sound/timed-mode-soundtrack.mp3";
 
     private static final URL PUSH_SOUND_URL = Objects.requireNonNull(SoundManager.class.getResource(PUSH_SOUND_FILE_PATH));
 
@@ -58,9 +63,13 @@ public class SoundManager {
 
     private static final MediaPlayer INTRO_SOUNDTRACK = new MediaPlayer(INTRO_SOUNDTRACK_MEDIA);
 
-    private static final Media GAME_SOUNDTRACK_MEDIA = new Media(Objects.requireNonNull(SoundManager.class.getResource(GAME_SOUNDTRACK_FILE_PATH)).toString());
+    private static final Media DEFAULT_MODE_SOUNDTRACK_MEDIA = new Media(Objects.requireNonNull(SoundManager.class.getResource(DEFAULT_MODE_SOUNDTRACK_FILE_PATH)).toString());
 
-    private static final MediaPlayer GAME_SOUNDTRACK = new MediaPlayer(GAME_SOUNDTRACK_MEDIA);
+    private static final MediaPlayer DEFAULT_MODE_SOUNDTRACK = new MediaPlayer(DEFAULT_MODE_SOUNDTRACK_MEDIA);
+
+    private static final Media TIMED_MODE_SOUNDTRACK_MEDIA = new Media(Objects.requireNonNull(SoundManager.class.getResource(TIMED_MODE_SOUNDTRACK_FILE_PATH)).toString());
+
+    private static final MediaPlayer TIMED_MODE_SOUNDTRACK = new MediaPlayer(TIMED_MODE_SOUNDTRACK_MEDIA);
 
     private SoundManager() {
 
@@ -104,25 +113,50 @@ public class SoundManager {
 
     @FXML
     public static void playInGame() {
-        GAME_SOUNDTRACK.stop();
-        GAME_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
-        GAME_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
-        GAME_SOUNDTRACK.play();
+        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            DEFAULT_MODE_SOUNDTRACK.stop();
+            TIMED_MODE_SOUNDTRACK.stop();
+            TIMED_MODE_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
+            TIMED_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
+            TIMED_MODE_SOUNDTRACK.play();
+        }
+        else if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+            TIMED_MODE_SOUNDTRACK.stop();
+            DEFAULT_MODE_SOUNDTRACK.stop();
+            DEFAULT_MODE_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
+            DEFAULT_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
+            DEFAULT_MODE_SOUNDTRACK.play();
+        }
     }
 
     @FXML
     public static void pauseInGame() {
-        GAME_SOUNDTRACK.pause();
+        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            TIMED_MODE_SOUNDTRACK.pause();
+        }
+        else if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+            DEFAULT_MODE_SOUNDTRACK.pause();
+        }
     }
 
     @FXML
     public static void resumeInGame() {
-        GAME_SOUNDTRACK.play();
+        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            TIMED_MODE_SOUNDTRACK.play();
+        }
+        else if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+            DEFAULT_MODE_SOUNDTRACK.play();
+        }
     }
 
     @FXML
     public static void stopInGame() {
-        GAME_SOUNDTRACK.stop();
+        if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            TIMED_MODE_SOUNDTRACK.stop();
+        }
+        else if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
+            DEFAULT_MODE_SOUNDTRACK.stop();
+        }
     }
 
     @FXML
