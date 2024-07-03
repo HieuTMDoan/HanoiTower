@@ -4,14 +4,14 @@ import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static hanoitower.utilties.ViewManager.*;
+import static hanoitower.utilties.ViewManager.BACKGROUND;
+import static hanoitower.utilties.ViewManager.HOME_VIEW_PATH;
 
 public class Main extends Application {
     @Override
