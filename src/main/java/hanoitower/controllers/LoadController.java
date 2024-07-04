@@ -1,4 +1,4 @@
-package hanoitower.control;
+package hanoitower.controllers;
 
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;

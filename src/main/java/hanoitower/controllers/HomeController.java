@@ -1,4 +1,4 @@
-package hanoitower.control;
+package hanoitower.controllers;
 
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
@@ -7,18 +7,31 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-import static hanoitower.utilties.ViewManager.VIEW_SWITCH_ERROR_MESSAGE;
+import static hanoitower.utilties.ViewManager.*;
 
-public class ExitController {
+public class HomeController {
     @FXML
-    private Button mySaveButton;
+    public Button myNewButton;
 
     @FXML
-    private Button myDoNotSaveButton;
+    private Button myLoadButton;
+
+    @FXML
+    private Button myHelpButton;
 
     @FXML
     private void attachEvents() {
-        mySaveButton.setOnMouseClicked(theMouseEvent -> {
+        myNewButton.setOnMouseClicked(theMouseEvent -> {
+            try {
+                SoundManager.playClick();
+                SoundManager.stopIntro();
+                ViewManager.setView(theMouseEvent);
+            } catch (IOException e) {
+                System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
+            }
+        });
+
+        myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
@@ -27,12 +40,10 @@ public class ExitController {
             }
         });
 
-        myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
+        myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 SoundManager.playClick();
-                SoundManager.stopInGame();
                 ViewManager.setView(theMouseEvent);
-                SoundManager.playIntro();
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

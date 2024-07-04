@@ -1,11 +1,10 @@
-package hanoitower.control;
+package hanoitower.controllers;
 
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import hanoitower.model.HanoiTower;
 
 import java.io.IOException;
 

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="myHelpAnchorPane" prefHeight="600.0" prefWidth="1000.0" onKeyPressed="#attachEvents" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.control.HelpController">
+<AnchorPane fx:id="myHelpAnchorPane" prefHeight="600.0" prefWidth="1000.0" onKeyPressed="#attachEvents" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hanoitower.controllers.HelpController">
    <children>
       <TabPane prefHeight="520.0" prefWidth="1000.0" tabMinHeight="30.0" tabMinWidth="100.0">
          <tabs>
