@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
 public class TimerManager {
@@ -43,6 +44,7 @@ public class TimerManager {
         }));
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.play();
+        myTimeline.getKeyFrames().get(0).getOnFinished().handle(new ActionEvent());
     }
 
     public static void cancelCountDownTimer() {
@@ -72,7 +74,7 @@ public class TimerManager {
         return myTime;
     }
 
-    public static boolean getRunningState() {
+    public static boolean isRan() {
         return myRunningState;
     }
 

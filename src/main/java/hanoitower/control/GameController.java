@@ -99,7 +99,7 @@ public class GameController implements Initializable {
                     }
                 }
                 case SPACE -> {
-                    if (TimerManager.getRunningState()) {
+                    if (TimerManager.isRan()) {
                         HanoiTower.getInstance().pauseGame();
                         SoundManager.pauseInGame();
                         myGameBorderPane.setDisable(true);
