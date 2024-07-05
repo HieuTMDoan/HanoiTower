@@ -26,7 +26,6 @@ public class SaveController {
 
                     ViewManager.setView(theKeyEvent);
                     SoundManager.stopInGame();
-                    SoundManager.playIntro();
                 } catch (IOException e) {
                     System.out.println(KEY_EVENT_ERROR_MESSAGE);
                 }

@@ -101,7 +101,7 @@ public class ViewManager {
                     initializePopUpView();
                     loadPopUpStage();
                 }
-                case "Don't Save" -> {
+                case "Don't Save", "No" -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
                     myPopUpStage.close();
                     myMainStage.close();
@@ -114,11 +114,6 @@ public class ViewManager {
                     myMainStage.close();
                     initializeView();
                     loadMainStage(myMainStage, myCurrentView);
-                }
-                case "No" -> {
-                    myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(HOME_VIEW_PATH));
-                    myPopUpStage.close();
-                    myMainStage.close();
                 }
                 default -> {
                     myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(getViewFilePath(viewKeyWord)));

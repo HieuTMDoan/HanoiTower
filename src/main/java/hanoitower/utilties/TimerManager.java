@@ -14,18 +14,17 @@ public class TimerManager {
 
     private static Timeline myTimeline;
 
-    private static boolean myRunningState;
+    private static boolean myRunningState = true;
 
     private static long myTime;
 
-    private static final StringProperty timeProperty = new SimpleStringProperty();
+    private static final StringProperty myTimeProperty = new SimpleStringProperty();
 
     private TimerManager() {
 
     }
 
     public static void startCountDownTimer(final long theTime) {
-        myRunningState = true;
         myTime = theTime;
         updateTimeProperty();
 
@@ -61,13 +60,13 @@ public class TimerManager {
         myRunningState = true;
     }
 
-    public static void restartCountDownTimer(final long theTime) {
+    public static void restartCountDownTimer() {
         cancelCountDownTimer();
-        startCountDownTimer(theTime);
+        startCountDownTimer(myTime);
     }
 
     private static void updateTimeProperty() {
-        timeProperty.set(String.valueOf(myTime));
+        myTimeProperty.set(String.valueOf(myTime));
     }
 
     public static long getCurrentTime() {
@@ -79,7 +78,7 @@ public class TimerManager {
     }
 
     public static StringProperty getTimeProperty() {
-        return timeProperty;
+        return myTimeProperty;
     }
 }
 

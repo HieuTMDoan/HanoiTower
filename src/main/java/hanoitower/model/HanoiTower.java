@@ -158,7 +158,7 @@ public class HanoiTower {
         setProgress(DEFAULT_PROGRESS);
         setTowers();
         if (myMode == TIMED_MODE) {
-            TimerManager.restartCountDownTimer(DEFAULT_COUNTDOWN);
+            TimerManager.restartCountDownTimer();
         }
     }
 
@@ -192,7 +192,7 @@ public class HanoiTower {
     /*******************************************************************************************************************
      *                                                 SETTER METHODS                                                  *
      *******************************************************************************************************************/
-    private void setPlayed(final boolean thePlayedState) {
+    public void setPlayed(final boolean thePlayedState) {
         myPlayedState = thePlayedState;
     }
 

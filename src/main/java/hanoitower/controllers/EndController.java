@@ -35,6 +35,7 @@ public class EndController implements Initializable {
                 SoundManager.playClick();
                 SoundManager.stopOutro();
                 ViewManager.setView(theMouseEvent);
+
                 HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -46,6 +47,8 @@ public class EndController implements Initializable {
                 SoundManager.playClick();
                 SoundManager.stopOutro();
                 ViewManager.setView(theMouseEvent);
+
+                HanoiTower.getInstance().setPlayed(false);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }

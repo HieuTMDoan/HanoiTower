@@ -22,7 +22,6 @@ public class Main extends Application {
         Scene scene = new Scene(load);
 
         ViewManager.loadMainStage(theStage, scene);
-        SoundManager.playIntro();
     }
 
     public static void main(String[] args) {

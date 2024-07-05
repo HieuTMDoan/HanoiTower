@@ -12,6 +12,7 @@ import java.util.Objects;
 import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
 import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
 
+//TODO: refine this helper class to be more flexible, should only have general methods: play/pause/resume/stop soundfxs or soundtracks
 public class SoundManager {
     private static final double SOUNDTRACK_VOLUME = 1.0;
 

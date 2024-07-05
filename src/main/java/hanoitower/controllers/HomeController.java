@@ -3,13 +3,16 @@ package hanoitower.controllers;
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static hanoitower.utilties.ViewManager.*;
 
-public class HomeController {
+public class HomeController implements Initializable {
     @FXML
     public Button myNewButton;
 
@@ -48,5 +51,10 @@ public class HomeController {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
         });
+    }
+
+    @Override
+    public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
+        SoundManager.playIntro();
     }
 }

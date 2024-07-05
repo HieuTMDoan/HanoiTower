@@ -89,13 +89,13 @@ public class GameController implements Initializable {
         myGameBorderPane.getScene().setOnKeyPressed(theKeyEvent -> {
             switch (theKeyEvent.getCode()) {
                 case T -> {
-                    if (!myPauseState) {
-                        if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
-                            HanoiTower.getInstance().setMode(TIMED_MODE);
-                        }
-
+                    if (HanoiTower.getInstance().getMode() == DEFAULT_MODE &&
+                            myMiddleTower.getDiskCount() == 0 &&
+                            myRightTower.getDiskCount() == 0) {
+                        HanoiTower.getInstance().setMode(TIMED_MODE);
                         SoundManager.playInGame();
                         showTimer();
+                        showLevel();
                     }
                 }
                 case SPACE -> {
@@ -141,7 +141,6 @@ public class GameController implements Initializable {
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
             SoundManager.playClick();
-            SoundManager.playInGame();
 
             HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             restartGame();
@@ -188,13 +187,11 @@ public class GameController implements Initializable {
                     if (!topDisk.isPopped()) {  //if the top disk of the clicked tower is not popped
                         HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
-                        SoundManager.playPop();
                     }
                     else {    //if the top disk of the clicked tower is not popped
                         if (HanoiTower.getInstance().pushDisk(theCurrentClickedTower.getTower())) {
                             theCurrentClickedTower.pushDisk();
                             updateGameStatistics();
-                            SoundManager.playPush();
 
                             if (HanoiTower.getInstance().hasWon()) {
                                 ViewManager.setEndView();
@@ -217,7 +214,6 @@ public class GameController implements Initializable {
                     else {    //else if the popped disk of the clicked tower is null or not popped
                         HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                         myPoppedDisk = theCurrentClickedTower.popDisk();
-                        SoundManager.playPop();
                     }
                 }
                 else {    //else if the clicked tower is empty
@@ -232,7 +228,6 @@ public class GameController implements Initializable {
             if (theCurrentClickedTower.getDiskCount() > 0) {   //if the clicked tower is not empty
                 HanoiTower.getInstance().popDisk(theCurrentClickedTower.getTower());
                 myPoppedDisk = theCurrentClickedTower.popDisk();
-                SoundManager.playPop();
             }
         }
 
@@ -246,7 +241,7 @@ public class GameController implements Initializable {
         showProgress();
 
         if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-            TimerManager.restartCountDownTimer(DEFAULT_COUNTDOWN);
+            TimerManager.restartCountDownTimer();
         }
     }
 
@@ -290,8 +285,11 @@ public class GameController implements Initializable {
 
     @FXML
     private void showLevel() {
-        int level = HanoiTower.getInstance().getLevel();
+        if (HanoiTower.getInstance().isPlayed() && HanoiTower.getInstance().getMode() == TIMED_MODE) {
+            myLevelSpinner.setDisable(true);
+        }
 
+        int level = HanoiTower.getInstance().getLevel();
         myLevelFactory.setValue(level);
         myLevelSpinner.setValueFactory(myLevelFactory);
         myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {

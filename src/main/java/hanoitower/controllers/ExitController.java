@@ -1,5 +1,6 @@
 package hanoitower.controllers;
 
+import hanoitower.model.HanoiTower;
 import hanoitower.utilties.SoundManager;
 import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
@@ -22,6 +23,8 @@ public class ExitController {
             try {
                 SoundManager.playClick();
                 ViewManager.setView(theMouseEvent);
+
+                HanoiTower.getInstance().setPlayed(false);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
@@ -32,7 +35,8 @@ public class ExitController {
                 SoundManager.playClick();
                 SoundManager.stopInGame();
                 ViewManager.setView(theMouseEvent);
-                SoundManager.playIntro();
+
+                HanoiTower.getInstance().setPlayed(false);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
             }
