@@ -14,8 +14,8 @@ public class DiskGUI extends Rectangle {
 
     private boolean myPoppedState;
 
-    public DiskGUI(final int theDiskID, final Color theColor) {
-        super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theDiskID)), DISK_HEIGHT);
+    public DiskGUI(final int theIndex, final Color theColor) {
+        super(MINIMUM_DISK_WIDTH + (WIDTH_DIFFERENCE * (theIndex)), DISK_HEIGHT);
         super.setFill(theColor);
         super.setArcWidth(DISK_ARC);
         super.setArcHeight(DISK_ARC);

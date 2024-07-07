@@ -1,7 +1,10 @@
 package hanoitower.utilties;
 
 import hanoitower.model.HanoiTower;
+import hanoitower.view.TowerGUI;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,9 +17,9 @@ import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
 
 //TODO: refine this helper class to be more flexible, should only have general methods: play/pause/resume/stop soundfxs or soundtracks
 public class SoundManager {
-    private static final double SOUNDTRACK_VOLUME = 1.0;
+    private static final double SOUNDTRACK_VOLUME = 0.5;
 
-    private static final double SOUND_FX_VOLUME = 0.5;
+    private static final double SOUND_FX_VOLUME = 1.0;
 
     private static final String PUSH_SOUND_FILE_PATH = "/hanoitower/sound/push-sound.m4a";
 
@@ -77,6 +80,36 @@ public class SoundManager {
     }
 
     @FXML
+    public static void playSoundEffect(final Node theSourceNode) {
+        System.out.println(theSourceNode.getTypeSelector());
+        switch (theSourceNode.getTypeSelector()) {
+            case "TowerGUI" -> {
+                TowerGUI tower = ((TowerGUI) theSourceNode);
+                if (tower.peekDisk().isPopped()) {
+                    playPush();
+                } else {
+                    playPop();
+                }
+            }
+            case "Button" -> {
+                playClick();
+            }
+            case "AnchorPane" -> {
+                playOutro();
+            }
+        }
+    }
+
+    @FXML
+    public static void playSoundTrack(final Scene theSourceView) {
+
+    }
+
+    private static void getSoundFilePath(final String theKeyword) {
+
+    }
+
+    @FXML
     public static void playPush() {
         PUSH_SOUND.setVolume(SOUND_FX_VOLUME);
         PUSH_SOUND.play();
@@ -118,14 +151,14 @@ public class SoundManager {
             DEFAULT_MODE_SOUNDTRACK.stop();
             TIMED_MODE_SOUNDTRACK.stop();
             TIMED_MODE_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
-            TIMED_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
+            TIMED_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME);
             TIMED_MODE_SOUNDTRACK.play();
         }
         else if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
             TIMED_MODE_SOUNDTRACK.stop();
             DEFAULT_MODE_SOUNDTRACK.stop();
             DEFAULT_MODE_SOUNDTRACK.setCycleCount(MediaPlayer.INDEFINITE);
-            DEFAULT_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME - 0.5);
+            DEFAULT_MODE_SOUNDTRACK.setVolume(SOUNDTRACK_VOLUME);
             DEFAULT_MODE_SOUNDTRACK.play();
         }
     }

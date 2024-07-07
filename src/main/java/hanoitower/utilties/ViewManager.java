@@ -210,7 +210,7 @@ public class ViewManager {
         myPopUpStage.show();
     }
 
-    private static String getViewFilePath(final String theViewKeyword) {
+    private static String getViewFilePath(final String theKeyword) {
         String fxmlPath = "";
         File directory = new File(FXML_DIRECTORY_PATH);
 
@@ -219,7 +219,7 @@ public class ViewManager {
 
             if (listOfFiles != null) {
                 for (File file : listOfFiles) {
-                    if (file.getName().contains(theViewKeyword.toLowerCase())) {
+                    if (file.getName().contains(theKeyword.toLowerCase())) {
                         fxmlPath = "/hanoitower/fxml/" + file.getName();
                         break;
                     }
