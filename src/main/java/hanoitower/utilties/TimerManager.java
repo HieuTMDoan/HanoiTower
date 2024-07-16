@@ -36,7 +36,7 @@ public class TimerManager {
                 } else {
                     updateTimeProperty();
                     myTimeline.stop();
-                    SoundManager.stopInGame();
+                    SoundManager.stopSoundtrack();
                     ViewManager.setEndView();
                 }
             }

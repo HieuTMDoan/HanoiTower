@@ -26,8 +26,8 @@ public class HomeController implements Initializable {
     private void attachEvents() {
         myNewButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
-                SoundManager.stopIntro();
+                SoundManager.playSoundEffect(myNewButton);
+                SoundManager.stopSoundtrack();
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -36,7 +36,7 @@ public class HomeController implements Initializable {
 
         myLoadButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myLoadButton);
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -45,7 +45,7 @@ public class HomeController implements Initializable {
 
         myHelpButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myHelpButton);
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -55,6 +55,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
-        SoundManager.playIntro();
+        SoundManager.playSoundtrack(myNewButton.getScene());
     }
 }

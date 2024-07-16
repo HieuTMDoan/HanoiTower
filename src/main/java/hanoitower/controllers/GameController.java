@@ -82,8 +82,6 @@ public class GameController implements Initializable {
     @FXML
     private final SpinnerValueFactory<Integer> myLevelFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(DEFAULT_LEVEL, MAXIMUM_LEVEL);
 
-    private boolean myPauseState = false;
-
     @FXML
     private void attachEvents() {
         myGameBorderPane.getScene().setOnKeyPressed(theKeyEvent -> {
@@ -93,7 +91,7 @@ public class GameController implements Initializable {
                             myMiddleTower.getDiskCount() == 0 &&
                             myRightTower.getDiskCount() == 0) {
                         HanoiTower.getInstance().setMode(TIMED_MODE);
-                        SoundManager.playInGame();
+                        SoundManager.playSoundtrack(myGameBorderPane.getScene());
                         showTimer();
                         showLevel();
                     }
@@ -101,14 +99,12 @@ public class GameController implements Initializable {
                 case SPACE -> {
                     if (TimerManager.isRan()) {
                         HanoiTower.getInstance().pauseGame();
-                        SoundManager.pauseInGame();
+                        SoundManager.pauseSoundtrack();
                         myGameBorderPane.setDisable(true);
-                        myPauseState = true;
                     } else {
                         HanoiTower.getInstance().resumeGame();
-                        SoundManager.resumeInGame();
+                        SoundManager.resumeSoundtrack();
                         myGameBorderPane.setDisable(false);
-                        myPauseState = false;
                     }
                 }
             }
@@ -119,7 +115,7 @@ public class GameController implements Initializable {
                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                     TimerManager.cancelCountDownTimer();
                 }
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myExitButton);
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -132,7 +128,7 @@ public class GameController implements Initializable {
                     HanoiTower.getInstance().pauseGame();
                 }
 
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myHelpButton);
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);
@@ -140,7 +136,7 @@ public class GameController implements Initializable {
         });
 
         myRestartButton.setOnMouseClicked(theMouseEvent -> {
-            SoundManager.playClick();
+            SoundManager.playSoundEffect(myRestartButton);
 
             HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
             restartGame();
@@ -195,7 +191,7 @@ public class GameController implements Initializable {
 
                             if (HanoiTower.getInstance().hasWon()) {
                                 ViewManager.setEndView();
-                                SoundManager.stopInGame();
+                                SoundManager.stopSoundtrack();
 
                                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
                                     TimerManager.cancelCountDownTimer();
@@ -293,7 +289,7 @@ public class GameController implements Initializable {
         myLevelFactory.setValue(level);
         myLevelSpinner.setValueFactory(myLevelFactory);
         myLevelSpinner.valueProperty().addListener((theObservableValue, theOldValue, theNewValue) -> {
-            SoundManager.playChangeLevel();
+            SoundManager.playSoundEffect(myLevelSpinner);
             HanoiTower.getInstance().restartGame(theNewValue);
             restartGame();
         });
@@ -334,6 +330,6 @@ public class GameController implements Initializable {
         showMoves();
         showMinimumMoves();
         showTimer();
-        SoundManager.playInGame();
+        SoundManager.playSoundtrack(myGameBorderPane.getScene());
     }
 }

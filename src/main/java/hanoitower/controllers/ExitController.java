@@ -21,7 +21,7 @@ public class ExitController {
     private void attachEvents() {
         mySaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(mySaveButton);
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().setPlayed(false);
@@ -32,8 +32,8 @@ public class ExitController {
 
         myDoNotSaveButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
-                SoundManager.stopInGame();
+                SoundManager.playSoundEffect(myDoNotSaveButton);
+                SoundManager.stopSoundtrack();
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().setPlayed(false);

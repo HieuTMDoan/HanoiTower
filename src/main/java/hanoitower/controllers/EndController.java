@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,8 +33,8 @@ public class EndController implements Initializable {
     private void attachEvents() {
         myYesButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
-                SoundManager.stopOutro();
+                SoundManager.playSoundEffect(myYesButton);
+                SoundManager.stopSoundEffect();
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
@@ -44,8 +45,8 @@ public class EndController implements Initializable {
 
         myNoButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
-                SoundManager.stopOutro();
+                SoundManager.playSoundEffect(myNoButton);
+                SoundManager.stopSoundEffect();
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().setPlayed(false);
@@ -58,7 +59,7 @@ public class EndController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myEndGameLabel.setText(HanoiTower.getInstance().hasWon() ? WIN_STATEMENT : LOSS_STATEMENT);
-        SoundManager.playOutro();
+        SoundManager.playSoundEffect(myYesButton.getParent());
     }
 }
 

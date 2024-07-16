@@ -35,7 +35,7 @@ public class HelpController {
 
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myBackButton);
                 ViewManager.setView(theMouseEvent);
                 HanoiTower.getInstance().resumeGame();
             } catch (IOException e) {

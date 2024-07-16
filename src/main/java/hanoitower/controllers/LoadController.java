@@ -59,7 +59,7 @@ public class LoadController implements Initializable {
 
         myBackButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playClick();
+                SoundManager.playSoundEffect(myBackButton);
                 ViewManager.setView(theMouseEvent);
             } catch (IOException e) {
                 System.out.println(VIEW_SWITCH_ERROR_MESSAGE);

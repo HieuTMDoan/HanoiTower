@@ -81,7 +81,7 @@ public class TowerGUI extends StackPane {
 
     public DiskGUI popDisk() {
         TransitionManager.playSlideUp(myPoppedDisk, POP_DISK_TRANSLATE_Y);
-        SoundManager.playPop();
+        SoundManager.playSoundEffect(this);
         myPoppedDisk.setPopped(true);
         return myPoppedDisk;
     }
@@ -89,7 +89,7 @@ public class TowerGUI extends StackPane {
     public void pushDisk() {
         double translateY = -BASE_HEIGHT * (this.getDiskCount());
         TransitionManager.playSlideDown(myPoppedDisk, translateY);
-        SoundManager.playPush();
+        SoundManager.playSoundEffect(this);
         myPoppedDisk.setPopped(false);
     }
 

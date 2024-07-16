@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ViewManager {
-    private static final String FXML_DIRECTORY_PATH = "src/main/resources/hanoitower/fxml/";
+    private static final String FXML_DIRECTORY_PATH_FROM_CONTENT_ROOT = "src/main/resources/hanoitower/fxml/";
+
+    public static final String FXML_DIRECTORY_PATH_FROM_SOURCE_ROOT = "/hanoitower/fxml/";
 
     public static final String HOME_VIEW_PATH = "/hanoitower/fxml/home-view.fxml";
 
@@ -212,7 +214,7 @@ public class ViewManager {
 
     private static String getViewFilePath(final String theKeyword) {
         String fxmlPath = "";
-        File directory = new File(FXML_DIRECTORY_PATH);
+        File directory = new File(FXML_DIRECTORY_PATH_FROM_CONTENT_ROOT);
 
         if (directory.isDirectory()) {
             File[] listOfFiles = directory.listFiles();
@@ -220,7 +222,7 @@ public class ViewManager {
             if (listOfFiles != null) {
                 for (File file : listOfFiles) {
                     if (file.getName().contains(theKeyword.toLowerCase())) {
-                        fxmlPath = "/hanoitower/fxml/" + file.getName();
+                        fxmlPath = FXML_DIRECTORY_PATH_FROM_SOURCE_ROOT + file.getName();
                         break;
                     }
                 }
