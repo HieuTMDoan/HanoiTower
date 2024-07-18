@@ -28,10 +28,8 @@ public class TowerGUI extends StackPane {
 
     private static final int DEFAULT_CHILDREN_SIZE = 2;
 
-    @FXML
     private final ObservableList<Node> myChildrenNodes = this.getChildren();
 
-    @FXML
     private DiskGUI myPoppedDisk;
 
     private final int myTowerID;
@@ -51,7 +49,7 @@ public class TowerGUI extends StackPane {
     }
 
     public void addDisk(final DiskGUI theDisk) {
-        TransitionManager.playFadeIn(theDisk);
+        TransitionManager.playFadeTransition(theDisk, true);
         myChildrenNodes.add(theDisk);
         myPoppedDisk = theDisk;
     }
@@ -69,7 +67,7 @@ public class TowerGUI extends StackPane {
 
     public void removeDisk() {
         if (this.getDiskCount() > 0) {
-            TransitionManager.playFadeOut(myPoppedDisk);
+            TransitionManager.playFadeTransition(myPoppedDisk, false);
             myChildrenNodes.remove(myPoppedDisk);
             myPoppedDisk = (this.getDiskCount() > 0) ? this.peekDisk() : null;
         }
@@ -80,7 +78,7 @@ public class TowerGUI extends StackPane {
     }
 
     public DiskGUI popDisk() {
-        TransitionManager.playSlideUp(myPoppedDisk, POP_DISK_TRANSLATE_Y);
+        TransitionManager.playTranslateTransition(myPoppedDisk, -POP_DISK_TRANSLATE_Y);
         SoundManager.playSoundEffect(this);
         myPoppedDisk.setPopped(true);
         return myPoppedDisk;
@@ -88,7 +86,7 @@ public class TowerGUI extends StackPane {
 
     public void pushDisk() {
         double translateY = -BASE_HEIGHT * (this.getDiskCount());
-        TransitionManager.playSlideDown(myPoppedDisk, translateY);
+        TransitionManager.playTranslateTransition(myPoppedDisk, translateY);
         SoundManager.playSoundEffect(this);
         myPoppedDisk.setPopped(false);
     }

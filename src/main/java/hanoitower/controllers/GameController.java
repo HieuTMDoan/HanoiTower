@@ -37,19 +37,14 @@ public class GameController implements Initializable {
     @FXML
     private HBox myTowersHBox;
 
-    @FXML
     private TowerGUI myLeftTower;
 
-    @FXML
     private TowerGUI myMiddleTower;
 
-    @FXML
     private TowerGUI myRightTower;
 
-    @FXML
     private TowerGUI myPreviousClickedTower;
 
-    @FXML
     private DiskGUI myPoppedDisk;
 
     @FXML
@@ -76,10 +71,8 @@ public class GameController implements Initializable {
     @FXML
     private Label myTimerLabel;
 
-    @FXML
     private final DoubleProperty myProgressProperty = new SimpleDoubleProperty();
 
-    @FXML
     private final SpinnerValueFactory<Integer> myLevelFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(DEFAULT_LEVEL, MAXIMUM_LEVEL);
 
     @FXML
@@ -91,7 +84,7 @@ public class GameController implements Initializable {
                             myMiddleTower.getDiskCount() == 0 &&
                             myRightTower.getDiskCount() == 0) {
                         HanoiTower.getInstance().setMode(TIMED_MODE);
-                        SoundManager.playSoundtrack(myGameBorderPane.getScene());
+                        SoundManager.playSoundtrack(myGameBorderPane);
                         showTimer();
                         showLevel();
                     }
@@ -113,7 +106,7 @@ public class GameController implements Initializable {
         myExitButton.setOnMouseClicked(theMouseEvent -> {
             try {
                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                    TimerManager.cancelCountDownTimer();
+                    TimerManager.cancelTimer();
                 }
                 SoundManager.playSoundEffect(myExitButton);
                 ViewManager.setView(theMouseEvent);
@@ -143,14 +136,12 @@ public class GameController implements Initializable {
         });
     }
 
-    @FXML
     private void showProgress() {
         double progress = HanoiTower.getInstance().getProgress();
         myProgressProperty.set(progress);
         myProgressBar.progressProperty().bind(myProgressProperty);
     }
 
-    @FXML
     private void showTowers() {
         myLeftTower = new TowerGUI(LEFT_TOWER_ID);
         myLeftTower.setOnMouseClicked(theMouseEvent -> {
@@ -173,7 +164,6 @@ public class GameController implements Initializable {
         myTowersHBox.getChildren().addAll(myLeftTower, myMiddleTower, myRightTower);
     }
 
-    @FXML
     private void handleDisk(final TowerGUI theCurrentClickedTower) {
         if (myPreviousClickedTower != null) {   //if a tower is already clicked before
             if (myPreviousClickedTower.equals(theCurrentClickedTower)) {    //if clicks the same tower as before
@@ -194,7 +184,7 @@ public class GameController implements Initializable {
                                 SoundManager.stopSoundtrack();
 
                                 if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-                                    TimerManager.cancelCountDownTimer();
+                                    TimerManager.cancelTimer();
                                 }
                             }
                         }
@@ -230,33 +220,28 @@ public class GameController implements Initializable {
         myPreviousClickedTower = theCurrentClickedTower;
     }
 
-    @FXML
     private void updateGameStatistics() {
         myPoppedDisk = null;
         showMoves();
         showProgress();
 
         if (HanoiTower.getInstance().getMode() == TIMED_MODE) {
-            TimerManager.restartCountDownTimer();
+            TimerManager.restartTimer();
         }
     }
 
-    @FXML
     private void showDisks() {
         int level = HanoiTower.getInstance().getLevel();
         DiskGUI[] disks = IntStream.iterate(level - 1, i -> i >= 0, i -> i - 1).mapToObj(this::createDisk).toArray(DiskGUI[]::new);
         myLeftTower.addAllDisks(disks);
     }
 
-    @FXML
     private void resetTowers() {
         myLeftTower.removeAllDisks();
         myMiddleTower.removeAllDisks();
         myRightTower.removeAllDisks();
         myPreviousClickedTower = null;
     }
-
-    @FXML
     private DiskGUI createDisk(final int theLevel) {
         int randomR = new Random().nextInt(255);
         int randomG = new Random().nextInt(255);
@@ -266,20 +251,17 @@ public class GameController implements Initializable {
         return new DiskGUI(theLevel, randomColor);
     }
 
-    @FXML
     private void showMinimumMoves() {
         int level = HanoiTower.getInstance().getLevel();
         int minimumMoves = HanoiTower.MINIMUM_MOVES[level-DEFAULT_LEVEL];
         myMinimumMovesLabel.setText(MINIMUM_MOVES_LABEL_PREFIX + minimumMoves);
     }
 
-    @FXML
     private void showMoves() {
         int moves = HanoiTower.getInstance().getMoves();
         myMovesLabel.setText(MOVES_LABEL_PREFIX + moves);
     }
 
-    @FXML
     private void showLevel() {
         if (HanoiTower.getInstance().isPlayed() && HanoiTower.getInstance().getMode() == TIMED_MODE) {
             myLevelSpinner.setDisable(true);
@@ -295,7 +277,6 @@ public class GameController implements Initializable {
         });
     }
 
-    @FXML
     private void showTimer() {
         if (HanoiTower.getInstance().getMode() == DEFAULT_MODE) {
             myTimerLabel.textProperty().unbind();
@@ -305,7 +286,6 @@ public class GameController implements Initializable {
         }
     }
 
-    @FXML
     private void restartGame() {
         resetTowers();
         showDisks();
@@ -330,6 +310,6 @@ public class GameController implements Initializable {
         showMoves();
         showMinimumMoves();
         showTimer();
-        SoundManager.playSoundtrack(myGameBorderPane.getScene());
+        SoundManager.playSoundtrack(myGameBorderPane);
     }
 }

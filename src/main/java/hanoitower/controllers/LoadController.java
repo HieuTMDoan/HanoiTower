@@ -67,7 +67,6 @@ public class LoadController implements Initializable {
         });
     }
 
-    @FXML
     private void showSavedGames() {
         myNameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
         myLevelColumn.setCellValueFactory(new PropertyValueFactory<>("Level"));

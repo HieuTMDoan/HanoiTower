@@ -23,9 +23,9 @@ public class SaveController {
 //                    HanoiTower.getInstance().setName(typedName);
 //                    HanoiTower.saveGame(HanoiTower.getInstance());
                     System.out.println(typedName);
-
-                    ViewManager.setView(theKeyEvent);
+                    
                     SoundManager.stopSoundtrack();
+                    ViewManager.setView(theKeyEvent);
                 } catch (IOException e) {
                     System.out.println(KEY_EVENT_ERROR_MESSAGE);
                 }

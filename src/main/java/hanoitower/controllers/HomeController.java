@@ -5,6 +5,7 @@ import hanoitower.utilties.ViewManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +14,9 @@ import java.util.ResourceBundle;
 import static hanoitower.utilties.ViewManager.*;
 
 public class HomeController implements Initializable {
+    @FXML
+    public HBox myHomeHBox;
+
     @FXML
     public Button myNewButton;
 
@@ -55,6 +59,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(final URL theUrl, final ResourceBundle theResourceBundle) {
-        SoundManager.playSoundtrack(myNewButton.getScene());
+        SoundManager.playSoundtrack(myHomeHBox);
     }
 }

@@ -1,5 +1,6 @@
 package hanoitower.utilties;
 
+import hanoitower.model.HanoiTower;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +25,7 @@ public class TimerManager {
 
     }
 
-    public static void startCountDownTimer(final long theTime) {
+    public static void startTimer(final long theTime) {
         myTime = theTime;
         updateTimeProperty();
 
@@ -43,26 +44,26 @@ public class TimerManager {
         }));
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.play();
-        myTimeline.getKeyFrames().get(0).getOnFinished().handle(new ActionEvent());
+        myTimeline.getKeyFrames().get(0).getOnFinished().handle(new ActionEvent()); //removes the initial 1-second delay of the timer
     }
 
-    public static void cancelCountDownTimer() {
+    public static void cancelTimer() {
         if (myTimeline != null) {
             myTimeline.stop();
         }
     }
 
-    public static void pauseCountDownTimer() {
+    public static void pauseTimer() {
         myRunningState = false;
     }
 
-    public static void resumeCountDownTimer() {
+    public static void resumeTimer() {
         myRunningState = true;
     }
 
-    public static void restartCountDownTimer() {
-        cancelCountDownTimer();
-        startCountDownTimer(myTime);
+    public static void restartTimer() {
+        cancelTimer();
+        startTimer(HanoiTower.DEFAULT_COUNTDOWN);
     }
 
     private static void updateTimeProperty() {

@@ -41,13 +41,10 @@ public class ViewManager {
 
     public static final String KEY_EVENT_ERROR_MESSAGE = "Unable to handle key event!";
 
-    @FXML
     private static final Rectangle2D VISIBLE_WINDOW_DIMENSION = Screen.getPrimary().getVisualBounds();
 
-    @FXML
     private static final Image ICON_IMAGE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/image/game-logo.png")));
 
-    @FXML
     private static final Image BACKGROUND_IMAGE_SOURCE = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/hanoitower/image/background-image.jpeg")));
 
     private static final BackgroundImage BACKGROUND_IMAGE = new BackgroundImage(
@@ -57,32 +54,24 @@ public class ViewManager {
             BackgroundPosition.DEFAULT,
             new BackgroundSize(100, 100, true, true, false, true));
 
-    @FXML
     public static final Background BACKGROUND = new Background(BACKGROUND_IMAGE);
 
-    @FXML
     private static FXMLLoader myFXMLLoader;
 
-    @FXML
     private static Scene myCurrentView;
 
-    @FXML
     private static Stage myMainStage;
 
-    @FXML
     private static Scene myPreviousView;
 
-    @FXML
     private static Scene myPopUpView;
 
-    @FXML
     private static Stage myPopUpStage;
 
     private ViewManager() {
 
     }
 
-    @FXML
     public static void setView(final InputEvent theInputEvent) throws IOException {
         if (theInputEvent instanceof MouseEvent) {
             String viewKeyWord = ((Button) theInputEvent.getSource()).getText();
@@ -155,7 +144,6 @@ public class ViewManager {
         }
     }
 
-    @FXML
     public static void setEndView() {
         try {
             myFXMLLoader = new FXMLLoader(ViewManager.class.getResource(END_VIEW_PATH));
@@ -166,7 +154,6 @@ public class ViewManager {
         }
     }
 
-    @FXML
     public static void initializeView() throws IOException {
         Pane load = myFXMLLoader.load();
         load.setBackground(BACKGROUND);
@@ -174,7 +161,6 @@ public class ViewManager {
         load.requestFocus();
     }
 
-    @FXML
     public static void loadMainStage(final Stage theStage, final Scene theScene) {
         if (myMainStage == null || myCurrentView == null) {
             myMainStage = theStage;
@@ -191,14 +177,12 @@ public class ViewManager {
         myMainStage.show();
     }
 
-    @FXML
     private static void initializePopUpView() throws IOException {
         Pane load = myFXMLLoader.load();
         myPopUpView = new Scene(load);
         load.requestFocus();
     }
 
-    @FXML
     private static void loadPopUpStage() {
         myPopUpStage = new Stage();
         myPopUpStage.getIcons().add(ICON_IMAGE);

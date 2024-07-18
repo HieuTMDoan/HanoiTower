@@ -16,29 +16,16 @@ public class TransitionManager {
 
     }
 
-    public static void playSlideUp(final Node theNode, final double theYTranslate) {
+    public static void playTranslateTransition(final Node theNode, final double theYTranslate) {
         TranslateTransition translateUp = new TranslateTransition(TRANSITION_DURATION, theNode);
-        translateUp.setToY(-theYTranslate);
+        translateUp.setToY(theYTranslate);
         translateUp.play();
     }
 
-    public static void playSlideDown(final Node theNode, final double theYTranslate) {
-        TranslateTransition translateDown = new TranslateTransition(TRANSITION_DURATION, theNode);
-        translateDown.setToY(theYTranslate);
-        translateDown.play();
-    }
-
-    public static void playFadeIn(final Node theNode) {
-        FadeTransition fadeIn = new FadeTransition(TRANSITION_DURATION, theNode);
-        fadeIn.setFromValue(INVISIBLE);
-        fadeIn.setToValue(VISIBLE);
-        fadeIn.play();
-    }
-
-    public static void playFadeOut(final Node theNode) {
+    public static void playFadeTransition(final Node theNode, final boolean theIsFadeIn) {
         FadeTransition fadeOut = new FadeTransition(TRANSITION_DURATION, theNode);
-        fadeOut.setFromValue(VISIBLE);
-        fadeOut.setToValue(INVISIBLE);
+        fadeOut.setFromValue(theIsFadeIn ? INVISIBLE : VISIBLE);
+        fadeOut.setToValue(theIsFadeIn ? VISIBLE : INVISIBLE);
         fadeOut.play();
     }
 }

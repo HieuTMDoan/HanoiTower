@@ -33,8 +33,8 @@ public class EndController implements Initializable {
     private void attachEvents() {
         myYesButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playSoundEffect(myYesButton);
                 SoundManager.stopSoundEffect();
+                SoundManager.playSoundEffect(myYesButton);
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().restartGame(HanoiTower.getInstance().getLevel());
@@ -45,8 +45,8 @@ public class EndController implements Initializable {
 
         myNoButton.setOnMouseClicked(theMouseEvent -> {
             try {
-                SoundManager.playSoundEffect(myNoButton);
                 SoundManager.stopSoundEffect();
+                SoundManager.playSoundEffect(myNoButton);
                 ViewManager.setView(theMouseEvent);
 
                 HanoiTower.getInstance().setPlayed(false);

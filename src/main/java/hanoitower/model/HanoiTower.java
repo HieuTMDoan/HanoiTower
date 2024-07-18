@@ -145,11 +145,11 @@ public class HanoiTower {
     }
 
     public void pauseGame() {
-        TimerManager.pauseCountDownTimer();
+        TimerManager.pauseTimer();
     }
 
     public void resumeGame() {
-        TimerManager.resumeCountDownTimer();
+        TimerManager.resumeTimer();
     }
 
     public void restartGame(final int theLevel) {
@@ -158,7 +158,7 @@ public class HanoiTower {
         setProgress(DEFAULT_PROGRESS);
         setTowers();
         if (myMode == TIMED_MODE) {
-            TimerManager.restartCountDownTimer();
+            TimerManager.restartTimer();
         }
     }
 
@@ -226,9 +226,9 @@ public class HanoiTower {
         }
 
         if (theMode == TIMED_MODE && myMode == DEFAULT_MODE) {
-            TimerManager.startCountDownTimer(DEFAULT_COUNTDOWN);
+            TimerManager.startTimer(DEFAULT_COUNTDOWN);
         } else if (theMode == DEFAULT_MODE && myMode == TIMED_MODE) {
-            TimerManager.cancelCountDownTimer();
+            TimerManager.cancelTimer();
         }
 
         myMode = theMode;
