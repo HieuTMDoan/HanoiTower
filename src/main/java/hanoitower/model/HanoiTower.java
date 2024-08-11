@@ -1,15 +1,21 @@
 package hanoitower.model;
 
 import hanoitower.model.Tower.Disk;
+import hanoitower.utilties.MemoryManager;
 import hanoitower.utilties.TimerManager;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static hanoitower.model.HanoiTower.Mode.DEFAULT_MODE;
 import static hanoitower.model.HanoiTower.Mode.TIMED_MODE;
 
-public class HanoiTower {
+public class HanoiTower implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1744888976121807340L;
+
     public static final int MAXIMUM_LEVEL = 8;
 
     public static final int DEFAULT_LEVEL = 3;
@@ -24,7 +30,7 @@ public class HanoiTower {
 
     public static final int[] MINIMUM_MOVES = {7, 15, 31, 63, 127, 255};
 
-    private static final List<HanoiTower> SAVED_GAMES = new ArrayList<>();
+    private static final List<HanoiTower> SAVED_GAMES = MemoryManager.readListFromFile();
 
     public static final long DEFAULT_COUNTDOWN = 15;
 
@@ -78,6 +84,21 @@ public class HanoiTower {
     }
 
     private HanoiTower() {
+
+    }
+
+    private HanoiTower(final HanoiTower theGame) {
+        myName = theGame.myName;
+        myMoves = theGame.myMoves;
+        myLevel = theGame.myLevel;
+        myProgress = theGame.myProgress;
+        myMode = theGame.myMode;
+        myPlayedState = theGame.myPlayedState;
+        myPoppedDisk = theGame.myPoppedDisk;
+        myPreviousTower = theGame.myPreviousTower;
+        myLeftTower = theGame.myLeftTower;
+        myMiddleTower = theGame.myMiddleTower;
+        myRightTower = theGame.myRightTower;
     }
 
     public void popDisk(final Tower theTower) {
@@ -140,7 +161,7 @@ public class HanoiTower {
         setProgress((double) myRightTower.getDiskCount() / myLevel);
 
         if (hasWon()) {
-            endGame();
+            SAVED_GAMES.remove(this);
         }
     }
 
@@ -162,31 +183,22 @@ public class HanoiTower {
         }
     }
 
-    public void endGame() {
-        if (hasWon()) {
-            SAVED_GAMES.remove(this);
-        }
+    public void saveGame() {
+        HanoiTower savedGame = new HanoiTower(SINGLE_INSTANCE);
+        SAVED_GAMES.add(savedGame);
+        MemoryManager.writeListToFile(SAVED_GAMES);
+
+        SINGLE_INSTANCE = null;
     }
 
-    public static void saveGame(final HanoiTower theGame) {
-        SAVED_GAMES.add(theGame);
-    }
+    public void loadGame(final String theName) {
+        HanoiTower loadedGame = SAVED_GAMES.stream().filter(game -> game.myName.equals(theName)).findFirst().orElse(null);
 
-    public static HanoiTower loadGame(final String theName) {
-        HanoiTower loadGame = null;
-
-        for (final HanoiTower game : SAVED_GAMES) {
-            if (game.myName.equals(theName)) {
-                loadGame = game;
-                break;
-            }
-        }
-
-        if (loadGame == null) {
+        if (loadedGame == null) {
             throw new IllegalArgumentException(LOAD_ERROR_MESSAGE);
         }
 
-        return loadGame;
+        SINGLE_INSTANCE = loadedGame;
     }
 
     /*******************************************************************************************************************
@@ -257,6 +269,10 @@ public class HanoiTower {
      *                                                 GETTER METHODS                                                  *
      *******************************************************************************************************************/
     public static List<HanoiTower> getSavedGames() {
+        /*
+        ensures the returned list is unmodifiable,
+        preventing unwanted changes to the original list
+         */
         return List.copyOf(SAVED_GAMES);
     }
 
@@ -284,10 +300,6 @@ public class HanoiTower {
         return myProgress;
     }
 
-    public Tower[] getTowers() {
-        return new Tower[] {myLeftTower, myMiddleTower, myRightTower};
-    }
-
     /*******************************************************************************************************************
      *                                                 HELPER METHODS                                                  *
      *******************************************************************************************************************/
@@ -306,7 +318,7 @@ public class HanoiTower {
 
     @Override
     public String toString() {
-        return "(" + myName + ", " + myLevel + ", " + myProgress + ", " + myMode + ")";
+        return String.format("(Name: %s, Level: %d, Progress: %.2f, Mode: %s)", myName, myLevel, myProgress, myMode);
     }
 
     /*******************************************************************************************************************
